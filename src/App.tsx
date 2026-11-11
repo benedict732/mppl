@@ -9,8 +9,7 @@ import ProfilOrmawa from  "./pages/visitor/ProfilOrmawa"
 function App() {
   return (
     <>
-      <LoginAdmin/>
-    </>
+    <DashboardAdmin /></>
   );
 }
 

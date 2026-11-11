@@ -38,12 +38,16 @@ interface PengingatLaporan {
 /* ===================== Data ===================== */
 const menuItems: MenuItem[] = [
   { label: "Dashboard", active: true },
-  { label: "Data Beasiswa" },
+  { label: "Data Beasiswa", hasArrow: true },
   { label: "Data Ormawa" },
   { label: "Pengumuman" },
   { label: "Proposal & Laporan" },
-  { label: "Rekapitulasi"},
-  { label: "Manajemen Akun", hasArrow: true},
+  { label: "Pengumpulan Laporan" },
+  { label: "Detail Laporan" },
+  { label: "Rekapitulasi", hasArrow: true},
+  { label: "Manajemen Akun"},
+  { label: "Edit Profil"},
+  { label: "Struktur Kepengurusan" },
 ];
  
 const stats: StatCard[] = [
