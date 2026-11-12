@@ -40,7 +40,7 @@ export const DetailLaporan: React.FC = () => {
     {
       id: '2',
       kegiatan: 'Pekan Seni Mahasiswa',
-      ormawa: 'UKM Seni',
+      ormawa: 'BEM Fakultas',
       jenis: 'Laporan Kegiatan',
       tahunAkademik: '2026/2027',
       status: 'Revisi',

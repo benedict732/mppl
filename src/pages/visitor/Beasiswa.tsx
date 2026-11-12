@@ -1,205 +1,253 @@
 import React from "react";
- 
-/* ===================== Types ===================== */
-interface NavItem {
-  label: string;
-  active?: boolean;
-}
- 
-interface BeasiswaCard {
+import { Link } from "react-router-dom";
+
+interface BeasiswaItem {
+  id: number;
   judul: string;
+  penyelenggara: string;
+  kategori: string;
   deskripsi: string;
+  kuota: string;
+  status: "Dibuka" | "Segera Dibuka" | "Ditutup";
+  tenggat: string;
 }
- 
-/* ===================== Data ===================== */
-const navItems: NavItem[] = [
-  { label: "Beranda" },
-  { label: "Beasiswa", active: true },
-  { label: "Ormawa" },
-  { label: "Berita & Kegiatan" },
-];
- 
-const beasiswa: BeasiswaCard[] = [
-  { judul: "KIP Kuliah", deskripsi: "Informasi pembukaan dan persyaratan beasiswa." },
-  { judul: "Bantuan Kebanksentralan", deskripsi: "Informasi beasiswa dan pengumuman terkait." },
-  { judul: "Beasiswa Prestasi", deskripsi: "Informasi beasiswa untuk mahasiswa." },
-];
- 
-/* ===================== Icons ===================== */
-const EmblemIcon: React.FC = () => (
-  <svg width="26" height="26" viewBox="0 0 32 32">
-    <path d="M16 2 L28 7 V16 C28 23 22 28 16 30 C10 28 4 23 4 16 V7 Z" fill="#2f8f6b" stroke="#f0b429" strokeWidth="2" />
-    <circle cx="16" cy="15" r="5" fill="#f0b429" />
-  </svg>
-);
- 
-const SiBeoIcon: React.FC = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="6" cy="18" r="2" />
-    <circle cx="18" cy="6" r="2" />
-    <path d="M7.5 16.5 L16.5 7.5" />
-  </svg>
-);
- 
-/* ===================== Styles ===================== */
-const css = `
-.bs-root { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; color:#1e293b; background:#f4f6fb; min-height:100vh; display:flex; flex-direction:column; font-size:11px; }
- 
-/* Navbar */
-.bs-nav { background:#fff; height:52px; display:flex; align-items:center; padding:0 24px; border-bottom:1px solid #e5e9f2; position:relative; }
-.bs-logo { display:flex; align-items:center; gap:10px; }
-.bs-logo-small { font-size:7px; color:#475569; letter-spacing:.3px; }
-.bs-logo-title { font-size:10px; font-weight:700; color:#12365f; }
-.bs-nav-links { position:absolute; left:50%; transform:translateX(-18%); display:flex; gap:28px; font-size:9px; color:#334155; }
-.bs-nav-links .active { font-weight:700; color:#12365f; }
- 
-/* Hero */
-.bs-hero { background:#12365f; padding:24px 40px; display:flex; align-items:center; justify-content:space-between; min-height:210px; }
-.bs-hero-left { max-width:300px; }
-.bs-eyebrow { font-size:7px; font-weight:700; color:#f0b429; margin-bottom:12px; }
-.bs-hero h1 { margin:0; font-size:23px; line-height:1.28; font-weight:700; color:#fff; }
-.bs-hero p { margin:16px 0 0; font-size:10px; line-height:1.6; color:#e2e8f0; }
-.bs-hero-btns { display:flex; gap:14px; margin-top:16px; align-items:center; }
-.bs-btn-ghost { background:transparent; color:#fff; border:none; font-size:8.5px; font-weight:700; padding:9px 18px; cursor:pointer; }
-.bs-btn-light { background:#fff; color:#12365f; border:none; border-radius:5px; font-size:8.5px; font-weight:700; padding:9px 20px; cursor:pointer; }
-.bs-hero-art { width:372px; height:213px; background:#1f5f96; border-radius:14px; position:relative; flex-shrink:0; margin-right:40px; }
-.bs-art-roof { position:absolute; left:54px; top:47px; width:240px; height:27px; background:#ebbb50; border-radius:2px; }
-.bs-art-body { position:absolute; left:36px; top:74px; width:296px; height:108px; background:#dce7f3; border-radius:5px; display:flex; gap:10px; padding:0 14px; box-sizing:border-box; }
-.bs-art-col { flex:1; background:#fff; margin-top:7px; border-radius:2px; }
-.bs-art-col.narrow { flex:0 0 14px; }
-.bs-art-base { position:absolute; left:27px; top:182px; width:318px; height:7px; background:#ebbb50; border-radius:4px; }
- 
-/* Section */
-.bs-section { padding:16px 30px 20px; background:#f4f6fb; }
-.bs-section h2 { margin:0; font-size:15px; font-weight:700; }
-.bs-section .sub { margin:4px 0 0; font-size:9px; color:#64748b; }
-.bs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px; }
- 
-.bs-card { background:#fff; border:1px solid #e5e9f2; border-top:4px solid #ebbb50; border-radius:5px; padding:10px 8px 10px; height:136px; box-sizing:border-box; display:flex; flex-direction:column; }
-.bs-card h3 { margin:0; font-size:11px; font-weight:700; }
-.bs-img { height:46px; background:#e5e5e5; border:1px solid #cfcfcf; border-radius:4px; margin-top:6px; }
-.bs-card p { margin:6px 0 0; font-size:7px; color:#64748b; flex:1; }
-.bs-card a { font-size:7.5px; font-weight:700; color:#1f5fa8; text-decoration:none; }
- 
-/* Footer */
-.bs-footer { background:#fff; padding:14px 30px 10px; }
-.bs-footer-top { display:flex; gap:40px; }
-.bs-footer-brand { width:180px; }
-.bs-footer-logo { display:flex; align-items:center; gap:8px; }
-.bs-footer-logo-box { width:24px; height:24px; background:#12365f; border-radius:5px; display:flex; align-items:center; justify-content:center; }
-.bs-footer-logo-title { font-size:12px; font-weight:700; color:#12365f; }
-.bs-footer-logo-sub { font-size:6.5px; color:#475569; }
-.bs-footer-desc { font-size:9px; color:#475569; margin:8px 0 0; line-height:1.5; }
-.bs-contact { width:130px; font-size:8px; }
-.bs-contact h4 { margin:0 0 6px; font-size:8px; font-weight:700; }
-.bs-contact p { margin:0 0 6px; line-height:1.4; }
-.bs-contact b { color:#1f5fa8; font-weight:700; }
-.bs-footer-bottom { display:flex; justify-content:space-between; font-size:7px; color:#475569; border-top:1px solid #e5e9f2; margin-top:22px; padding-top:10px; }
-.bs-footer-links span + span::before { content:' · '; }
-`;
- 
-/* ===================== Component ===================== */
-const Beasiswa: React.FC = () => {
+
+export const Beasiswa: React.FC = () => {
+  const daftarBeasiswa: BeasiswaItem[] = [
+    {
+      id: 1,
+      judul: "KIP Kuliah 2026",
+      penyelenggara: "Kemendikbudristek",
+      kategori: "Pemerintah",
+      deskripsi: "Bantuan biaya pendidikan penuh dan tunjangan biaya hidup bulanan bagi mahasiswa berprestasi dari keluarga prasejahtera.",
+      kuota: "250 Mahasiswa",
+      status: "Dibuka",
+      tenggat: "30 November 2026"
+    },
+    {
+      id: 2,
+      judul: "Beasiswa Bank Indonesia",
+      penyelenggara: "Bank Indonesia",
+      kategori: "Instansi",
+      deskripsi: "Program beasiswa prestisius untuk mahasiswa aktif semester 3 hingga 6 dengan capaian IPK minimal 3.00.",
+      kuota: "50 Mahasiswa",
+      status: "Dibuka",
+      tenggat: "15 Desember 2026"
+    },
+    {
+      id: 3,
+      judul: "Beasiswa Prestasi Akademik Kampus",
+      penyelenggara: "Universitas",
+      kategori: "Internal",
+      deskripsi: "Apresiasi potongan biaya kuliah bagi mahasiswa peraih IPK tertinggi di tingkat fakultas dan program studi.",
+      kuota: "100 Mahasiswa",
+      status: "Segera Dibuka",
+      tenggat: "20 Januari 2027"
+    },
+    {
+      id: 4,
+      judul: "Beasiswa Van Deventer-Maas Indonesia (VDMI)",
+      penyelenggara: "Yayasan VDMI",
+      kategori: "Yayasan",
+      deskripsi: "Dukungan dana pendidikan serta pelatihan kepemimpinan dan bahasa Inggris bagi mahasiswa jenjang S1 dan D4.",
+      kuota: "30 Mahasiswa",
+      status: "Ditutup",
+      tenggat: "10 Oktober 2026"
+    },
+    {
+      id: 5,
+      judul: "Beasiswa Unggulan Prestasi Mahasiswa",
+      penyelenggara: "Biro Kemahasiswaan",
+      kategori: "Internal",
+      deskripsi: "Beasiswa khusus mahasiswa yang memiliki prestasi kejuaraan akademik maupun kepemimpinan minimal tingkat provinsi.",
+      kuota: "20 Mahasiswa",
+      status: "Dibuka",
+      tenggat: "05 Desember 2026"
+    },
+    {
+      id: 6,
+      judul: "Bantuan Dana Riset Skripsi Mahasiswa",
+      penyelenggara: "LPPM Universitas",
+      kategori: "Internal",
+      deskripsi: "Bantuan dana pelaksanaan penelitian dan publikasi jurnal ilmiah bagi mahasiswa tingkat akhir.",
+      kuota: "75 Mahasiswa",
+      status: "Dibuka",
+      tenggat: "31 Desember 2026"
+    }
+  ];
+
   return (
-    <div className="bs-root">
-      <style>{css}</style>
- 
-      {/* ---------- Navbar ---------- */}
-      <header className="bs-nav">
-        <div className="bs-logo">
-          <EmblemIcon />
-          <div>
-            <div className="bs-logo-small">UNIVERSITAS</div>
-            <div className="bs-logo-title">PORTAL KEMAHASISWAAN</div>
+    <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
+      
+      {/* ================= NAVBAR VISITOR ================= */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img 
+              src="/logo.jpg" 
+              alt="Logo Kampus" 
+              className="w-9 h-9 object-contain rounded-lg p-0.5 bg-white shadow-sm border border-gray-100"
+            />
+            <div>
+              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">
+                UNIVERSITAS
+              </span>
+              <span className="text-sm font-extrabold text-[#0B1E36] tracking-tight block">
+                PORTAL KEMAHASISWAAN
+              </span>
+            </div>
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold">
+            <Link to="/" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Beranda
+            </Link>
+            <Link to="/beasiswa" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
+              Beasiswa
+            </Link>
+            <Link to="/ormawa" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Ormawa
+            </Link>
+            <Link to="/berita-kegiatan" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Berita &amp; Kegiatan
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Link 
+              to="/ormawa/login" 
+              className="px-3.5 py-2 text-xs font-bold text-gray-700 hover:text-blue-900 rounded-xl transition"
+            >
+              Login Ormawa
+            </Link>
+            <Link 
+              to="/biro/login" 
+              className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition"
+            >
+              Login Biro
+            </Link>
           </div>
         </div>
-        <nav className="bs-nav-links">
-          {navItems.map((n) => (
-            <span key={n.label} className={n.active ? "active" : undefined}>
-              {n.label}
-            </span>
-          ))}
-        </nav>
       </header>
- 
-      {/* ---------- Hero ---------- */}
-      <section className="bs-hero">
-        <div className="bs-hero-left">
-          <div className="bs-eyebrow">PORTAL KEMAHASISWAAN</div>
-          <h1>Kembangkan Potensimu Lewat Beasiswa &amp; Organisasi Mahasiswa</h1>
-          <p>Informasi beasiswa, organisasi, dan kegiatan mahasiswa dalam satu portal kampus.</p>
-          <div className="bs-hero-btns">
-            <button className="bs-btn-ghost" type="button">Jelajahi Beasiswa</button>
-            <button className="bs-btn-light" type="button">Lihat Kegiatan</button>
-          </div>
-        </div>
- 
-        <div className="bs-hero-art" aria-hidden="true">
-          <div className="bs-art-roof" />
-          <div className="bs-art-body">
-            <div className="bs-art-col" />
-            <div className="bs-art-col" />
-            <div className="bs-art-col" />
-            <div className="bs-art-col" />
-            <div className="bs-art-col" />
-            <div className="bs-art-col narrow" />
-          </div>
-          <div className="bs-art-base" />
+
+      {/* ================= HERO SECTION ================= */}
+      <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-4">
+          <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider">
+            ✦ Informasi Beasiswa Aktif
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+            Peluang Beasiswa Mahasiswa
+          </h1>
+          <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-2xl">
+            Jelajahi beragam program beasiswa dari pemerintah, universitas, maupun lembaga mitra eksternal untuk mendukung pembiayaan studimu.
+          </p>
         </div>
       </section>
- 
-      {/* ---------- Informasi Beasiswa ---------- */}
-      <section className="bs-section">
-        <h2>Informasi Beasiswa</h2>
-        <p className="sub">Temukan informasi dan pengumuman beasiswa terbaru.</p>
-        <div className="bs-grid">
-          {beasiswa.map((b) => (
-            <article key={b.judul} className="bs-card">
-              <h3>{b.judul}</h3>
-              <div className="bs-img" />
-              <p>{b.deskripsi}</p>
-              <a href="#">Baca selengkapnya</a>
-            </article>
-          ))}
+
+      {/* ================= DAFTAR BEASISWA ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-gray-900">
+            Daftar Program Beasiswa ({daftarBeasiswa.length})
+          </h2>
         </div>
-      </section>
- 
-      {/* ---------- Footer ---------- */}
-      <footer className="bs-footer">
-        <div className="bs-footer-top">
-          <div className="bs-footer-brand">
-            <div className="bs-footer-logo">
-              <div className="bs-footer-logo-box"><SiBeoIcon /></div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {daftarBeasiswa.map((item) => (
+            <div 
+              key={item.id} 
+              className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
+            >
               <div>
-                <div className="bs-footer-logo-title">SI-BEO</div>
-                <div className="bs-footer-logo-sub">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</div>
+                <div className="flex justify-between items-start gap-2 mb-3">
+                  <span className="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                    {item.kategori}
+                  </span>
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                    item.status === "Dibuka" ? "bg-emerald-100 text-emerald-700" :
+                    item.status === "Segera Dibuka" ? "bg-amber-100 text-amber-800" : "bg-gray-100 text-gray-600"
+                  }`}>
+                    {item.status}
+                  </span>
+                </div>
+
+                <h3 className="text-base font-bold text-gray-900 mb-1">
+                  {item.judul}
+                </h3>
+                <p className="text-[11px] text-gray-400 font-medium mb-3">
+                  Penyelenggara: {item.penyelenggara}
+                </p>
+
+                <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                  {item.deskripsi}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-gray-100 space-y-3">
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>Kuota: <strong className="text-gray-800">{item.kuota}</strong></span>
+                  <span>Batas: <strong className="text-gray-800">{item.tenggat}</strong></span>
+                </div>
+
+                <Link 
+                  to="/beasiswa/detail" 
+                  className="w-full block text-center py-2 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow-sm transition"
+                >
+                  Lihat Detail &amp; Panduan →
+                </Link>
               </div>
             </div>
-            <p className="bs-footer-desc">
-              Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-            </p>
-          </div>
- 
-          <div className="bs-contact">
-            <h4>Kontak Kampus</h4>
-            <p>Email: <b>[tempatkan email resmi]</b></p>
-            <p>Telepon: <b>[tempatkan nomor resmi]</b></p>
-            <p>Lokasi: <b>[tempatkan alamat resmi]</b></p>
-          </div>
+          ))}
         </div>
- 
-        <div className="bs-footer-bottom">
-          <span>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</span>
-          <span className="bs-footer-links">
-            <span>Konten program ilustratif</span>
-            <span>Pusat bantuan</span>
-            <span>Kebijakan privasi</span>
-          </span>
+      </section>
+
+      {/* ================= FOOTER SI-BEO ================= */}
+      <footer className="mt-auto bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col md:flex-row justify-between gap-8 pb-8">
+            <div className="flex items-start gap-3.5 max-w-md">
+              <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="6" cy="18" r="2.5" />
+                  <circle cx="18" cy="6" r="2.5" />
+                  <path d="M7.5 16.5 L16.5 7.5" />
+                </svg>
+              </div>
+              <div>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
+                  <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
+                </div>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-1.5 text-xs text-gray-600">
+              <p className="font-bold text-gray-900 text-xs mb-2">Kontak Kampus</p>
+              <p>Email: <span className="text-blue-600 font-medium">[tempatkan email resmi]</span></p>
+              <p>Telepon: <span className="text-blue-600 font-medium">[tempatkan nomor resmi]</span></p>
+              <p>Lokasi: <span className="text-blue-600 font-medium">[tempatkan alamat resmi]</span></p>
+            </div>
+          </div>
+
+          <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-2">
+            <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
+            <div className="flex items-center gap-4 text-xs">
+              <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
+              <span>•</span>
+              <span className="hover:text-gray-600 cursor-pointer">Pusat bantuan</span>
+              <span>•</span>
+              <span className="hover:text-gray-600 cursor-pointer">Kebijakan privasi</span>
+            </div>
+          </div>
         </div>
       </footer>
+
     </div>
   );
 };
- 
+
 export default Beasiswa;
- 

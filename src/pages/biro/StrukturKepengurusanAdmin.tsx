@@ -298,7 +298,7 @@ export const StrukturKepengurusanAdmin: React.FC = () => {
 
               {/* Tingkat 2: Ketua Umum */}
               {currentList[1] && (
-                <div className="bg-white border border-emerald-200 bg-emerald-50/20 p-4 rounded-xl shadow-sm w-full max-w-sm flex justify-between items-center relative">
+                <div className="bg-emerald-50/20 border border-emerald-200 p-4 rounded-xl shadow-sm w-full max-w-sm flex justify-between items-center relative">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold">👤</div>
                     <div>

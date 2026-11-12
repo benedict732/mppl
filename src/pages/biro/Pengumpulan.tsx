@@ -38,7 +38,7 @@ export const Pengumpulan: React.FC = () => {
     },
     {
       id: '2',
-      ormawa: 'UKM Seni',
+      ormawa: 'BEM Fakultas',
       namaKegiatan: 'Pentas Seni Kampus',
       jenisLaporan: 'Laporan Keuangan & Kegiatan',
       tanggalKumpul: '12 Oktober 2026',

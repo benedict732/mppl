@@ -31,9 +31,9 @@ export const ManajemenAkun: React.FC = () => {
   const daftarAkun: AkunItem[] = [
     { id: '1', namaOrmawa: 'BEM Universitas', username: 'admin_bem', email: 'admin.bem@kampus.ac.id', status: 'Aktif', jenis: 'BEM' },
     { id: '2', namaOrmawa: 'BPM Universitas', username: 'admin_bpm', email: 'admin.bpm@kampus.ac.id', status: 'Aktif', jenis: 'BPM' },
-    { id: '3', namaOrmawa: 'UKM Seni dan Budaya', username: 'admin_seni', email: 'admin.seni@kampus.ac.id', status: 'Tidak Aktif', jenis: 'UKM' },
+    { id: '3', namaOrmawa: 'BEM Fakultas Teknik', username: 'admin_bemft', email: 'admin.bemft@kampus.ac.id', status: 'Aktif', jenis: 'BEM' },
     { id: '4', namaOrmawa: 'MPM Universitas', username: 'admin_mpm', email: 'admin.mpm@kampus.ac.id', status: 'Aktif', jenis: 'MPM' },
-    { id: '5', namaOrmawa: 'UKM Olahraga', username: 'admin_olahraga', email: 'admin.olahraga@kampus.ac.id', status: 'Aktif', jenis: 'UKM' },
+    { id: '5', namaOrmawa: 'BPM Fakultas Hukum', username: 'admin_bpmfh', email: 'admin.bpmfh@kampus.ac.id', status: 'Aktif', jenis: 'BPM' },
   ];
 
   const handleOpenEdit = (akun: AkunItem) => {
@@ -226,7 +226,6 @@ export const ManajemenAkun: React.FC = () => {
                   <option value="BEM">BEM</option>
                   <option value="BPM">BPM</option>
                   <option value="MPM">MPM</option>
-                  <option value="UKM">UKM</option>
                 </select>
               </div>
 

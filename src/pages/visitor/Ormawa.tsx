@@ -1,215 +1,228 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-/* ===================== Types ===================== */
-interface NavItem {
-  label: string;
-  active?: boolean;
-}
-
-interface KegiatanCard {
-  judul: string;
+interface OrmawaItem {
+  id: number;
+  nama: string;
+  singkatan: string;
+  kategori: string;
   deskripsi: string;
+  anggota: string;
+  ketua: string;
+  status: string;
 }
 
-/* ===================== Data ===================== */
-const navItems: NavItem[] = [
-  { label: "Beranda" },
-  { label: "Beasiswa" },
-  { label: "Ormawa", active: true },
-  { label: "Berita & Kegiatan" },
-];
+export const Ormawa: React.FC = () => {
+  const daftarOrmawa: OrmawaItem[] = [
+    {
+      id: 1,
+      nama: "Badan Eksekutif Mahasiswa Universitas",
+      singkatan: "BEM Universitas",
+      kategori: "Lembaga Eksekutif",
+      deskripsi: "Lembaga eksekutif tingkat universitas yang mengoordinasikan aspirasi, program kerja kemahasiswaan, dan advokasi mahasiswa kampus.",
+      anggota: "85 Pengurus",
+      ketua: "Andi Pratama",
+      status: "Aktif"
+    },
+    {
+      id: 2,
+      nama: "Badan Perwakilan Mahasiswa Universitas",
+      singkatan: "BPM Universitas",
+      kategori: "Lembaga Legislatif",
+      deskripsi: "Lembaga perwakilan dan legislatif kemahasiswaan yang bertugas menampung aspirasi, merumuskan regulasi, dan mengawasi kinerja eksekutif.",
+      anggota: "45 Anggota",
+      ketua: "Maria Lestari",
+      status: "Aktif"
+    },
+    {
+      id: 3,
+      nama: "Badan Eksekutif Mahasiswa Fakultas",
+      singkatan: "BEM Fakultas",
+      kategori: "Lembaga Eksekutif",
+      deskripsi: "Pelaksana program kerja kemahasiswaan di tingkat fakultas yang menaungi kegiatan akademik, sosial, dan minat mahasiswa fakultas.",
+      anggota: "55 Pengurus",
+      ketua: "Rizky Saputra",
+      status: "Aktif"
+    },
+    {
+      id: 4,
+      nama: "Badan Perwakilan Mahasiswa Fakultas",
+      singkatan: "BPM Fakultas",
+      kategori: "Lembaga Legislatif",
+      deskripsi: "Badan legislatif di tingkat fakultas yang mengawal kebijakan dekanat serta menjaring aspirasi mahasiswa di program studi.",
+      anggota: "35 Anggota",
+      ketua: "Clara Manoppo",
+      status: "Aktif"
+    }
+  ];
 
-const kegiatan: KegiatanCard[] = [
-  { judul: "Bakti Sosial Mahasiswa", deskripsi: "Pengumuman kegiatan dan informasi pelaksanaan." },
-  { judul: "Pekan Seni Kampus", deskripsi: "Kabar kegiatan dan organisasi mahasiswa." },
-  { judul: "Seminar Karier", deskripsi: "Informasi acara dan pengumuman terbaru." },
-];
-
-/* ===================== Icons ===================== */
-const EmblemIcon: React.FC = () => (
-  <svg width="26" height="26" viewBox="0 0 32 32">
-    <path d="M16 2 L28 7 V16 C28 23 22 28 16 30 C10 28 4 23 4 16 V7 Z" fill="#2f8f6b" stroke="#f0b429" strokeWidth="2" />
-    <circle cx="16" cy="15" r="5" fill="#f0b429" />
-  </svg>
-);
-
-const LogoutIcon: React.FC = () => (
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-    <polyline points="16 17 21 12 16 7" />
-    <line x1="21" y1="12" x2="9" y2="12" />
-  </svg>
-);
-
-const SiBeoIcon: React.FC = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="6" cy="18" r="2" />
-    <circle cx="18" cy="6" r="2" />
-    <path d="M7.5 16.5 L16.5 7.5" />
-  </svg>
-);
-
-/* ===================== Styles ===================== */
-const css = `
-.or-root { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; color:#1e293b; background:#f4f6fb; min-height:100vh; display:flex; flex-direction:column; font-size:11px; }
-
-/* Navbar */
-.or-nav { background:#fff; height:42px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; border-bottom:1px solid #e5e9f2; position:relative; }
-.or-logo { display:flex; align-items:center; gap:10px; }
-.or-logo-small { font-size:6px; color:#475569; letter-spacing:.3px; }
-.or-logo-title { font-size:9px; font-weight:700; color:#12365f; }
-.or-nav-links { position:absolute; left:50%; transform:translateX(-30%); display:flex; gap:28px; font-size:8px; color:#334155; }
-.or-nav-links .active { font-weight:700; color:#12365f; }
-.or-logout { display:flex; align-items:center; gap:5px; background:#e11d2e; color:#fff; border:none; border-radius:5px; padding:4px 10px; font-size:8px; font-weight:700; cursor:pointer; }
-
-/* Hero */
-.or-hero { background:#12365f; padding:24px 34px; display:flex; align-items:center; justify-content:space-between; min-height:195px; }
-.or-hero-left { max-width:300px; }
-.or-eyebrow { font-size:6.5px; font-weight:700; color:#f0b429; margin-bottom:10px; }
-.or-hero h1 { margin:0; font-size:19px; line-height:1.28; font-weight:700; color:#fff; }
-.or-hero p { margin:12px 0 0; font-size:8.5px; line-height:1.6; color:#e2e8f0; }
-.or-hero-btns { display:flex; gap:12px; margin-top:14px; align-items:center; }
-.or-btn-ghost { background:transparent; color:#fff; border:none; font-size:7.5px; font-weight:700; padding:8px 14px; cursor:pointer; }
-.or-btn-light { background:#fff; color:#12365f; border:none; border-radius:5px; font-size:7.5px; font-weight:700; padding:8px 16px; cursor:pointer; }
-.or-hero-art { width:274px; height:158px; background:#1f5f96; border-radius:12px; position:relative; flex-shrink:0; margin-right:30px; }
-.or-art-roof { position:absolute; left:40px; top:35px; width:176px; height:20px; background:#ebbb50; border-radius:2px; }
-.or-art-body { position:absolute; left:27px; top:55px; width:218px; height:80px; background:#dce7f3; border-radius:4px; display:flex; gap:8px; padding:0 10px; box-sizing:border-box; }
-.or-art-col { flex:1; background:#fff; margin-top:5px; border-radius:2px; }
-.or-art-col.narrow { flex:0 0 10px; }
-.or-art-base { position:absolute; left:20px; top:135px; width:234px; height:5px; background:#ebbb50; border-radius:3px; }
-
-/* Section */
-.or-section { padding:16px 34px 14px; background:#f4f6fb; }
-.or-section h2 { margin:0; font-size:13px; font-weight:700; }
-.or-section .sub { margin:4px 0 0; font-size:8px; color:#64748b; }
-.or-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:12px; }
-
-.or-card { background:#fff; border:1px solid #e5e9f2; border-top:4px solid #ebbb50; border-radius:6px; padding:8px 8px 8px; height:150px; box-sizing:border-box; display:flex; flex-direction:column; }
-.or-card h3 { margin:0; font-size:8.5px; font-weight:700; }
-.or-img { height:48px; background:#e5e5e5; border:1px solid #1e293b; border-radius:6px; margin-top:5px; }
-.or-card p { margin:4px 0 0; font-size:6px; color:#64748b; flex:1; }
-.or-card a { font-size:6.5px; font-weight:700; color:#1f5fa8; text-decoration:none; }
-
-/* Footer */
-.or-footer { background:#fff; padding:14px 34px 10px; }
-.or-footer-top { display:flex; gap:40px; }
-.or-footer-brand { width:180px; }
-.or-footer-logo { display:flex; align-items:center; gap:8px; }
-.or-footer-logo-box { width:24px; height:24px; background:#12365f; border-radius:5px; display:flex; align-items:center; justify-content:center; }
-.or-footer-logo-title { font-size:11px; font-weight:700; color:#12365f; }
-.or-footer-logo-sub { font-size:6px; color:#475569; }
-.or-footer-desc { font-size:8.5px; color:#475569; margin:8px 0 0; line-height:1.5; }
-.or-contact { width:130px; font-size:7.5px; }
-.or-contact h4 { margin:0 0 6px; font-size:7.5px; font-weight:700; }
-.or-contact p { margin:0 0 6px; line-height:1.4; }
-.or-contact b { color:#1f5fa8; font-weight:700; }
-.or-footer-bottom { display:flex; justify-content:space-between; font-size:6.5px; color:#475569; border-top:1px solid #e5e9f2; margin-top:18px; padding-top:10px; }
-.or-footer-links span + span::before { content:' · '; }
-`;
-
-/* ===================== Component ===================== */
-const Ormawa: React.FC = () => {
   return (
-    <div className="or-root">
-      <style>{css}</style>
+    <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
+      
+      {/* ================= NAVBAR VISITOR ================= */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img 
+              src="/logo.jpg" 
+              alt="Logo Kampus" 
+              className="w-9 h-9 object-contain rounded-lg p-0.5 bg-white shadow-sm border border-gray-100"
+            />
+            <div>
+              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">
+                UNIVERSITAS
+              </span>
+              <span className="text-sm font-extrabold text-[#0B1E36] tracking-tight block">
+                PORTAL KEMAHASISWAAN
+              </span>
+            </div>
+          </Link>
 
-      {/* ---------- Navbar ---------- */}
-      <header className="or-nav">
-        <div className="or-logo">
-          <EmblemIcon />
-          <div>
-            <div className="or-logo-small">UNIVERSITAS</div>
-            <div className="or-logo-title">PORTAL KEMAHASISWAAN</div>
+          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold">
+            <Link to="/" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Beranda
+            </Link>
+            <Link to="/beasiswa" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Beasiswa
+            </Link>
+            <Link to="/ormawa" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
+              Ormawa
+            </Link>
+            <Link to="/berita-kegiatan" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Berita &amp; Kegiatan
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Link 
+              to="/ormawa/login" 
+              className="px-3.5 py-2 text-xs font-bold text-gray-700 hover:text-blue-900 rounded-xl transition"
+            >
+              Login Ormawa
+            </Link>
+            <Link 
+              to="/biro/login" 
+              className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition"
+            >
+              Login Biro
+            </Link>
           </div>
         </div>
-        <nav className="or-nav-links">
-          {navItems.map((n) => (
-            <span key={n.label} className={n.active ? "active" : undefined}>
-              {n.label}
-            </span>
-          ))}
-        </nav>
-        <button className="or-logout" type="button">
-          <LogoutIcon />
-          Logout
-        </button>
       </header>
 
-      {/* ---------- Hero ---------- */}
-      <section className="or-hero">
-        <div className="or-hero-left">
-          <div className="or-eyebrow">PORTAL KEMAHASISWAAN</div>
-          <h1>Kembangkan Potensimu Lewat Beasiswa &amp; Organisasi Mahasiswa</h1>
-          <p>Informasi beasiswa, organisasi, dan kegiatan mahasiswa dalam satu portal kampus.</p>
-          <div className="or-hero-btns">
-            <button className="or-btn-ghost" type="button">Jelajahi Beasiswa</button>
-            <button className="or-btn-light" type="button">Lihat Kegiatan</button>
-          </div>
-        </div>
-
-        <div className="or-hero-art" aria-hidden="true">
-          <div className="or-art-roof" />
-          <div className="or-art-body">
-            <div className="or-art-col" />
-            <div className="or-art-col" />
-            <div className="or-art-col" />
-            <div className="or-art-col" />
-            <div className="or-art-col" />
-            <div className="or-art-col narrow" />
-          </div>
-          <div className="or-art-base" />
+      {/* ================= HERO SECTION ================= */}
+      <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-4">
+          <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider">
+            ✦ Organisasi Mahasiswa
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+            Organisasi Mahasiswa (BEM &amp; BPM)
+          </h1>
+          <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-2xl">
+            Informasi kelembagaan Badan Eksekutif Mahasiswa (BEM) dan Badan Perwakilan Mahasiswa (BPM) di lingkungan kampus.
+          </p>
         </div>
       </section>
 
-      {/* ---------- Kegiatan & Berita Ormawa ---------- */}
-      <section className="or-section">
-        <h2>Kegiatan &amp; Berita Ormawa</h2>
-        <p className="sub">Temukan informasi dan pengumuman beasiswa terbaru.</p>
-        <div className="or-grid">
-          {kegiatan.map((k) => (
-            <article key={k.judul} className="or-card">
-              <h3>{k.judul}</h3>
-              <div className="or-img" />
-              <p>{k.deskripsi}</p>
-              <a href="#">Baca selengkapnya</a>
-            </article>
+      {/* ================= DAFTAR ORMAWA ================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-gray-900">
+            Daftar Lembaga Mahasiswa ({daftarOrmawa.length})
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {daftarOrmawa.map((item) => (
+            <div 
+              key={item.id} 
+              className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
+            >
+              <div>
+                <div className="flex justify-between items-start gap-2 mb-3">
+                  <span className="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                    {item.kategori}
+                  </span>
+                  <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold">
+                    {item.status}
+                  </span>
+                </div>
+
+                <h3 className="text-lg font-bold text-gray-900 mb-0.5">
+                  {item.singkatan}
+                </h3>
+                <p className="text-xs text-gray-400 font-medium mb-3">
+                  {item.nama}
+                </p>
+
+                <p className="text-xs text-gray-600 leading-relaxed line-clamp-3 mb-4">
+                  {item.deskripsi}
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 space-y-3">
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>Ketua: <strong className="text-gray-800">{item.ketua}</strong></span>
+                  <span>Kepengurusan: <strong className="text-gray-800">{item.anggota}</strong></span>
+                </div>
+
+                <Link 
+                  to="/ormawa/profil" 
+                  className="w-full block text-center py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow-sm transition"
+                >
+                  Lihat Profil Lengkap →
+                </Link>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* ---------- Footer ---------- */}
-      <footer className="or-footer">
-        <div className="or-footer-top">
-          <div className="or-footer-brand">
-            <div className="or-footer-logo">
-              <div className="or-footer-logo-box"><SiBeoIcon /></div>
+      {/* ================= FOOTER SI-BEO ================= */}
+      <footer className="mt-auto bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col md:flex-row justify-between gap-8 pb-8">
+            <div className="flex items-start gap-3.5 max-w-md">
+              <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="6" cy="18" r="2.5" />
+                  <circle cx="18" cy="6" r="2.5" />
+                  <path d="M7.5 16.5 L16.5 7.5" />
+                </svg>
+              </div>
               <div>
-                <div className="or-footer-logo-title">SI-BEO</div>
-                <div className="or-footer-logo-sub">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</div>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
+                  <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
+                </div>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
+                </p>
               </div>
             </div>
-            <p className="or-footer-desc">
-              Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-            </p>
+
+            <div className="space-y-1.5 text-xs text-gray-600">
+              <p className="font-bold text-gray-900 text-xs mb-2">Kontak Kampus</p>
+              <p>Email: <span className="text-blue-600 font-medium">[tempatkan email resmi]</span></p>
+              <p>Telepon: <span className="text-blue-600 font-medium">[tempatkan nomor resmi]</span></p>
+              <p>Lokasi: <span className="text-blue-600 font-medium">[tempatkan alamat resmi]</span></p>
+            </div>
           </div>
 
-          <div className="or-contact">
-            <h4>Kontak Kampus</h4>
-            <p>Email: <b>[tempatkan email resmi]</b></p>
-            <p>Telepon: <b>[tempatkan nomor resmi]</b></p>
-            <p>Lokasi: <b>[tempatkan alamat resmi]</b></p>
+          <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-2">
+            <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
+            <div className="flex items-center gap-4 text-xs">
+              <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
+              <span>•</span>
+              <span className="hover:text-gray-600 cursor-pointer">Pusat bantuan</span>
+              <span>•</span>
+              <span className="hover:text-gray-600 cursor-pointer">Kebijakan privasi</span>
+            </div>
           </div>
-        </div>
-
-        <div className="or-footer-bottom">
-          <span>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</span>
-          <span className="or-footer-links">
-            <span>Konten program ilustratif</span>
-            <span>Pusat bantuan</span>
-            <span>Kebijakan privasi</span>
-          </span>
         </div>
       </footer>
+
     </div>
   );
 };

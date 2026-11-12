@@ -1,92 +1,30 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SidebarAdmin } from './components/SidebarAdmin';
 
 export const DashboardOrmawa: React.FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('ormawaToken');
-    navigate('/ormawa/login');
-  };
+  const isMpm = location.pathname.startsWith('/mpm');
+  const prefix = isMpm ? '/mpm' : '/ormawa';
 
   return (
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
       <div className="flex flex-1">
         
-        {/* ================= SIDEBAR KIRI ORMAWA ================= */}
-        <aside className="w-64 bg-[#0B1E36] text-white flex flex-col justify-between p-4 shrink-0">
-          <div>
-            <div className="flex items-center gap-3 mb-8 px-2 pt-2">
-              <img 
-                src="/logo.jpg" 
-                alt="Logo Kampus" 
-                className="w-10 h-10 object-contain rounded-lg shrink-0 bg-white p-1 shadow"
-              />
-              <div>
-                <span className="text-[11px] font-extrabold text-amber-400 tracking-wider uppercase block">
-                  ORMAWA
-                </span>
-                <span className="text-[11px] text-gray-400 block">Portal Manajemen</span>
-              </div>
-            </div>
-
-            <nav className="space-y-1 text-xs">
-              <a href="/ormawa/dashboard" className="flex items-center gap-3 px-3 py-2.5 bg-blue-600/40 text-blue-300 font-semibold rounded-lg transition border-l-4 border-blue-400">
-                <span>📊</span>
-                <span>Dashboard</span>
-              </a>
-              <a href="/ormawa/data-ormawa" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>👥</span>
-                <span>Data Ormawa</span>
-              </a>
-              <a href="/ormawa/pengumuman" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📢</span>
-                <span>Pengumuman</span>
-              </a>
-              <a href="/ormawa/proposal" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📄</span>
-                <span>Proposal & Laporan</span>
-              </a>
-              <a href="/ormawa/pengumpulan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📥</span>
-                <span>Pengumpulan Laporan</span>
-              </a>
-              <a href="/ormawa/detail-kegiatan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📋</span>
-                <span>Detail Kegiatan</span>
-              </a>
-              <a href="/ormawa/struktur" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>🌿</span>
-                <span>Struktur Kepengurusan</span>
-              </a>
-              <a href="/ormawa/revisi" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>🔄</span>
-                <span>Revisi Dokumen</span>
-              </a>
-              <a href="/ormawa/edit-profil" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>✏️</span>
-                <span>Edit Profil</span>
-              </a>
-            </nav>
-          </div>
-
-          <div className="pt-4 border-t border-gray-700/50">
-            <button 
-              onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition shadow cursor-pointer"
-            >
-              <span>🚪</span>
-              <span>Logout</span>
-            </button>
-          </div>
-        </aside>
+        {/* ================= SIDEBAR KIRI (ORMAWA / MPM) ================= */}
+        <SidebarAdmin currentMenu="dashboard" />
 
         {/* ================= KONTEN UTAMA ================= */}
         <main className="flex-1 p-8 overflow-y-auto space-y-6">
           
           <div>
-            <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">PORTAL / DASHBOARD</p>
-            <h1 className="text-xl font-bold text-gray-900">Dashboard Ormawa</h1>
+            <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">
+              {isMpm ? 'MPM / DASHBOARD' : 'PORTAL / DASHBOARD'}
+            </p>
+            <h1 className="text-xl font-bold text-gray-900">
+              {isMpm ? 'Dashboard MPM' : 'Dashboard Ormawa'}
+            </h1>
           </div>
 
           {/* Selamat Datang & Filter */}
@@ -145,7 +83,7 @@ export const DashboardOrmawa: React.FC = () => {
                   </div>
                 </div>
                 <div className="p-3 pt-0 text-right">
-                  <button onClick={() => navigate('/ormawa/detail-kegiatan')} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
+                  <button onClick={() => navigate(`${prefix}/detail-kegiatan`)} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
                 </div>
               </div>
 
@@ -161,7 +99,7 @@ export const DashboardOrmawa: React.FC = () => {
                   </div>
                 </div>
                 <div className="p-3 pt-0 text-right">
-                  <button onClick={() => navigate('/ormawa/detail-kegiatan')} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
+                  <button onClick={() => navigate(`${prefix}/detail-kegiatan`)} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
                 </div>
               </div>
 
@@ -177,7 +115,7 @@ export const DashboardOrmawa: React.FC = () => {
                   </div>
                 </div>
                 <div className="p-3 pt-0 text-right">
-                  <button onClick={() => navigate('/ormawa/detail-kegiatan')} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
+                  <button onClick={() => navigate(`${prefix}/detail-kegiatan`)} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
                 </div>
               </div>
 
@@ -193,7 +131,7 @@ export const DashboardOrmawa: React.FC = () => {
                   </div>
                 </div>
                 <div className="p-3 pt-0 text-right">
-                  <button onClick={() => navigate('/ormawa/detail-kegiatan')} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
+                  <button onClick={() => navigate(`${prefix}/detail-kegiatan`)} className="text-xs font-bold text-blue-600 hover:underline cursor-pointer">Selengkapnya →</button>
                 </div>
               </div>
 
@@ -228,7 +166,7 @@ export const DashboardOrmawa: React.FC = () => {
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <button 
-                        onClick={() => navigate('/ormawa/detail-kegiatan')}
+                        onClick={() => navigate(`${prefix}/detail-kegiatan`)}
                         className="px-3.5 py-1.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-lg font-bold transition shadow-sm cursor-pointer"
                       >
                         Cek Kegiatan
@@ -245,7 +183,7 @@ export const DashboardOrmawa: React.FC = () => {
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <button 
-                        onClick={() => navigate('/ormawa/detail-kegiatan')}
+                        onClick={() => navigate(`${prefix}/detail-kegiatan`)}
                         className="px-3.5 py-1.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-lg font-bold transition shadow-sm cursor-pointer"
                       >
                         Cek Kegiatan

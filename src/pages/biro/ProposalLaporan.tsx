@@ -57,7 +57,7 @@ export const ProposalLaporan: React.FC = () => {
     {
       id: '2',
       kegiatan: 'Pekan Seni',
-      ormawa: 'UKM Seni',
+      ormawa: 'BEM Fakultas',
       jenisDokumen: 'Laporan',
       tahunAkademik: '2026/2027',
       status: 'Revisi',
@@ -440,7 +440,7 @@ export const ProposalLaporan: React.FC = () => {
             <div>
               <label className="block text-xs font-bold text-gray-800 mb-2">Ormawa</label>
               <div className="flex flex-wrap gap-2">
-                {['BEM', 'BPM', 'MPM', 'UKM Seni'].map((o) => (
+                {['BEM', 'BPM', 'MPM'].map((o) => (
                   <button
                     key={o}
                     onClick={() => setFilterOrmawa(o)}

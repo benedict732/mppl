@@ -14,11 +14,17 @@ export const LoginOrmawa: React.FC = () => {
     setLoading(true);
 
     setTimeout(() => {
-      if (identifier.trim().length > 0 && password === 'ormawa123') {
+      const isMpm = identifier.toLowerCase().includes('mpm') || password === 'mpm123';
+      const isOrmawa = password === 'ormawa123';
+
+      if (isMpm) {
+        localStorage.setItem('mpmToken', 'mpm-token');
+        window.location.href = '/mpm/pengumpulan-laporan';
+      } else if (isOrmawa && identifier.trim().length > 0) {
         localStorage.setItem('ormawaToken', 'ormawa-token');
         window.location.href = '/ormawa/dashboard';
       } else {
-        setError('Email/username atau kata sandi tidak valid. Gunakan sandi: ormawa123');
+        setError('Email/username atau kata sandi tidak valid. Gunakan sandi: ormawa123 (Ormawa) atau mpm123 (MPM)');
         setLoading(false);
       }
     }, 400);
@@ -44,9 +50,9 @@ export const LoginOrmawa: React.FC = () => {
               className="w-24 h-24 object-contain mb-6"
             />
 
-            <h3 className="text-2xl font-bold text-gray-800">Login Ormawa</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Login Ormawa &amp; MPM</h3>
             <p className="text-xs text-gray-500 mt-1">
-              Masuk untuk mengelola kegiatan dan laporan organisasi mahasiswa.
+              Masuk untuk mengelola kegiatan ormawa atau pengawasan laporan MPM.
             </p>
 
             {error && (
@@ -83,7 +89,7 @@ export const LoginOrmawa: React.FC = () => {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Masukkan kata sandi (ormawa123)"
+                    placeholder="Masukkan kata sandi (ormawa123 / mpm123)"
                     className="w-full pl-9 pr-10 py-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none"
                     required
                   />
@@ -104,6 +110,18 @@ export const LoginOrmawa: React.FC = () => {
               >
                 {loading ? 'Memproses...' : 'Login'}
               </button>
+
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-[11px] text-gray-600 space-y-1">
+                <p className="font-semibold text-gray-700">Akun Pengujian Demo:</p>
+                <div className="flex flex-wrap gap-2 text-[10px]">
+                  <span className="bg-blue-100/70 text-blue-800 px-2 py-0.5 rounded">
+                    Ormawa: sandi <code className="font-mono font-bold">ormawa123</code>
+                  </span>
+                  <span className="bg-amber-100/70 text-amber-800 px-2 py-0.5 rounded">
+                    MPM: sandi <code className="font-mono font-bold">mpm123</code>
+                  </span>
+                </div>
+              </div>
             </form>
           </div>
 

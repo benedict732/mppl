@@ -18,7 +18,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
 
   // State Modal Pop-up ('tambah' | 'edit' | 'filter' | null)
   const [activeModal, setActiveModal] = useState<'tambah' | 'edit' | 'filter' | null>(null);
-  const [selectedAnggota, setSelectedAnggota] = useState<AnggotaOrmawa | null>(null);
+  const [, setSelectedAnggota] = useState<AnggotaOrmawa | null>(null);
 
   // Form State untuk Tambah & Edit
   const [formData, setFormData] = useState({
@@ -113,6 +113,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
   };
 
   const handleOpenTambah = () => {
+    setSelectedAnggota(null);
     setFormData({
       nama: '',
       nim: '',

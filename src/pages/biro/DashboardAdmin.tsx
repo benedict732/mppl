@@ -235,7 +235,7 @@ export const DashboardAdmin: React.FC = () => {
                     <tr className="hover:bg-gray-50 transition">
                       <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Pekan Seni</td>
                       <td className="p-3 text-gray-600">2/12/2026</td>
-                      <td className="p-3 text-gray-600">UKM Seni</td>
+                      <td className="p-3 text-gray-600">BEM Fakultas</td>
                       <td className="p-3 text-gray-600">Laporan</td>
                       <td className="p-3 text-center">
                         <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-semibold">

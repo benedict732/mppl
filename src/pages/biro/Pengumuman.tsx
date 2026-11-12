@@ -72,12 +72,12 @@ export const Pengumuman: React.FC = () => {
     },
     {
       id: 4,
-      judul: 'Pentas Seni & Budaya Kampus - UKM Seni',
+      judul: 'Pekan Seni & Budaya Kampus - BEM Universitas',
       kategori: 'Ormawa',
-      organisasi: 'UKM Seni',
+      organisasi: 'BEM Universitas',
       tahunAkademik: '2025/2026',
       gambar: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80',
-      isi: 'Saksikan pertunjukan seni tahunan yang diselenggarakan oleh UKM Seni Unika De La Salle Manado.',
+      isi: 'Saksikan pertunjukan seni tahunan yang diselenggarakan oleh BEM Universitas.',
       tanggal: '25 Oktober 2026'
     }
   ];
@@ -373,7 +373,7 @@ export const Pengumuman: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Contoh: Pendaftaran Anggota Baru UKM 2026"
+                  placeholder="Contoh: Pendaftaran Anggota Tim Kerja BEM 2026"
                   value={formBuat.judul}
                   onChange={(e) => setFormBuat({ ...formBuat, judul: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500"
@@ -392,7 +392,7 @@ export const Pengumuman: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                   >
                     <option value="Beasiswa">Beasiswa (KIP, GenBI, VDMI)</option>
-                    <option value="Ormawa">Ormawa (BEM, BPM, UKM, HIMA)</option>
+                    <option value="Ormawa">Ormawa (BEM, BPM, MPM)</option>
                   </select>
                 </div>
 

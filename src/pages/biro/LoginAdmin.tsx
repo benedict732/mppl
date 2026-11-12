@@ -15,12 +15,12 @@ export const LoginAdmin: React.FC = () => {
 
     try {
       // Simulasi / Panggil API Login
-      if (identifier === 'admin' && password === 'admin123') {
+      if (password === 'admin123') {
         localStorage.setItem('adminToken', 'biro-token');
         // Navigasi browser murni tanpa useNavigate
         window.location.href = '/biro/dashboard';
       } else {
-        setError('Email/username atau kata sandi tidak valid.');
+        setError('Email/username atau kata sandi tidak valid. Gunakan sandi: admin123');
       }
     } catch (err) {
       setError('Terjadi kesalahan pada sistem. Silakan coba lagi.');
@@ -32,7 +32,7 @@ export const LoginAdmin: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center p-4">
       {/* Card Container 2 Sisi */}
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[580px]">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-145">
         
         {/* Sisi Kiri: Panel Biro (Biru) */}
         <div className="md:col-span-5 bg-[#1B437C] text-white p-8 flex flex-col justify-between">
@@ -139,7 +139,7 @@ export const LoginAdmin: React.FC = () => {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Masukkan kata sandi"
+                    placeholder="Masukkan kata sandi (admin123)"
                     className="w-full pl-9 pr-10 py-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none"
                     required
                   />
@@ -160,6 +160,10 @@ export const LoginAdmin: React.FC = () => {
               >
                 {loading ? 'Memproses...' : 'Login'}
               </button>
+
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-[11px] text-gray-600">
+                <span className="font-semibold text-gray-700">Akun Demo Biro:</span> sandi <code className="font-mono font-bold text-blue-700">admin123</code>
+              </div>
             </form>
           </div>
 
