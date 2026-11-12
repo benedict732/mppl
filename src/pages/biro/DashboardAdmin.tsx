@@ -1,395 +1,407 @@
-import React from "react";
- 
-/* ===================== Types ===================== */
-interface MenuItem {
-  label: string;
-  active?: boolean;
-  hasArrow?: boolean;
-}
- 
-interface StatCard {
-  label: string;
-  value: number;
-  note: string;
-  color: string;
-}
- 
-type StatusProposal = "Menunggu" | "Revisi";
- 
-interface DokumenTerbaru {
-  kegiatan: string;
-  tanggal: string;
-  ormawa: string;
-  jenis: "Proposal" | "Laporan";
-  status: StatusProposal;
-}
- 
-interface AksesCepat {
-  judul: string;
-  deskripsi: string;
-}
- 
-interface PengingatLaporan {
-  kegiatan: string;
-  tahunAkademik: string;
-  status: string;
-}
- 
-/* ===================== Data ===================== */
-const menuItems: MenuItem[] = [
-  { label: "Dashboard", active: true },
-  { label: "Data Beasiswa", hasArrow: true },
-  { label: "Data Ormawa" },
-  { label: "Pengumuman" },
-  { label: "Proposal & Laporan" },
-  { label: "Pengumpulan Laporan" },
-  { label: "Detail Laporan" },
-  { label: "Rekapitulasi", hasArrow: true},
-  { label: "Manajemen Akun"},
-  { label: "Edit Profil"},
-  { label: "Struktur Kepengurusan" },
-];
- 
-const stats: StatCard[] = [
-  { label: "Total Penerima Beasiswa", value: 128, note: "Data dummy", color: "#1f5fa8" },
-  { label: "Laporan selesai", value: 12, note: "Data dummy", color: "#f0b429" },
-  { label: "Laporan menunggu", value: 8, note: "Perlu diperiksa", color: "#e8a317" },
-  { label: "Pengumuman", value: 5, note: "Data dummy", color: "#2f8f6b" },
-];
- 
-const dokumenTerbaru: DokumenTerbaru[] = [
-  { kegiatan: "Bakti Sosial", tanggal: "12/12/2026", ormawa: "BEM", jenis: "Proposal", status: "Menunggu" },
-  { kegiatan: "Pekan Seni", tanggal: "2/12/2026", ormawa: "UKM Seni", jenis: "Laporan", status: "Revisi" },
-  { kegiatan: "Seminar Karier", tanggal: "2/11/2026", ormawa: "HIMA", jenis: "Proposal", status: "Menunggu" },
-];
- 
-const aksesCepat: AksesCepat[] = [
-  { judul: "Data beasiswa", deskripsi: "Kelola data mahasiswa" },
-  { judul: "Data ormawa", deskripsi: "Anggota & struktur" },
-  { judul: "Pengumuman", deskripsi: "Informasi beasiswa/kegiatan" },
-  { judul: "Rekapitulasi", deskripsi: "Khusus Kepala Biro" },
-];
- 
-const pengingat: PengingatLaporan[] = [
-  { kegiatan: "Seminar Karier", tahunAkademik: "08 - 10 - 2026", status: "Belum dikumpulkan" },
-  { kegiatan: "Pekan Seni", tahunAkademik: "05 - 09 - 2026", status: "Belum dikumpulkan" },
-];
- 
-/* ===================== Icons ===================== */
-const ArrowIcon: React.FC = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1f5fa8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
-  </svg>
-);
- 
-const ChevronRight: React.FC = () => (
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="9 18 15 12 9 6" />
-  </svg>
-);
- 
-const ChevronDown: React.FC = () => (
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
- 
-const LogoutIcon: React.FC = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-    <polyline points="16 17 21 12 16 7" />
-    <line x1="21" y1="12" x2="9" y2="12" />
-  </svg>
-);
- 
-const EmblemIcon: React.FC = () => (
-  <svg width="26" height="26" viewBox="0 0 32 32">
-    <path d="M16 2 L28 7 V16 C28 23 22 28 16 30 C10 28 4 23 4 16 V7 Z" fill="#2f8f6b" stroke="#f0b429" strokeWidth="2" />
-    <circle cx="16" cy="15" r="5" fill="#f0b429" />
-  </svg>
-);
- 
-const SiBeoIcon: React.FC = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="6" cy="18" r="2" />
-    <circle cx="18" cy="6" r="2" />
-    <path d="M7.5 16.5 L16.5 7.5" />
-  </svg>
-);
- 
-/* ===================== Styles ===================== */
-const css = `
-.da-root { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; color:#1e293b; background:#f4f6fb; min-height:100vh; display:flex; flex-direction:column; font-size:11px; }
-.da-top { display:flex; flex:1; }
- 
-/* Sidebar */
-.da-sidebar { width:130px; flex-shrink:0; background:#12365f; color:#fff; display:flex; flex-direction:column; padding:12px 8px; min-height:535px; }
-.da-brand { display:flex; align-items:center; gap:8px; padding:0 4px 12px; border-bottom:1px solid rgba(255,255,255,.12); }
-.da-brand-title { font-weight:700; font-size:10px; line-height:1.2; }
-.da-brand-sub { font-size:8px; opacity:.8; }
-.da-menu { list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; }
-.da-menu-item { position:relative; display:flex; align-items:center; gap:10px; padding:10px 10px; border-radius:4px; font-size:10px; cursor:pointer; }
-.da-menu-item.active { background:rgba(255,255,255,.12); }
-.da-menu-item.active::before { content:''; position:absolute; left:-8px; top:0; bottom:0; width:3px; background:#f0b429; }
-.da-dot { width:6px; height:6px; border-radius:50%; background:#fff; flex-shrink:0; }
-.da-menu-arrow { position:absolute; left:-4px; font-size:9px; }
-.da-spacer { flex:1; }
-.da-logout { align-self:flex-start; display:flex; align-items:center; gap:5px; background:#e11d2e; color:#fff; border:none; border-radius:4px; padding:4px 10px; font-size:10px; font-weight:700; cursor:pointer; margin:0 0 4px 30px; }
- 
-/* Main */
-.da-main { flex:1; min-width:0; display:flex; flex-direction:column; }
-.da-header { background:#fff; display:flex; justify-content:space-between; align-items:center; padding:8px 16px; border-bottom:1px solid #e5e9f2; }
-.da-crumb { font-size:7px; color:#64748b; letter-spacing:.2px; }
-.da-header-title { font-size:13px; font-weight:700; }
-.da-header-right { font-size:12px; }
-.da-content { padding:16px 16px 12px; display:flex; flex-direction:column; gap:14px; }
- 
-.da-welcome { display:flex; justify-content:space-between; align-items:flex-start; }
-.da-welcome h1 { margin:0; font-size:19px; font-weight:700; }
-.da-welcome p { margin:4px 0 0; font-size:9px; color:#64748b; }
-.da-select { display:flex; align-items:center; justify-content:space-between; width:80px; border:1px solid #cbd5e1; background:#fff; border-radius:5px; padding:6px 8px; font-size:10px; font-weight:600; }
- 
-.da-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
-.da-stat { background:#fff; border:1px solid #e5e9f2; border-left-width:3px; border-radius:5px; padding:10px 10px 8px; height:62px; box-sizing:border-box; }
-.da-stat-label { font-size:8px; font-weight:600; color:#334155; }
-.da-stat-value { font-size:20px; font-weight:700; line-height:1.1; margin-top:4px; }
-.da-stat-note { font-size:8px; color:#64748b; }
- 
-.da-grid { display:grid; grid-template-columns:1fr 222px; gap:12px; }
-.da-card { background:#fff; border:1px solid #e5e9f2; border-radius:8px; padding:14px; }
-.da-card-head { display:flex; justify-content:space-between; align-items:flex-start; }
-.da-card-title { font-size:12px; font-weight:700; margin:0; }
-.da-card-sub { font-size:8px; color:#64748b; margin-top:3px; }
-.da-btn-outline { background:#fff; border:1px solid #cbd5e1; border-radius:5px; padding:7px 16px; font-size:9px; font-weight:700; cursor:pointer; color:#1e293b; }
- 
-.da-table { width:100%; border-collapse:collapse; margin-top:14px; }
-.da-table th { background:#f1f3f9; text-align:left; font-size:7px; font-weight:700; color:#475569; padding:7px 8px; letter-spacing:.3px; }
-.da-table td { font-size:8.5px; padding:11px 8px; border-bottom:1px solid #e5e9f2; color:#334155; }
-.da-table td.kegiatan { font-weight:700; text-decoration:underline; color:#1e293b; }
-.da-table tbody tr:last-child td { border-bottom:1px solid #e5e9f2; }
- 
-.da-badge { display:inline-block; font-size:7px; font-weight:700; padding:3px 12px; border-radius:20px; }
-.da-badge.menunggu { background:#fdecc0; color:#8a5a00; }
-.da-badge.revisi { background:#dbe6f8; color:#1f4f9c; }
-.da-badge.belum { background:#fde1e1; color:#b42318; padding:3px 14px; }
- 
-.da-quick { display:flex; flex-direction:column; gap:7px; margin-top:20px; }
-.da-quick-item { display:flex; align-items:center; gap:8px; background:#f1f3f9; border-radius:5px; padding:8px; cursor:pointer; }
-.da-quick-icon { width:18px; height:18px; border-radius:4px; background:#dbe6f8; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.da-quick-text { flex:1; }
-.da-quick-title { font-size:8.5px; font-weight:700; }
-.da-quick-desc { font-size:7px; color:#64748b; margin-top:1px; }
- 
-.da-reminder { margin:0 16px 12px; }
-.da-reminder .da-table th, .da-reminder .da-table td { padding-left:14px; }
-.da-reminder .da-table th.center, .da-reminder .da-table td.center { text-align:center; }
-.da-reminder .da-table td { border-bottom:1px solid #e5e9f2; padding-top:9px; padding-bottom:9px; }
- 
-/* Footer */
-.da-footer { background:#fff; border-top:1px solid #e5e9f2; padding:14px 50px 10px; }
-.da-footer-top { display:flex; gap:40px; }
-.da-footer-brand { width:180px; }
-.da-footer-logo { display:flex; align-items:center; gap:8px; }
-.da-footer-logo-box { width:24px; height:24px; background:#12365f; border-radius:5px; display:flex; align-items:center; justify-content:center; }
-.da-footer-logo-title { font-size:12px; font-weight:700; color:#12365f; }
-.da-footer-logo-sub { font-size:6.5px; color:#475569; }
-.da-footer-desc { font-size:9px; color:#475569; margin:8px 0 0; line-height:1.5; }
-.da-contact { width:120px; font-size:8px; }
-.da-contact h4 { margin:0 0 6px; font-size:8px; font-weight:700; }
-.da-contact p { margin:0 0 6px; line-height:1.4; }
-.da-contact b { color:#1f5fa8; font-weight:700; }
-.da-footer-bottom { display:flex; justify-content:space-between; font-size:7px; color:#475569; border-top:1px solid #e5e9f2; margin-top:22px; padding-top:10px; }
-.da-footer-links span + span::before { content:' · '; }
-`;
- 
-/* ===================== Component ===================== */
-const DashboardAdmin: React.FC = () => {
+import React, { useState } from 'react';
+
+export const DashboardAdmin: React.FC = () => {
+  const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(false);
+  const [isRekapOpen, setIsRekapOpen] = useState(false);
+  const [tahunAkademik, setTahunAkademik] = useState('2026/2027');
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    window.location.href = '/biro/login';
+  };
+
   return (
-    <div className="da-root">
-      <style>{css}</style>
- 
-      <div className="da-top">
-        {/* ---------- Sidebar ---------- */}
-        <aside className="da-sidebar">
-          <div className="da-brand">
-            <EmblemIcon />
+    <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
+      <div className="flex flex-1">
+        
+        {/* SIDEBAR KIRI (11 MENU KONSISTEN DENGAN LOGO /logo.jpg) */}
+        <aside className="w-64 bg-[#0B1E36] text-white flex flex-col justify-between p-4 shrink-0">
+          <div>
+            {/* LOGO KAMPUS /logo.jpg */}
+            <div className="flex items-center gap-3 mb-6 px-2 pt-2">
+              <img 
+                src="/logo.jpg" 
+                alt="Logo Kampus" 
+                className="w-9 h-9 object-contain rounded-lg shrink-0"
+              />
+              <div>
+                <span className="text-[10px] font-bold text-blue-300 tracking-wider uppercase block">
+                  KEMAHASISWAAN
+                </span>
+                <span className="text-xs text-gray-400 block mt-0.5">Portal Manajemen</span>
+              </div>
+            </div>
+
+            <nav className="space-y-1 text-xs">
+              <a href="/biro/dashboard" className="flex items-center gap-3 px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg">
+                <span>📊</span>
+                <span>Dashboard</span>
+              </a>
+
+              {/* ACCORDION DATA BEASISWA */}
+              <div>
+                <button
+                  onClick={() => setIsBeasiswaOpen(!isBeasiswaOpen)}
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <span>🎓</span>
+                    <span>Data Beasiswa</span>
+                  </div>
+                  <span className="text-[10px]">{isBeasiswaOpen ? '▲' : '▼'}</span>
+                </button>
+
+                {isBeasiswaOpen && (
+                  <div className="ml-6 mt-1 space-y-1 border-l border-blue-400/30 pl-3">
+                    <a href="/biro/beasiswa/penerima" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
+                      › Data Penerima
+                    </a>
+                    <a href="/biro/beasiswa/calon" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
+                      › Data Calon Penerima
+                    </a>
+                    <a href="/biro/beasiswa/kelola" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
+                      › Kelola Data Mahasiswa
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <a href="/biro/ormawa" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>👥</span>
+                <span>Data Ormawa</span>
+              </a>
+              <a href="/biro/pengumuman" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>📢</span>
+                <span>Pengumuman</span>
+              </a>
+              <a href="/biro/proposal" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>📄</span>
+                <span>Proposal & Laporan</span>
+              </a>
+              <a href="/biro/pengumpulan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>📥</span>
+                <span>Pengumpulan Laporan</span>
+              </a>
+              <a href="/biro/detail-laporan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>📋</span>
+                <span>Detail Laporan</span>
+              </a>
+
+              {/* ACCORDION REKAPITULASI */}
+              <div>
+                <button
+                  onClick={() => setIsRekapOpen(!isRekapOpen)}
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <span>📈</span>
+                    <span>Rekapitulasi</span>
+                  </div>
+                  <span className="text-[10px]">{isRekapOpen ? '▲' : '▼'}</span>
+                </button>
+
+                {isRekapOpen && (
+                  <div className="ml-6 mt-1 space-y-1 border-l border-blue-400/30 pl-3">
+                    <a href="/biro/rekapitulasi/beasiswa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
+                      › Beasiswa
+                    </a>
+                    <a href="/biro/rekapitulasi/ormawa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
+                      › Ormawa
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>👤</span>
+                <span>Manajemen Akun</span>
+              </a>
+              <a href="/biro/edit-profil" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>✏️</span>
+                <span>Edit Profil</span>
+              </a>
+              <a href="/biro/struktur" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>🌿</span>
+                <span>Struktur Kepengurusan</span>
+              </a>
+            </nav>
+          </div>
+
+          <div className="pt-4 border-t border-gray-700/50">
+            <button 
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition shadow-sm"
+            >
+              <span>🚪</span>
+              <span>Logout</span>
+            </button>
+          </div>
+        </aside>
+
+        {/* KONTEN UTAMA DASHBOARD (PERSIS DESAIN SCREENSHOT) */}
+        <main className="flex-1 p-8 overflow-y-auto">
+          
+          {/* HEADER UTAMA & FILTER TAHUN */}
+          <div className="flex justify-between items-start mb-6">
             <div>
-              <div className="da-brand-title">KEMAHASISWAAN</div>
-              <div className="da-brand-sub">Portal Manajemen</div>
+              <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">PORTAL / DASHBOARD</p>
+              <h1 className="text-xl font-bold text-gray-900">Dashboard Staf Biro</h1>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <select
+                value={tahunAkademik}
+                onChange={(e) => setTahunAkademik(e.target.value)}
+                className="bg-white border border-gray-200 rounded-lg px-4 py-1.5 text-xs font-semibold text-gray-700 outline-none shadow-sm cursor-pointer"
+              >
+                <option value="2026/2027">2026/2027</option>
+                <option value="2025/2026">2025/2026</option>
+              </select>
+              <span className="text-xs font-bold text-gray-400">1</span>
             </div>
           </div>
- 
-          <ul className="da-menu">
-            {menuItems.map((item) => (
-              <li key={item.label} className={`da-menu-item${item.active ? " active" : ""}`}>
-                {item.hasArrow && <span className="da-menu-arrow">›</span>}
-                <span className="da-dot" />
-                {item.label}
-              </li>
-            ))}
-          </ul>
- 
-          <div className="da-spacer" />
- 
-          <button className="da-logout" type="button">
-            <LogoutIcon />
-            Logout
-          </button>
-        </aside>
- 
-        {/* ---------- Main ---------- */}
-        <div className="da-main">
-          <header className="da-header">
-            <div>
-              <div className="da-crumb">PORTAL / DASHBOARD</div>
-              <div className="da-header-title">Dashboard Staf Biro</div>
+
+          {/* SUBTITLE */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-extrabold text-gray-900">Selamat datang, Admin</h2>
+            <p className="text-xs text-gray-500 mt-0.5">Kelola data beasiswa, ormawa, pengumuman, dan laporan kegiatan.</p>
+          </div>
+
+          {/* 4 KARTU METRIK UTAMA (PERSIS SCREENSHOT) */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-blue-600">
+              <p className="text-[11px] text-gray-500 font-medium">Total Penerima Beasiswa</p>
+              <p className="text-3xl font-extrabold text-gray-900 mt-1">128</p>
+              <p className="text-[10px] text-gray-400 mt-1">Data dummy</p>
             </div>
-            <div className="da-header-right">1</div>
-          </header>
- 
-          <div className="da-content">
-            <div className="da-welcome">
-              <div>
-                <h1>Selamat datang, Admin</h1>
-                <p>Kelola data beasiswa, ormawa, pengumuman, dan laporan kegiatan.</p>
-              </div>
-              <div className="da-select">
-                <span>2026/2027</span>
-                <ChevronDown />
-              </div>
+
+            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-amber-500">
+              <p className="text-[11px] text-gray-500 font-medium">Laporan selesai</p>
+              <p className="text-3xl font-extrabold text-gray-900 mt-1">12</p>
+              <p className="text-[10px] text-gray-400 mt-1">Data dummy</p>
             </div>
- 
-            <div className="da-stats">
-              {stats.map((s) => (
-                <div key={s.label} className="da-stat" style={{ borderLeftColor: s.color }}>
-                  <div className="da-stat-label">{s.label}</div>
-                  <div className="da-stat-value">{s.value}</div>
-                  <div className="da-stat-note">{s.note}</div>
+
+            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-amber-500">
+              <p className="text-[11px] text-gray-500 font-medium">Laporan menunggu</p>
+              <p className="text-3xl font-extrabold text-gray-900 mt-1">8</p>
+              <p className="text-[10px] text-amber-600 font-semibold mt-1">Perlu diperiksa</p>
+            </div>
+
+            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-blue-400">
+              <p className="text-[11px] text-gray-500 font-medium">Pengumuman</p>
+              <p className="text-3xl font-extrabold text-gray-900 mt-1">5</p>
+              <p className="text-[10px] text-gray-400 mt-1">Data dummy</p>
+            </div>
+          </div>
+
+          {/* SECTION UTAMA: PROPOSAL & LAPORAN TERBARU + AKSES CEPAT */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+            
+            {/* TABEL PROPOSAL & LAPORAN TERBARU (8 KOLOM) */}
+            <div className="lg:col-span-8 bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900">Proposal & laporan terbaru</h3>
+                  <p className="text-[11px] text-gray-400 mt-0.5">Dokumen yang membutuhkan tindak lanjut</p>
                 </div>
-              ))}
-            </div>
- 
-            <div className="da-grid">
-              {/* Proposal & laporan terbaru */}
-              <section className="da-card">
-                <div className="da-card-head">
-                  <div>
-                    <h2 className="da-card-title">Proposal &amp; laporan terbaru</h2>
-                    <div className="da-card-sub">Dokumen yang membutuhkan tindak lanjut</div>
-                  </div>
-                  <button className="da-btn-outline" type="button">Lihat semua</button>
-                </div>
- 
-                <table className="da-table">
-                  <thead>
+                <button className="px-4 py-1.5 border border-gray-200 hover:bg-gray-50 rounded-lg text-xs font-semibold text-gray-700 transition">
+                  Lihat semua
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-[10px]">
                     <tr>
-                      <th>KEGIATAN</th>
-                      <th>TANGGAL</th>
-                      <th>ORMAWA</th>
-                      <th>JENIS</th>
-                      <th>STATUS</th>
+                      <th className="p-3">KEGIATAN</th>
+                      <th className="p-3">TANGGAL</th>
+                      <th className="p-3">ORMAWA</th>
+                      <th className="p-3">JENIS</th>
+                      <th className="p-3 text-center">STATUS</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {dokumenTerbaru.map((d) => (
-                      <tr key={d.kegiatan}>
-                        <td className="kegiatan">{d.kegiatan}</td>
-                        <td>{d.tanggal}</td>
-                        <td>{d.ormawa}</td>
-                        <td>{d.jenis}</td>
-                        <td>
-                          <span className={`da-badge ${d.status.toLowerCase()}`}>{d.status}</span>
-                        </td>
-                      </tr>
-                    ))}
+                  <tbody className="divide-y divide-gray-100">
+                    <tr className="hover:bg-gray-50 transition">
+                      <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Bakti Sosial</td>
+                      <td className="p-3 text-gray-600">12/12/2026</td>
+                      <td className="p-3 text-gray-600">BEM</td>
+                      <td className="p-3 text-gray-600">Proposal</td>
+                      <td className="p-3 text-center">
+                        <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-semibold">
+                          Menunggu
+                        </span>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-gray-50 transition">
+                      <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Pekan Seni</td>
+                      <td className="p-3 text-gray-600">2/12/2026</td>
+                      <td className="p-3 text-gray-600">UKM Seni</td>
+                      <td className="p-3 text-gray-600">Laporan</td>
+                      <td className="p-3 text-center">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-semibold">
+                          Revisi
+                        </span>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-gray-50 transition">
+                      <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Seminar Karier</td>
+                      <td className="p-3 text-gray-600">2/11/2026</td>
+                      <td className="p-3 text-gray-600">HIMA</td>
+                      <td className="p-3 text-gray-600">Proposal</td>
+                      <td className="p-3 text-center">
+                        <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-semibold">
+                          Menunggu
+                        </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
-              </section>
- 
-              {/* Akses cepat */}
-              <section className="da-card">
-                <h2 className="da-card-title">Akses cepat</h2>
-                <div className="da-quick">
-                  {aksesCepat.map((a) => (
-                    <div key={a.judul} className="da-quick-item">
-                      <span className="da-quick-icon"><ArrowIcon /></span>
-                      <div className="da-quick-text">
-                        <div className="da-quick-title">{a.judul}</div>
-                        <div className="da-quick-desc">{a.deskripsi}</div>
-                      </div>
-                      <ChevronRight />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-          </div>
- 
-          {/* Pengingat laporan kegiatan */}
-          <section className="da-card da-reminder">
-            <h2 className="da-card-title">Pengingat laporan kegiatan</h2>
-            <div className="da-card-sub">Ormawa yang belum mengirimkan laporan setelah kegiatan selesai</div>
- 
-            <table className="da-table">
-              <thead>
-                <tr>
-                  <th>KEGIATAN</th>
-                  <th className="center">TAHUN AKADEMIK</th>
-                  <th className="center">STATUS LAPORAN</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pengingat.map((p) => (
-                  <tr key={p.kegiatan}>
-                    <td>{p.kegiatan}</td>
-                    <td className="center">{p.tahunAkademik}</td>
-                    <td className="center">
-                      <span className="da-badge belum">{p.status}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </div>
- 
-      {/* ---------- Footer ---------- */}
-      <footer className="da-footer">
-        <div className="da-footer-top">
-          <div className="da-footer-brand">
-            <div className="da-footer-logo">
-              <div className="da-footer-logo-box"><SiBeoIcon /></div>
-              <div>
-                <div className="da-footer-logo-title">SI-BEO</div>
-                <div className="da-footer-logo-sub">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</div>
               </div>
             </div>
-            <p className="da-footer-desc">
-              Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-            </p>
+
+            {/* KARTU AKSES CEPAT (4 KOLOM PERSIS SCREENSHOT) */}
+            <div className="lg:col-span-4 bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-gray-900 mb-4">Akses cepat</h3>
+                
+                <div className="space-y-3">
+                  <a 
+                    href="/biro/beasiswa/penerima" 
+                    className="flex items-center justify-between p-3 bg-blue-50/50 hover:bg-blue-100/50 rounded-xl transition border border-blue-100/50 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
+                        →
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-900">Data beasiswa</p>
+                        <p className="text-[10px] text-gray-400">Kelola data mahasiswa</p>
+                      </div>
+                    </div>
+                    <span className="text-gray-400 text-xs group-hover:translate-x-1 transition">›</span>
+                  </a>
+
+                  <a 
+                    href="/biro/ormawa" 
+                    className="flex items-center justify-between p-3 bg-blue-50/50 hover:bg-blue-100/50 rounded-xl transition border border-blue-100/50 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
+                        →
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-900">Data ormawa</p>
+                        <p className="text-[10px] text-gray-400">Anggota & struktur</p>
+                      </div>
+                    </div>
+                    <span className="text-gray-400 text-xs group-hover:translate-x-1 transition">›</span>
+                  </a>
+
+                  <a 
+                    href="/biro/pengumuman" 
+                    className="flex items-center justify-between p-3 bg-blue-50/50 hover:bg-blue-100/50 rounded-xl transition border border-blue-100/50 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
+                        →
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-900">Pengumuman</p>
+                        <p className="text-[10px] text-gray-400">Informasi beasiswa/kegiatan</p>
+                      </div>
+                    </div>
+                    <span className="text-gray-400 text-xs group-hover:translate-x-1 transition">›</span>
+                  </a>
+
+                  <a 
+                    href="/biro/rekapitulasi/beasiswa" 
+                    className="flex items-center justify-between p-3 bg-blue-50/50 hover:bg-blue-100/50 rounded-xl transition border border-blue-100/50 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
+                        →
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-900">Rekapitulasi</p>
+                        <p className="text-[10px] text-gray-400">Khusus Kepala Biro</p>
+                      </div>
+                    </div>
+                    <span className="text-gray-400 text-xs group-hover:translate-x-1 transition">›</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
           </div>
- 
-          <div className="da-contact">
-            <h4>Kontak Kampus</h4>
-            <p>Email: <b>[tempatkan email resmi]</b></p>
-            <p>Telepon: <b>[tempatkan nomor resmi]</b></p>
-            <p>Lokasi: <b>[tempatkan alamat resmi]</b></p>
+
+          {/* TABEL PENGINGAT LAPORAN KEGIATAN (PERSIS SCREENSHOT) */}
+          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
+            <div className="mb-4">
+              <h3 className="text-sm font-bold text-gray-900">Pengingat laporan kegiatan</h3>
+              <p className="text-[11px] text-gray-400 mt-0.5">Ormawa yang belum mengirimkan laporan setelah kegiatan selesai</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-[10px]">
+                  <tr>
+                    <th className="p-3">KEGIATAN</th>
+                    <th className="p-3 text-center">TAHUN AKADEMIK</th>
+                    <th className="p-3 text-center">STATUS LAPORAN</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  <tr className="hover:bg-gray-50 transition">
+                    <td className="p-3 font-medium text-gray-900">Seminar Karier</td>
+                    <td className="p-3 text-center text-gray-600">08 - 10 - 2026</td>
+                    <td className="p-3 text-center">
+                      <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-[10px] font-semibold">
+                        Belum dikumpulkan
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-gray-50 transition">
+                    <td className="p-3 font-medium text-gray-900">Pekan Seni</td>
+                    <td className="p-3 text-center text-gray-600">05 - 09 - 2026</td>
+                    <td className="p-3 text-center">
+                      <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-[10px] font-semibold">
+                        Belum dikumpulkan
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
- 
-        <div className="da-footer-bottom">
-          <span>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</span>
-          <span className="da-footer-links">
-            <span>Konten program ilustratif</span>
-            <span>Pusat bantuan</span>
-            <span>Kebijakan privasi</span>
-          </span>
-        </div>
-      </footer>
+
+          {/* FOOTER BAWAH */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 font-bold text-gray-800">
+                <div className="p-1 bg-blue-900 rounded text-white text-xs">🛡️</div>
+                <span>SI-BEO</span>
+              </div>
+              <p className="text-[10px] text-gray-400 max-w-sm">
+                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
+              </p>
+            </div>
+            <div className="space-y-1">
+              <p className="font-bold text-gray-700">Kontak Kampus</p>
+              <p>Email: <span className="text-blue-600 underline">[tempatkan email resmi]</span></p>
+              <p>Telepon: <span className="text-blue-600 underline">[tempatkan nomor resmi]</span></p>
+              <p>Lokasi: <span className="text-blue-600 underline">[tempatkan alamat resmi]</span></p>
+            </div>
+          </footer>
+
+          <div className="mt-6 flex justify-between items-center text-[10px] text-gray-400">
+            <p>© 2026 SIMPUL - Satu Akses, Beragam Peluang.</p>
+            <p>Konten program ilustratif - Pusat bantuan - Kebijakan privasi</p>
+          </div>
+
+        </main>
+      </div>
     </div>
   );
 };
- 
-export default DashboardAdmin
+
+export default DashboardAdmin;
