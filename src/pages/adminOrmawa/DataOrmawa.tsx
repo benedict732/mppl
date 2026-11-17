@@ -99,14 +99,14 @@ export const DataAnggotaOrmawa: React.FC = () => {
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="px-4 py-2 bg-[#1B437C] hover:bg-blue-900 text-white text-xs font-bold rounded-lg shadow transition flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-2 cursor-pointer"
             >
               <span>+ Tambah Anggota</span>
             </button>
           </div>
 
-          {/* Card Box Utama Pencaian & Filter */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6 space-y-4">
+          {/* Card Box Utama Pencarian & Filter (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6 space-y-4">
             <div>
               <h3 className="text-sm font-bold text-gray-900">Data Anggota Ormawa</h3>
               <p className="text-xs text-gray-500 mt-0.5">Kelola anggota, jabatan, struktur, dan riwayat kepengurusan tiap ormawa.</p>
@@ -120,7 +120,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Nama atau NIM..."
-                  className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-white/90 border border-gray-200/80 rounded-xl text-xs font-medium text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -128,7 +128,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                 <label className="block text-[11px] font-bold text-gray-700 mb-1">Filter</label>
                 <button
                   onClick={() => setShowFilterModal(true)}
-                  className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-600 text-left flex justify-between items-center hover:bg-gray-50 cursor-pointer"
+                  className="w-full px-4 py-2 bg-white/90 border border-gray-200/80 rounded-xl text-xs font-medium text-gray-600 text-left flex justify-between items-center hover:bg-white cursor-pointer"
                 >
                   <span>{selectedOrmawa ? `Ormawa: ${selectedOrmawa}` : 'Filter data...'}</span>
                   <span>⚙️</span>
@@ -138,7 +138,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
               <div className="md:col-span-2">
                 <button
                   onClick={() => { setSearchQuery(''); setSelectedOrmawa('BEM'); setSelectedStatusFilter('AKTIF'); setSelectedFakultas('TEKNIK'); }}
-                  className="w-full px-4 py-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-bold rounded-lg transition cursor-pointer"
+                  className="w-full px-4 py-2 bg-white/90 border border-gray-200/80 hover:bg-white text-gray-700 text-xs font-bold rounded-xl transition cursor-pointer"
                 >
                   Reset
                 </button>
@@ -146,15 +146,15 @@ export const DataAnggotaOrmawa: React.FC = () => {
             </div>
           </div>
 
-          {/* Tabel Daftar Anggota */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
+          {/* Tabel Daftar Anggota (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <h3 className="text-sm font-bold text-gray-900 mb-1">Daftar anggota</h3>
             <p className="text-[11px] text-gray-500 mb-4">Data dibagi berdasarkan ormawa</p>
 
-            <div className="overflow-x-auto border border-gray-100 rounded-xl">
+            <div className="overflow-x-auto border border-gray-100 rounded-xl bg-white/50">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-gray-50 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                  <tr className="bg-gray-50/80 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
                     <th className="py-3 px-4">NIM</th>
                     <th className="py-3 px-4">NAMA LENGKAP</th>
                     <th className="py-3 px-4">SEMESTER</th>
@@ -166,7 +166,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                 </thead>
                 <tbody className="text-xs divide-y divide-gray-100">
                   {filteredData.map((item) => (
-                    <tr key={item.id} className="hover:bg-gray-50/50">
+                    <tr key={item.id} className="hover:bg-white/60 transition">
                       <td className="py-3.5 px-4 font-medium text-gray-800">{item.nim}</td>
                       <td className="py-3.5 px-4 font-bold text-gray-900">{item.nama}</td>
                       <td className="py-3.5 px-4 text-gray-600">{item.semester}</td>
@@ -180,7 +180,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                       <td className="py-3.5 px-4 text-right">
                         <button
                           onClick={() => handleOpenEdit(item)}
-                          className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition cursor-pointer inline-flex items-center justify-center"
+                          className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow transition cursor-pointer inline-flex items-center justify-center"
                         >
                           ✏️
                         </button>
@@ -193,51 +193,50 @@ export const DataAnggotaOrmawa: React.FC = () => {
 
             {/* Pagination 1-5 */}
             <div className="flex justify-end items-center gap-1.5 mt-6 pt-4 border-t border-gray-100">
-              <button className="w-8 h-8 rounded-lg border flex items-center justify-center text-xs bg-gray-100 cursor-pointer">◀</button>
+              <button className="w-8 h-8 rounded-xl border flex items-center justify-center text-xs bg-white/90 cursor-pointer">◀</button>
               {[1, 2, 3, 4, 5].map((num) => (
                 <button
                   key={num}
                   onClick={() => setCurrentPage(num)}
-                  className={`w-8 h-8 rounded-lg border text-xs font-bold transition cursor-pointer ${currentPage === num ? 'bg-[#1B437C] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+                  className={`w-8 h-8 rounded-xl border text-xs font-bold transition cursor-pointer ${currentPage === num ? 'bg-[#1B437C] text-white' : 'bg-white/90 text-gray-700 hover:bg-white'}`}
                 >
                   {num}
                 </button>
               ))}
-              <button className="w-8 h-8 rounded-lg border flex items-center justify-center text-xs bg-white hover:bg-gray-50 cursor-pointer">▶</button>
+              <button className="w-8 h-8 rounded-xl border flex items-center justify-center text-xs bg-white/90 hover:bg-white cursor-pointer">▶</button>
             </div>
           </div>
 
-          {/* Riwayat Kepengurusan Box dengan Navigasi ke Struktur */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-8 flex justify-between items-center">
+          {/* Riwayat Kepengurusan Box (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8 flex justify-between items-center">
             <div>
               <h3 className="text-sm font-bold text-gray-900">Riwayat kepengurusan</h3>
               <p className="text-[11px] text-gray-500 mt-0.5">Simpan daftar pengurus dan jabatan per tahun; anggota lama tetap tercatat.</p>
             </div>
             <button
               onClick={() => navigate(`${prefix}/struktur`)}
-              className="px-5 py-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-bold rounded-xl shadow-sm transition cursor-pointer"
+              className="px-5 py-2.5 bg-white/90 border border-gray-300 hover:bg-white text-gray-700 text-xs font-bold rounded-xl shadow-sm transition cursor-pointer"
             >
               Lihat struktur
             </button>
           </div>
 
-          {/* Footer */}
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1.5 bg-[#1B437C] rounded-lg text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
-                <span className="text-[10px] text-gray-400 font-normal">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</span>
+          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm leading-relaxed">
-                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-              </p>
             </div>
-            <div className="space-y-1.5">
-              <p className="font-bold text-gray-700 uppercase tracking-wider text-[10px]">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline cursor-pointer">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline cursor-pointer">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline cursor-pointer">[tempatkan alamat resmi]</span></p>
+
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
         </main>
@@ -245,9 +244,9 @@ export const DataAnggotaOrmawa: React.FC = () => {
 
       {/* ================= MODAL FILTER DI TENGAH DENGAN BLUR ================= */}
       {showFilterModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4 animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center border-b pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <span className="text-xs font-bold text-gray-900">Filter Data</span>
               <button onClick={() => setShowFilterModal(false)} className="text-gray-400 font-bold hover:text-gray-600 cursor-pointer">✕</button>
             </div>
@@ -260,7 +259,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     key={item}
                     type="button"
                     onClick={() => setSelectedOrmawa(item)}
-                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${selectedOrmawa === item ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                    className={`px-4 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${selectedOrmawa === item ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                   >
                     {item}
                   </button>
@@ -278,7 +277,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                       key={fak}
                       type="button"
                       onClick={() => setSelectedFakultas(fak)}
-                      className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${isSelected ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                      className={`px-3 py-1.5 rounded-xl text-[10px] font-bold transition cursor-pointer ${isSelected ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                     >
                       {fak}
                     </button>
@@ -295,7 +294,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     key={st}
                     type="button"
                     onClick={() => setSelectedStatusFilter(st)}
-                    className={`px-3 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer ${selectedStatusFilter === st ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                    className={`px-3 py-1 rounded-xl text-[11px] font-bold transition cursor-pointer ${selectedStatusFilter === st ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                   >
                     {st}
                   </button>
@@ -303,7 +302,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center pt-3 border-t">
+            <div className="flex justify-between items-center pt-3 border-t border-gray-100">
               <button
                 onClick={() => { setSelectedOrmawa(''); setSelectedStatusFilter(''); setSelectedFakultas(''); }}
                 className="px-4 py-2 bg-red-600 text-white rounded-xl text-xs font-bold hover:bg-red-700 cursor-pointer"
@@ -323,11 +322,11 @@ export const DataAnggotaOrmawa: React.FC = () => {
 
       {/* ================= MODAL TAMBAH ANGGOTA ================= */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center border-b pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-blue-100 text-blue-600 rounded-lg">➕</span>
+                <span className="p-1.5 bg-blue-100 text-blue-600 rounded-xl">➕</span>
                 <h3 className="text-sm font-bold text-gray-900">Tambah Anggota</h3>
               </div>
               <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-600 font-bold cursor-pointer">✕</button>
@@ -342,7 +341,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     value={newAnggota.nama}
                     onChange={(e) => setNewAnggota({ ...newAnggota, nama: e.target.value })}
                     placeholder="Masukkan Nama Lengkap"
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -352,7 +351,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     value={newAnggota.nim}
                     onChange={(e) => setNewAnggota({ ...newAnggota, nim: e.target.value })}
                     placeholder="Masukkan NIM"
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
               </div>
@@ -365,7 +364,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     value={newAnggota.semester}
                     onChange={(e) => setNewAnggota({ ...newAnggota, semester: e.target.value })}
                     placeholder="Pilih Semester"
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -375,7 +374,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     value={newAnggota.fakultas}
                     onChange={(e) => setNewAnggota({ ...newAnggota, fakultas: e.target.value })}
                     placeholder="Pilih Fakultas"
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
               </div>
@@ -386,7 +385,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                   <select
                     value={newAnggota.ormawa}
                     onChange={(e) => setNewAnggota({ ...newAnggota, ormawa: e.target.value })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none cursor-pointer"
                   >
                     <option>BEM</option>
                     <option>BPM</option>
@@ -398,7 +397,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                   <select
                     value={newAnggota.jabatan}
                     onChange={(e) => setNewAnggota({ ...newAnggota, jabatan: e.target.value })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none cursor-pointer"
                   >
                     <option>Ketua</option>
                     <option>Sekretaris</option>
@@ -408,7 +407,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t">
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
@@ -430,11 +429,11 @@ export const DataAnggotaOrmawa: React.FC = () => {
 
       {/* ================= MODAL EDIT ANGGOTA ================= */}
       {showEditModal && editAnggota && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center border-b pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-blue-600 text-white rounded-lg">✏️</span>
+                <span className="p-1.5 bg-blue-600 text-white rounded-xl">✏️</span>
                 <h3 className="text-sm font-bold text-gray-900">Edit Data Anggota Ormawa</h3>
               </div>
               <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-gray-600 font-bold cursor-pointer">✕</button>
@@ -448,7 +447,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     type="text" required
                     value={editAnggota.nama}
                     onChange={(e) => setEditAnggota({ ...editAnggota, nama: e.target.value })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -457,7 +456,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     type="text" required
                     value={editAnggota.nim}
                     onChange={(e) => setEditAnggota({ ...editAnggota, nim: e.target.value })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
               </div>
@@ -469,7 +468,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     type="number" required
                     value={editAnggota.semester}
                     onChange={(e) => setEditAnggota({ ...editAnggota, semester: parseInt(e.target.value) || 1 })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
                 <div>
@@ -478,7 +477,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     type="text" required
                     value={editAnggota.fakultas}
                     onChange={(e) => setEditAnggota({ ...editAnggota, fakultas: e.target.value })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
               </div>
@@ -489,7 +488,7 @@ export const DataAnggotaOrmawa: React.FC = () => {
                   <select
                     value={editAnggota.status}
                     onChange={(e) => setEditAnggota({ ...editAnggota, status: e.target.value as 'AKTIF' | 'TIDAK AKTIF' })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none cursor-pointer"
                   >
                     <option value="AKTIF">Aktif</option>
                     <option value="TIDAK AKTIF">Tidak Aktif</option>
@@ -501,12 +500,12 @@ export const DataAnggotaOrmawa: React.FC = () => {
                     type="text" required
                     value={editAnggota.jabatan}
                     onChange={(e) => setEditAnggota({ ...editAnggota, jabatan: e.target.value })}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t">
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}

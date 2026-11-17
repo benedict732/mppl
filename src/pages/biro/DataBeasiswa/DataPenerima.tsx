@@ -4,24 +4,40 @@ interface MahasiswaPenerima {
   nim: string;
   nama: string;
   semester: number;
+  fakultas: string;
   prodi: string;
   beasiswa: string;
-  status: string;
+  status: string; // 'Penerima' | 'Mantan Penerima' | 'Dikeluarkan'
 }
+
+const prodiMapping: Record<string, string[]> = {
+  'TEKNIK': ['Informatika', 'Elektro', 'Sipil', 'Industri'],
+  'FEB': ['Manajemen', 'Akuntansi'],
+  'HUKUM': ['Ilmu Hukum'],
+  'PGSD': ['Ilmu Pendidikan'],
+  'KEPERAWATAN': ['Keperawatan'],
+  'KEDOKTERAN': ['Kedokteran'],
+  'PARIWISATA': ['Pariwisata'],
+  'AGRIBISNIS': ['Agribisnis']
+};
 
 export const DataPenerima: React.FC = () => {
   const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(true);
   const [isRekapOpen, setIsRekapOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const [periode, setPeriode] = useState('2026');
+  const [currentPage, setCurrentPage] = useState(1);
   
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filterStep, setFilterStep] = useState<number>(1);
   const [selectedMhs, setSelectedMhs] = useState<MahasiswaPenerima | null>(null);
 
   const [filterState, setFilterState] = useState({
-    beasiswa: 'KIP',
+    beasiswa: 'KIP Kuliah',
     fakultas: 'TEKNIK',
-    statusMahasiswa: 'AKTIF'
+    prodi: 'Informatika',
+    statusMahasiswa: 'Penerima'
   });
 
   const handleLogout = () => {
@@ -34,25 +50,37 @@ export const DataPenerima: React.FC = () => {
       nim: '22041001',
       nama: 'Benedictus Siby',
       semester: 6,
-      prodi: 'Teknik / Informatika',
+      fakultas: 'TEKNIK',
+      prodi: 'Informatika',
       beasiswa: 'KIP Kuliah',
-      status: 'Aktif'
+      status: 'Penerima'
     },
     {
       nim: '23021005',
       nama: 'Maria Lestari',
       semester: 4,
-      prodi: 'Ekonomi / Manajemen',
+      fakultas: 'FEB',
+      prodi: 'Manajemen',
       beasiswa: 'Kebanksentralan',
-      status: 'Aktif'
+      status: 'Penerima'
     },
     {
       nim: '23051007',
       nama: 'Daniel Rondonuwu',
       semester: 4,
-      prodi: 'Pertanian / Agroteknologi',
+      fakultas: 'AGRIBISNIS',
+      prodi: 'Agroteknologi',
       beasiswa: 'VDMI',
-      status: 'Aktif'
+      status: 'Mantan Penerima'
+    },
+    {
+      nim: '21011012',
+      nama: 'Sarah Wowor',
+      semester: 8,
+      fakultas: 'HUKUM',
+      prodi: 'Ilmu Hukum',
+      beasiswa: 'KIP Kuliah',
+      status: 'Dikeluarkan'
     }
   ];
 
@@ -61,19 +89,20 @@ export const DataPenerima: React.FC = () => {
     setIsDetailOpen(true);
   };
 
+  const availableProdi = prodiMapping[filterState.fakultas] || ['Umum'];
+
   return (
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
       <div className="flex flex-1">
         
-        {/* SIDEBAR KIRI (11 MENU KONSISTEN DENGAN LOGO /logo.jpg) */}
+        {/* SIDEBAR KIRI */}
         <aside className="w-64 bg-[#0B1E36] text-white flex flex-col justify-between p-4 shrink-0">
           <div>
-            {/* LOGO KAMPUS /logo.jpg */}
             <div className="flex items-center gap-3 mb-6 px-2 pt-2">
               <img 
                 src="/logo.jpg" 
                 alt="Logo Kampus" 
-                className="w-9 h-9 object-contain rounded-lg shrink-0"
+                className="w-9 h-9 object-contain rounded-lg shrink-0 bg-white p-0.5 shadow"
               />
               <div>
                 <span className="text-[10px] font-bold text-blue-300 tracking-wider uppercase block">
@@ -89,11 +118,10 @@ export const DataPenerima: React.FC = () => {
                 <span>Dashboard</span>
               </a>
 
-              {/* ACCORDION DATA BEASISWA */}
               <div>
                 <button
                   onClick={() => setIsBeasiswaOpen(!isBeasiswaOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg text-left"
+                  className="w-full flex items-center justify-between px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg text-left cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>🎓</span>
@@ -138,11 +166,10 @@ export const DataPenerima: React.FC = () => {
                 <span>Detail Laporan</span>
               </a>
 
-              {/* ACCORDION REKAPITULASI */}
               <div>
                 <button
                   onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>📈</span>
@@ -181,7 +208,7 @@ export const DataPenerima: React.FC = () => {
           <div className="pt-4 border-t border-gray-700/50">
             <button 
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition cursor-pointer"
             >
               <span>🚪</span>
               <span>Logout</span>
@@ -191,17 +218,30 @@ export const DataPenerima: React.FC = () => {
 
         {/* AREA KONTEN UTAMA */}
         <main className="flex-1 p-8 overflow-y-auto">
-          <div className="mb-6">
-            <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">BEASISWA / DATABASE</p>
-            <h1 className="text-xl font-bold text-gray-900">Data Beasiswa</h1>
+          {/* HEADER TUNGGAL YANG RAPI */}
+          <div className="mb-6 flex justify-between items-center">
+            <div>
+              <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">BEASISWA / BASIS DATA</p>
+              <h1 className="text-2xl font-bold text-gray-900 mt-0.5">Data Penerima</h1>
+              <p className="text-xs text-gray-500 mt-0.5">Data mahasiswa penerima beasiswa dan riwayat penerimaannya.</p>
+            </div>
+            
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/40 shadow-sm">
+              <span className="text-xs font-bold text-gray-500">Periode:</span>
+              <select
+                value={periode}
+                onChange={(e) => setPeriode(e.target.value)}
+                className="bg-transparent text-xs font-semibold text-gray-800 outline-none cursor-pointer"
+              >
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+              </select>
+            </div>
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Data Penerima</h2>
-            <p className="text-xs text-gray-500 mt-1">Data mahasiswa penerima beasiswa dan riwayat penerimaannya.</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
+          {/* KONTainer PENCARIAN & FILTER */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div className="md:col-span-8">
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5">Cari nama mahasiswa</label>
@@ -210,59 +250,71 @@ export const DataPenerima: React.FC = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Nama atau NIM..."
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-4 py-2 border border-gray-200/80 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white/90"
                 />
               </div>
 
               <div className="md:col-span-4">
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5">Filter</label>
                 <div 
-                  onClick={() => setIsFilterOpen(true)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs flex justify-between items-center cursor-pointer bg-white text-gray-500 hover:border-blue-400 transition"
+                  onClick={() => { setFilterStep(1); setIsFilterOpen(true); }}
+                  className="w-full px-4 py-2 border border-gray-200/80 rounded-xl text-xs flex justify-between items-center cursor-pointer bg-white/90 text-gray-600 hover:border-blue-400 transition"
                 >
-                  <span>Filter ..........</span>
+                  <span>Filter berdasarkan kriteria...</span>
                   <span>🔍</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
-            <div className="mb-4">
-              <h3 className="text-sm font-bold text-gray-900">Daftar mahasiswa</h3>
-              <p className="text-[11px] text-gray-400 mt-0.5">Menampilkan data contoh untuk rancangan UI</p>
+          {/* KONTainer DAFTAR MAHASISWA */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-sm font-bold text-gray-900">Daftar mahasiswa</h3>
+                <p className="text-[11px] text-gray-400 mt-0.5">Menampilkan data contoh untuk rancangan UI</p>
+              </div>
+              <span className="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1 rounded-xl border border-blue-100">
+                Total Penerima: {dataMahasiswa.length} Mahasiswa
+              </span>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-[10px]">
+                <thead className="bg-gray-50/80 text-gray-500 font-semibold uppercase text-[10px]">
                   <tr>
                     <th className="p-3">NIM</th>
                     <th className="p-3">NAMA LENGKAP</th>
                     <th className="p-3 text-center">SEMESTER</th>
-                    <th className="p-3">FAKULTAS / PRODI</th>
+                    <th className="p-3">FAKULTAS</th>
+                    <th className="p-3">PROGRAM STUDI</th>
                     <th className="p-3">BEASISWA AKTIF</th>
-                    <th className="p-3 text-center">STATUS MAHASISWA</th>
+                    <th className="p-3 text-center">KETERANGAN</th>
                     <th className="p-3 text-right">AKSI</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {dataMahasiswa.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-gray-50 transition">
+                    <tr key={idx} className="hover:bg-white/60 transition">
                       <td className="p-3 text-gray-600 font-medium">{item.nim}</td>
                       <td className="p-3 font-bold text-gray-900">{item.nama}</td>
                       <td className="p-3 text-center text-gray-600">{item.semester}</td>
+                      <td className="p-3 text-gray-600">{item.fakultas}</td>
                       <td className="p-3 text-gray-600">{item.prodi}</td>
                       <td className="p-3 text-gray-600 font-medium">{item.beasiswa}</td>
                       <td className="p-3 text-center">
-                        <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-semibold">
+                        <span className={`px-3 py-1 rounded-full text-[10px] font-semibold ${
+                          item.status === 'Penerima' ? 'bg-emerald-100 text-emerald-700' :
+                          item.status === 'Mantan Penerima' ? 'bg-blue-100 text-blue-700' :
+                          'bg-red-100 text-red-600'
+                        }`}>
                           {item.status}
                         </span>
                       </td>
                       <td className="p-3 text-right">
                         <button 
                           onClick={() => handleOpenDetail(item)}
-                          className="text-blue-600 hover:underline font-semibold text-xs"
+                          className="text-blue-600 hover:underline font-semibold text-xs cursor-pointer"
                         >
                           Detail
                         </button>
@@ -273,64 +325,63 @@ export const DataPenerima: React.FC = () => {
               </table>
             </div>
 
-            <div className="flex justify-end items-center gap-1 mt-6">
-              <button className="w-6 h-6 bg-black text-white rounded text-xs flex items-center justify-center">◄</button>
-              <button className="w-6 h-6 border border-gray-300 text-xs font-bold rounded flex items-center justify-center bg-gray-50">1</button>
-              <button className="w-6 h-6 border border-gray-300 text-xs rounded flex items-center justify-center">2</button>
-              <button className="w-6 h-6 border border-gray-300 text-xs rounded flex items-center justify-center">3</button>
-              <button className="w-6 h-6 border border-gray-300 text-xs rounded flex items-center justify-center">4</button>
-              <button className="w-6 h-6 border border-gray-300 text-xs rounded flex items-center justify-center">5</button>
-              <button className="w-6 h-6 bg-black text-white rounded text-xs flex items-center justify-center">►</button>
+            {/* PAGINATION HANYA PANAH KIRI KANAN */}
+            <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100 text-xs text-gray-500">
+              <span>Halaman {currentPage} dari total data</span>
+              <div className="flex items-center gap-1">
+                <button 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  className="w-8 h-8 bg-[#0B1E36] hover:bg-[#133763] text-white rounded-lg flex items-center justify-center cursor-pointer shadow-sm transition"
+                >
+                  ◄
+                </button>
+                <button 
+                  onClick={() => setCurrentPage(p => p + 1)}
+                  className="w-8 h-8 bg-[#0B1E36] hover:bg-[#133763] text-white rounded-lg flex items-center justify-center cursor-pointer shadow-sm transition"
+                >
+                  ►
+                </button>
+              </div>
             </div>
           </div>
 
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1 bg-blue-900 rounded text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm">
-                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-              </p>
             </div>
-            <div className="space-y-1">
-              <p className="font-bold text-gray-700">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline">[tempatkan alamat resmi]</span></p>
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
-
-          <div className="mt-6 flex justify-between items-center text-[10px] text-gray-400">
-            <p>© 2026 SIMPUL - Satu Akses, Beragam Peluang.</p>
-            <p>Konten program ilustratif - Pusat bantuan - Kebijakan privasi</p>
-          </div>
         </main>
       </div>
 
       {/* MODAL DETAIL RIWAYAT */}
       {isDetailOpen && selectedMhs && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-gray-100 animate-in fade-in zoom-in duration-200 p-6 space-y-4">
+          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6 space-y-4">
             <div className="flex justify-between items-start">
               <h3 className="text-base font-bold text-[#0B2545]">Riwayat Beasiswa</h3>
-              <button onClick={() => setIsDetailOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold">✕</button>
+              <button onClick={() => setIsDetailOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold cursor-pointer">✕</button>
             </div>
 
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold text-lg">
-                  👤
-                </div>
+                <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold text-lg">👤</div>
                 <div>
                   <h4 className="font-bold text-sm text-gray-900">{selectedMhs.nama}</h4>
                   <p className="text-[11px] text-gray-500">NIM {selectedMhs.nim}</p>
                 </div>
               </div>
-              <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-semibold flex items-center gap-1">
-                ● Penerima Aktif
-              </span>
+              <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-semibold">● Penerima Aktif</span>
             </div>
 
             <div>
@@ -338,48 +389,14 @@ export const DataPenerima: React.FC = () => {
               <div className="p-3 border border-gray-100 bg-gray-50/50 rounded-xl flex justify-between items-center">
                 <div>
                   <p className="font-bold text-xs text-gray-900">{selectedMhs.beasiswa}</p>
-                  <p className="text-[10px] text-gray-400">Tahun Akademik 2026/2027 · Mulai menerima: Semester 4</p>
+                  <p className="text-[10px] text-gray-400">Tahun Akademik 2026/2027</p>
                 </div>
                 <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-semibold">Aktif</span>
               </div>
             </div>
 
-            <div>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">RIWAYAT BEASISWA SEBELUMNYA</p>
-              <div className="p-3 border border-gray-100 rounded-xl flex justify-between items-center">
-                <div>
-                  <p className="font-bold text-xs text-gray-800">VDMI</p>
-                  <p className="text-[10px] text-gray-400">Semester 3 · Tahun Akademik 2025/2026</p>
-                </div>
-                <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-semibold">Pernah diterima</span>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">BEASISWA DIBERHENTIKAN</p>
-              <div className="p-3 border border-red-50 bg-red-50/20 rounded-xl flex justify-between items-center">
-                <div>
-                  <p className="font-bold text-xs text-gray-800">VDMI</p>
-                  <p className="text-[10px] text-gray-400">Semester 4 · Tahun Akademik 2026/2027</p>
-                </div>
-                <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-[10px] font-semibold">Diberhentikan</span>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Catatan Pendaftaran Beasiswa (Tidak Lolos)</p>
-              <div className="p-3 border border-gray-100 rounded-xl flex justify-between items-center">
-                <div>
-                  <p className="font-bold text-xs text-gray-800">Bantuan Kebanksentralan</p>
-                  <p className="text-[10px] text-gray-400">Semester 3 · Tahun Akademik 2025/2026</p>
-                </div>
-                <span className="px-3 py-1 bg-red-500 text-white rounded-full text-[10px] font-semibold">Tidak Lolos</span>
-              </div>
-            </div>
-
-            <div className="pt-2 flex justify-between items-center text-[10px] text-gray-400 border-t border-gray-100">
-              <span>Riwayat menampilkan status beasiswa yang pernah dan sedang diterima.</span>
-              <button onClick={() => setIsDetailOpen(false)} className="px-5 py-2 bg-[#1B5299] text-white rounded-lg font-semibold text-xs">
+            <div className="pt-2 flex justify-end">
+              <button onClick={() => setIsDetailOpen(false)} className="px-5 py-2 bg-[#1B5299] text-white rounded-lg font-semibold text-xs cursor-pointer">
                 Tutup
               </button>
             </div>
@@ -387,72 +404,77 @@ export const DataPenerima: React.FC = () => {
         </div>
       )}
 
-      {/* MODAL FILTER */}
+      {/* MODAL FILTER BERTAHAP */}
       {isFilterOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100 animate-in fade-in zoom-in duration-200 p-6 space-y-4">
+          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6 space-y-4">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <h3 className="text-xs font-bold text-gray-800">Filter Data</h3>
-              <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-xs">✕</button>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-gray-800 mb-2">Beasiswa</label>
-              <div className="flex flex-wrap gap-2">
-                {['KIP', 'VDMI', 'BI'].map((b) => (
-                  <button
-                    key={b}
-                    onClick={() => setFilterState({ ...filterState, beasiswa: b })}
-                    className={`px-4 py-1.5 rounded-lg text-xs font-semibold ${filterState.beasiswa === b ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
-                  >
-                    {b}
-                  </button>
-                ))}
+              <div>
+                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Filter Berurutan</span>
+                <h3 className="text-xs font-bold text-gray-800">
+                  {filterStep === 1 ? '1. Pilih Beasiswa' : filterStep === 2 ? '2. Pilih Fakultas' : filterStep === 3 ? `3. Pilih Prodi (${filterState.fakultas})` : '4. Status Mahasiswa'}
+                </h3>
               </div>
+              <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-xs cursor-pointer">✕</button>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-gray-800 mb-2">Fakultas</label>
-              <div className="flex flex-wrap gap-2">
-                {['TEKNIK', 'HUKUM', 'FEB', 'PGSD', 'KEPERAWATAN', 'KEDOKTERAN', 'PARIWISATA', 'AGRIBISNIS'].map((f) => (
-                  <button
-                    key={f}
-                    onClick={() => setFilterState({ ...filterState, fakultas: f })}
-                    className={`px-3 py-1.5 rounded-lg text-[10px] font-semibold ${filterState.fakultas === f ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
-                  >
-                    {f}
-                  </button>
-                ))}
+            {filterStep === 1 && (
+              <div className="space-y-2">
+                <div className="flex flex-col gap-2">
+                  {['KIP Kuliah', 'VDMI', 'Kebanksentralan'].map((b) => (
+                    <button key={b} onClick={() => setFilterState({ ...filterState, beasiswa: b })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.beasiswa === b ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{b}</button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            <div>
-              <label className="block text-xs font-bold text-gray-800 mb-2">Status Mahasiswa</label>
-              <div className="flex flex-wrap gap-2">
-                {['AKTIF', 'TIDAK AKTIF'].map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setFilterState({ ...filterState, statusMahasiswa: s })}
-                    className={`px-4 py-1.5 rounded-lg text-xs font-semibold ${filterState.statusMahasiswa === s ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
-                  >
-                    {s}
-                  </button>
-                ))}
+            {filterStep === 2 && (
+              <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+                  {['TEKNIK', 'HUKUM', 'FEB', 'PGSD', 'KEPERAWATAN', 'KEDOKTERAN', 'PARIWISATA', 'AGRIBISNIS'].map((f) => (
+                    <button key={f} onClick={() => { const firstProdi = prodiMapping[f]?.[0] || ''; setFilterState({ ...filterState, fakultas: f, prodi: firstProdi }); }} className={`px-3 py-2 rounded-xl text-[10px] font-semibold text-center cursor-pointer transition ${filterState.fakultas === f ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{f}</button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
-              <button onClick={() => setFilterState({ beasiswa: '', fakultas: '', statusMahasiswa: '' })} className="px-4 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-lg">
-                RESET
-              </button>
-              <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-blue-500 text-white text-xs font-semibold rounded-lg">
-                TERAPKAN
-              </button>
+            {filterStep === 3 && (
+              <div className="space-y-2">
+                <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
+                  {availableProdi.map((p) => (
+                    <button key={p} onClick={() => setFilterState({ ...filterState, prodi: p })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.prodi === p ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{p}</button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {filterStep === 4 && (
+              <div className="space-y-2">
+                <div className="flex flex-col gap-2">
+                  {['Penerima', 'Mantan Penerima', 'Dikeluarkan'].map((s) => (
+                    <button key={s} onClick={() => setFilterState({ ...filterState, statusMahasiswa: s })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.statusMahasiswa === s ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{s}</button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+              <div>
+                {filterStep > 1 && (
+                  <button onClick={() => setFilterStep(filterStep - 1)} className="px-4 py-1.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg cursor-pointer">Kembali</button>
+                )}
+              </div>
+              <div>
+                {filterStep < 4 ? (
+                  <button onClick={() => setFilterStep(filterStep + 1)} className="px-4 py-1.5 bg-blue-600 text-white text-xs font-semibold rounded-lg cursor-pointer">Lanjut ➔</button>
+                ) : (
+                  <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg cursor-pointer">Terapkan Filter</button>
+                )}
+              </div>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };

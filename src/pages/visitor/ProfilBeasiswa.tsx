@@ -1,8 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const ProfilBeasiswa: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("KIP Kuliah");
+
+  // Membaca parameter URL (misal: ?tab=VDMI) agar pas diklik dari daftar langsung mengarah ke tab yang sesuai
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tabParam = params.get("tab");
+    if (tabParam && ["KIP Kuliah", "VDMI", "Bank Indonesia"].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [location.search]);
 
   const beasiswaData: Record<string, {
     nama: string;
@@ -10,9 +21,7 @@ export const ProfilBeasiswa: React.FC = () => {
     deskripsi: string;
     persyaratan: string[];
     benefit: string[];
-    periode: string;
-    status: string;
-    kuota: string;
+    caraMendaftar: string[];
   }> = {
     "KIP Kuliah": {
       nama: "Kartu Indonesia Pintar Kuliah (KIP Kuliah 2026)",
@@ -29,9 +38,13 @@ export const ProfilBeasiswa: React.FC = () => {
         "Bantuan biaya hidup bulanan yang disalurkan per semester.",
         "Pendampingan dan pembinaan berkala dari Biro Kemahasiswaan."
       ],
-      periode: "01 Oktober - 30 November 2026",
-      status: "Pendaftaran Dibuka",
-      kuota: "250 Penerima"
+      caraMendaftar: [
+        "Mengunggah berkas melalui Gform yang dibagikan Biro Kemahasiswaan.",
+        "Setelah dinyatakan lolos seleksi mengumpulkan hard file di ruangan Biro Kemahasiswaan.",
+        "Setelah itu dilakukan seleksi wawancara dan penandatanganan surat pernyataan.",
+        "Penentuan Penerima Beasiswa KIP Kuliah.",
+        "Pengusulan ke pihak pengelola beasiswa (Pemerintah)."
+      ]
     },
     "VDMI": {
       nama: "Beasiswa Van Deventer-Maas Indonesia (VDMI)",
@@ -48,9 +61,13 @@ export const ProfilBeasiswa: React.FC = () => {
         "Pelatihan kepemimpinan, workshop kewirausahaan, dan kursus bahasa Inggris.",
         "Bonus kelulusan tepat waktu."
       ],
-      periode: "10 Februari - 10 Maret 2027",
-      status: "Segera Dibuka",
-      kuota: "30 Penerima"
+      caraMendaftar: [
+        "Mendapatkan informasi melalui promosi, flyer digital di media sosial dan Biro Kemahasiswaan, penempelan flyer di kampus, serta sosialisasi kegiatan.",
+        "Mengunggah berkas pendaftaran melalui link resmi dari pihak pengelola Beasiswa VDMI.",
+        "Setelah dinyatakan lolos seleksi awal, mengumpulkan hard file di ruangan Biro Kemahasiswaan.",
+        "Menerima hasil lulus seleksi dari pihak pengelola Beasiswa VDMI dilanjutkan pengumuman resmi.",
+        "Melakukan penandatanganan surat pernyataan."
+      ]
     },
     "Bank Indonesia": {
       nama: "Beasiswa Prestasi Generasi Baru Indonesia (GenBI)",
@@ -67,13 +84,16 @@ export const ProfilBeasiswa: React.FC = () => {
         "Keanggotaan resmi komunitas GenBI dengan akses ke program leadership camp BI.",
         "Peluang magang di lingkungan Kantor Perwakilan Bank Indonesia."
       ],
-      periode: "15 November - 15 Desember 2026",
-      status: "Pendaftaran Dibuka",
-      kuota: "50 Penerima"
+      caraMendaftar: [
+        "Mendapatkan informasi melalui promosi penerimaan mahasiswa baru, flyer digital, serta sosialisasi di kegiatan mahasiswa.",
+        "Mengumpulkan berkas pendaftaran secara langsung di Biro Kemahasiswaan.",
+        "Ketika dinyatakan lulus berkas, dilanjutkan dengan seleksi wawancara oleh pihak pengurus Bantuan Pendidikan Kebanksentralan (Bank Indonesia).",
+        "Menunggu pengumuman kelulusan seleksi akhir."
+      ]
     }
   };
 
-  const current = beasiswaData[activeTab];
+  const current = beasiswaData[activeTab] || beasiswaData["KIP Kuliah"];
 
   return (
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
@@ -107,21 +127,21 @@ export const ProfilBeasiswa: React.FC = () => {
             <Link to="/ormawa" className="text-gray-600 hover:text-blue-600 py-5 transition">
               Ormawa
             </Link>
-            <Link to="/berita-kegiatan" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Berita &amp; Kegiatan
+            <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Kegiatan &amp; Agenda
             </Link>
           </nav>
 
           <div className="flex items-center gap-2">
             <Link 
               to="/ormawa/login" 
-              className="px-3.5 py-2 text-xs font-bold text-gray-700 hover:text-blue-900 rounded-xl transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Ormawa
             </Link>
             <Link 
               to="/biro/login" 
-              className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Biro
             </Link>
@@ -129,23 +149,25 @@ export const ProfilBeasiswa: React.FC = () => {
         </div>
       </header>
 
-      {/* ================= HERO HEADER ================= */}
+      {/* ================= HERO HEADER (Hanya Judul & Tab Beasiswa) ================= */}
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
+          
           <div className="flex items-center gap-2 text-xs text-amber-300 font-bold">
             <Link to="/beasiswa" className="hover:underline">Beasiswa</Link>
             <span>/</span>
             <span>Detail Program</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
-            {current.nama}
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-200">
-            Dikelola oleh: <strong>{current.instansi}</strong>
-          </p>
+          <div className="space-y-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
+              {current.nama}
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-200">
+              Dikelola oleh: <strong>{current.instansi}</strong>
+            </p>
+          </div>
 
-          {/* Program Tabs */}
           <div className="flex flex-wrap gap-2 pt-4">
             {["KIP Kuliah", "VDMI", "Bank Indonesia"].map((tab) => (
               <button
@@ -161,17 +183,27 @@ export const ProfilBeasiswa: React.FC = () => {
               </button>
             ))}
           </div>
+
         </div>
       </section>
 
-      {/* ================= KONTEN DETAIL & SIDEBAR ================= */}
+      {/* ================= KONTEN DETAIL ================= */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+        
+        {/* Tombol Kembali (Di antara tab dan kotak Tentang Beasiswa, berwujud teks dengan efek hover) */}
+        <div className="mb-6 flex justify-start">
+          <button 
+            onClick={() => navigate("/beasiswa")}
+            className="px-3.5 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] rounded-xl text-xs font-bold transition cursor-pointer shadow-xs bg-white border border-gray-200"
+          >
+            Kembali ke Daftar Beasiswa
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           
-          {/* Kolom Kiri: Rincian Lengkap */}
           <div className="lg:col-span-2 space-y-6">
             
-            {/* Card Tentang */}
             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-3">
               <h2 className="text-base font-bold text-gray-900">
                 Tentang Beasiswa
@@ -181,30 +213,28 @@ export const ProfilBeasiswa: React.FC = () => {
               </p>
             </div>
 
-            {/* Card Persyaratan */}
             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-3">
               <h2 className="text-base font-bold text-gray-900">
                 Persyaratan Umum
               </h2>
-              <ul className="space-y-2 text-xs text-gray-600">
+              <ul className="space-y-2.5 text-xs text-gray-700 leading-relaxed">
                 {current.persyaratan.map((syarat, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
-                    <span className="text-blue-600 font-bold">✓</span>
+                    <span className="text-blue-600 font-bold mt-0.5">✓</span>
                     <span>{syarat}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Card Benefit */}
             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-3">
               <h2 className="text-base font-bold text-gray-900">
                 Benefit &amp; Manfaat
               </h2>
-              <ul className="space-y-2 text-xs text-gray-600">
+              <ul className="space-y-2.5 text-xs text-gray-700 leading-relaxed">
                 {current.benefit.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
-                    <span className="text-emerald-600 font-bold">★</span>
+                    <span className="text-emerald-600 font-bold mt-0.5">★</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -213,42 +243,21 @@ export const ProfilBeasiswa: React.FC = () => {
 
           </div>
 
-          {/* Kolom Kanan: Status & Pendaftaran */}
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 border-t-4 border-t-amber-400 shadow-sm space-y-5">
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 border-t-4 border-t-amber-400 shadow-sm space-y-4">
               <h3 className="text-sm font-bold text-gray-900">
-                Informasi Pendaftaran
+                Cara Mendaftar
               </h3>
-
-              <div className="space-y-3 text-xs">
-                <div>
-                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Status Pendaftaran</span>
-                  <span className="font-bold text-emerald-600 text-sm">{current.status}</span>
-                </div>
-                <div>
-                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Periode Seleksi</span>
-                  <span className="font-semibold text-gray-800">{current.periode}</span>
-                </div>
-                <div>
-                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Alokasi Kuota</span>
-                  <span className="font-semibold text-gray-800">{current.kuota}</span>
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-gray-100">
-                <button 
-                  onClick={() => alert(`Informasi pendaftaran ${current.nama} dapat diajukan via portal Kemahasiswaan.`)}
-                  className="w-full py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer"
-                >
-                  Ajukan Pendaftaran Beasiswa
-                </button>
-                <p className="text-[10px] text-gray-400 text-center mt-2">
-                  Pastikan dokumen berkas sudah lengkap sebelum mengirimkan data.
-                </p>
-              </div>
+              
+              <ol className="space-y-3 text-xs text-gray-700 list-decimal list-inside leading-relaxed">
+                {current.caraMendaftar.map((langkah, idx) => (
+                  <li key={idx} className="pl-1">
+                    <span className="font-medium text-gray-800">{langkah}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
 
-            {/* Bantuan */}
             <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100 text-xs space-y-2 text-blue-900">
               <span className="font-bold block">Punya Pertanyaan?</span>
               <p className="text-blue-800 text-[11px] leading-relaxed">
@@ -260,18 +269,16 @@ export const ProfilBeasiswa: React.FC = () => {
         </div>
       </main>
 
-      {/* ================= FOOTER SI-BEO ================= */}
+      {/* ================= FOOTER ================= */}
       <footer className="mt-auto bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row justify-between gap-8 pb-8">
             <div className="flex items-start gap-3.5 max-w-md">
-              <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="6" cy="18" r="2.5" />
-                  <circle cx="18" cy="6" r="2.5" />
-                  <path d="M7.5 16.5 L16.5 7.5" />
-                </svg>
-              </div>
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-10 h-10 object-contain rounded-xl bg-white p-0.5 shadow shrink-0 border border-gray-100"
+              />
               <div>
                 <div className="flex items-baseline gap-2">
                   <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
@@ -292,7 +299,7 @@ export const ProfilBeasiswa: React.FC = () => {
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-2">
-            <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
+            <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             <div className="flex items-center gap-4 text-xs">
               <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
               <span>•</span>

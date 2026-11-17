@@ -1,48 +1,107 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+interface BeasiswaItem {
+  id: number;
+  judul: string;
+  kategori: string;
+  tagFilter: 'KIP' | 'VDMI' | 'BI';
+  deskripsi: string;
+  pengumumanBiro: string;
+}
+
+interface KegiatanItem {
+  id: number;
+  judul: string;
+  penyelenggara: string;
+  tagFilter: 'MPM' | 'BPM' | 'BEM';
+  tanggal: string;
+  deskripsi: string;
+  pengumumanBiro: string;
+}
+
 export const Beranda: React.FC = () => {
-  const beasiswaList = [
+  // State Filter Beasiswa & Ormawa
+  const [filterBeasiswa, setFilterBeasiswa] = useState<string>("semua");
+  const [filterOrmawa, setFilterOrmawa] = useState<string>("semua");
+
+  // State Pop-up Modal
+  const [selectedItem, setSelectedItem] = useState<{
+    tipe: 'beasiswa' | 'kegiatan';
+    judul: string;
+    penyelenggaraOrKategori: string;
+    tanggalOrDeskripsi: string;
+    isiFormatBiro: string;
+  } | null>(null);
+
+  const beasiswaList: BeasiswaItem[] = [
     {
+      id: 1,
       judul: "KIP Kuliah 2026",
       kategori: "Pemerintah",
+      tagFilter: "KIP",
       deskripsi: "Bantuan biaya pendidikan penuh dan tunjangan biaya hidup bagi mahasiswa berprestasi dari keluarga prasejahtera.",
-      link: "/beasiswa/detail"
+      pengumumanBiro: "PENGUMUMAN RESMI BIRO KEMAHASISWAAN: Seleksi administrasi dan verifikasi berkas fisik KIP Kuliah 2026 wajib melampirkan KHS semester terakhir, slip rekening listrik, serta surat pernyataan keaktifan organisasi. Batas pengumpulan berkas ke loket biro adalah tanggal 28 November 2026."
     },
     {
+      id: 2,
       judul: "Beasiswa Kebanksentralan BI",
       kategori: "Instansi",
+      tagFilter: "BI",
       deskripsi: "Program beasiswa Bank Indonesia untuk mahasiswa semester 3-6 dengan IPK memuaskan dan aktif berorganisasi.",
-      link: "/beasiswa/detail"
+      pengumumanBiro: "PENGUMUMAN RESMI BIRO KEMAHASISWAAN: Pendaftaran Beasiswa Bank Indonesia (BI) dibuka untuk mahasiswa aktif S1. Syarat utama minimal IPK 3.00, melampirkan surat rekomendasi akademisi, dan bersedia aktif dalam komunitas Generasi Baru Indonesia (GenBI)."
     },
     {
-      judul: "Beasiswa Prestasi Akademik",
-      kategori: "Kampus",
-      deskripsi: "Apresiasi universitas bagi mahasiswa peraih IPK tertinggi di setiap fakultas untuk semester genap.",
-      link: "/beasiswa/detail"
+      id: 3,
+      judul: "Beasiswa VDMI (Vanguard Fellowship)",
+      kategori: "Yayasan",
+      tagFilter: "VDMI",
+      deskripsi: "Dukungan finansial dan program pengembangan kepemimpinan bagi mahasiswa terpilih dari yayasan VDMI.",
+      pengumumanBiro: "PENGUMUMAN RESMI BIRO KEMAHASISWAAN: Pengumuman kelayakan penerima beasiswa VDMI tahap wawancara akan dilaksanakan secara daring. Peserta diharapkan menyiapkan transkrip nilai resmi dan esai motivasi dalam bahasa Inggris."
     }
   ];
 
-  const kegiatanList = [
+  const kegiatanList: KegiatanItem[] = [
     {
+      id: 1,
       judul: "Bakti Sosial Mahasiswa Peduli",
       penyelenggara: "BEM Universitas",
+      tagFilter: "BEM",
       tanggal: "15 November 2026",
-      deskripsi: "Kegiatan pengabdian masyarakat di desa binaan, pembagian paket sembako, dan edukasi kesehatan keluarga."
+      deskripsi: "Kegiatan pengabdian masyarakat di desa binaan, pembagian paket sembako, dan edukasi kesehatan keluarga.",
+      pengumumanBiro: "CATATAN & PENGUMUMAN BIRO: Seluruh proposal kegiatan bakti sosial yang dikoordinasikan oleh BEM telah diverifikasi dan disetujui untuk dilaksanakan dengan tetap memperhatikan protokol ketertiban kampus."
     },
     {
-      judul: "Pekan Seni & Budaya Nusantara",
-      penyelenggara: "BEM Departemen Seni & Budaya",
+      id: 2,
+      judul: "Rapat Koordinasi Pengawasan Anggaran",
+      penyelenggara: "BPM Fakultas",
+      tagFilter: "BPM",
       tanggal: "22 November 2026",
-      deskripsi: "Pentas teater, tari tradisional, serta pameran karya seni rupa karya mahasiswa lintas program studi."
+      deskripsi: "Peninjauan draf laporan pertanggungjawaban kegiatan dan transparansi alokasi dana organisasi mahasiswa.",
+      pengumumanBiro: "CATATAN & PENGUMUMAN BIRO: Sidang pleno terbuka pengawasan anggaran oleh BPM wajib dihadiri oleh seluruh ketua divisi keuangan masing-masing ormawa."
     },
     {
-      judul: "Seminar Nasional Karir & Kepemimpinan",
-      penyelenggara: "BPM Kampus",
+      id: 3,
+      judul: "Sidang Pleno Terbuka Evaluasi Kinerja",
+      penyelenggara: "MPM Kampus",
+      tagFilter: "MPM",
       tanggal: "30 November 2026",
-      deskripsi: "Sesi bimbingan karir bersama pembicara industri terkemuka mengenai persiapan memasuki dunia kerja modern."
+      deskripsi: "Sidang akbar tahunan untuk mengevaluasi produk hukum kemahasiswaan dan kinerja eksekutif-legislatif.",
+      pengumumanBiro: "CATATAN & PENGUMUMAN BIRO: Pemberitahuan resmi kepada seluruh ormawa untuk menyerahkan laporan tengah tahun kepengurusan paling lambat 3 hari sebelum sidang dimulai."
     }
   ];
+
+  // Filter Data Beasiswa
+  const filteredBeasiswa = beasiswaList.filter(item => {
+    if (filterBeasiswa === "semua") return true;
+    return item.tagFilter.toLowerCase() === filterBeasiswa.toLowerCase();
+  });
+
+  // Filter Data Kegiatan Ormawa
+  const filteredKegiatan = kegiatanList.filter(item => {
+    if (filterOrmawa === "semua") return true;
+    return item.tagFilter.toLowerCase() === filterOrmawa.toLowerCase();
+  });
 
   return (
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
@@ -84,17 +143,17 @@ export const Beranda: React.FC = () => {
             </Link>
           </nav>
 
-          {/* Tombol Akses Portal Login */}
+          {/* Tombol Akses Portal Login (Keduanya Polos, Muncul Bar Saat Hover) */}
           <div className="flex items-center gap-2">
             <Link 
               to="/ormawa/login" 
-              className="px-3.5 py-2 text-xs font-bold text-gray-700 hover:text-blue-900 rounded-xl transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Ormawa
             </Link>
             <Link 
               to="/biro/login" 
-              className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Biro
             </Link>
@@ -132,12 +191,14 @@ export const Beranda: React.FC = () => {
             </div>
           </div>
 
-          {/* Hero Banner Ilustrasi / Card */}
+          {/* Hero Banner Card dengan Logo SI-BEO */}
           <div className="w-full lg:w-96 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white shadow-2xl space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-400 text-gray-950 flex items-center justify-center text-xl font-bold">
-                🎓
-              </div>
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-10 h-10 object-contain rounded-xl bg-white p-1 shadow"
+              />
               <div>
                 <h3 className="text-sm font-bold">SI-BEO Terpadu</h3>
                 <p className="text-xs text-gray-300">Akses Cepat Informasi Kampus</p>
@@ -152,7 +213,7 @@ export const Beranda: React.FC = () => {
                 <span className="text-[10px] text-gray-300">Program Beasiswa</span>
               </div>
               <div>
-                <span className="block font-bold text-amber-400 text-base">BEM &amp; BPM</span>
+                <span className="block font-bold text-amber-400 text-base">MPM, BEM, BPM</span>
                 <span className="text-[10px] text-gray-300">Lembaga Aktif</span>
               </div>
               <div>
@@ -167,98 +228,191 @@ export const Beranda: React.FC = () => {
 
       {/* ================= SECTION INFORMASI BEASISWA ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
               Informasi Beasiswa
             </h2>
             <p className="text-xs text-gray-500 mt-1">
-              Temukan peluang beasiswa internal dan eksternal terbaru untuk mendukung studimu.
+              Temukan peluang beasiswa internal dan eksternal terbaru berdasarkan pengumuman resmi biro.
             </p>
           </div>
-          <Link to="/beasiswa" className="text-xs font-bold text-blue-600 hover:text-blue-800 transition">
-            Lihat Semua Beasiswa →
-          </Link>
+
+          {/* Filter Dropdown Beasiswa (semua, KIP, VDMI, BI) */}
+          <div className="flex items-center gap-2 text-xs">
+            <span className="font-bold text-gray-600">Filter:</span>
+            <select
+              value={filterBeasiswa}
+              onChange={(e) => setFilterBeasiswa(e.target.value)}
+              className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-xs"
+            >
+              <option value="semua">Semua</option>
+              <option value="KIP">KIP</option>
+              <option value="VDMI">VDMI</option>
+              <option value="BI">BI</option>
+            </select>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {beasiswaList.map((item, idx) => (
-            <div 
-              key={idx} 
-              className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between"
-            >
-              <div>
-                <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[10px] font-bold uppercase tracking-wider mb-3">
-                  {item.kategori}
-                </span>
-                <h3 className="text-base font-bold text-gray-900 mb-2">
-                  {item.judul}
-                </h3>
-                <p className="text-xs text-gray-500 leading-relaxed mb-6">
-                  {item.deskripsi}
-                </p>
-              </div>
-              <Link 
-                to={item.link} 
-                className="text-xs font-bold text-blue-600 hover:text-blue-800 transition flex items-center gap-1.5"
+          {filteredBeasiswa.length > 0 ? (
+            filteredBeasiswa.map((item) => (
+              <div 
+                key={item.id} 
+                className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between"
               >
-                <span>Baca selengkapnya</span>
-                <span>→</span>
-              </Link>
+                <div>
+                  <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[10px] font-bold uppercase tracking-wider mb-3">
+                    {item.kategori}
+                  </span>
+                  <h3 className="text-base font-bold text-gray-900 mb-2">
+                    {item.judul}
+                  </h3>
+                  <p className="text-xs text-gray-500 leading-relaxed mb-6">
+                    {item.deskripsi}
+                  </p>
+                </div>
+                <button 
+                  onClick={() => setSelectedItem({
+                    tipe: 'beasiswa',
+                    judul: item.judul,
+                    penyelenggaraOrKategori: item.kategori,
+                    tanggalOrDeskripsi: item.deskripsi,
+                    isiFormatBiro: item.pengumumanBiro
+                  })}
+                  className="text-xs font-bold text-blue-600 hover:text-blue-800 transition flex items-center gap-1.5 cursor-pointer text-left"
+                >
+                  <span>Baca selengkapnya</span>
+                  <span>→</span>
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-3 py-8 text-center text-gray-400 text-xs">
+              Tidak ada data beasiswa untuk kategori ini.
             </div>
-          ))}
+          )}
         </div>
       </section>
 
       {/* ================= SECTION KEGIATAN & BERITA ORMAWA ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-16 w-full">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
               Kegiatan &amp; Berita Ormawa
             </h2>
             <p className="text-xs text-gray-500 mt-1">
-              Kabar kegiatan mahasiswa terkini dari BEM dan BPM di lingkungan kampus.
+              Kabar kegiatan mahasiswa terkini berdasarkan pengumuman resmi lembaga kampus.
             </p>
           </div>
-          <Link to="/berita-kegiatan" className="text-xs font-bold text-blue-600 hover:text-blue-800 transition">
-            Lihat Semua Berita →
-          </Link>
+
+          {/* Filter Dropdown Kegiatan & Berita Ormawa (semua, MPM, BPM, BEM) */}
+          <div className="flex items-center gap-2 text-xs">
+            <span className="font-bold text-gray-600">Filter:</span>
+            <select
+              value={filterOrmawa}
+              onChange={(e) => setFilterOrmawa(e.target.value)}
+              className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-xs"
+            >
+              <option value="semua">Semua</option>
+              <option value="MPM">MPM</option>
+              <option value="BPM">BPM</option>
+              <option value="BEM">BEM</option>
+            </select>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {kegiatanList.map((item, idx) => (
-            <div 
-              key={idx} 
-              className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition space-y-3"
-            >
-              <div className="flex justify-between items-center text-[11px] text-gray-400">
-                <span className="font-semibold text-blue-600">{item.penyelenggara}</span>
-                <span>{item.tanggal}</span>
+          {filteredKegiatan.length > 0 ? (
+            filteredKegiatan.map((item) => (
+              <div 
+                key={item.id} 
+                className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3"
+              >
+                <div>
+                  <div className="flex justify-between items-center text-[11px] text-gray-400 mb-2">
+                    <span className="font-semibold text-blue-600 px-2 py-0.5 bg-blue-50/60 rounded">{item.penyelenggara}</span>
+                    <span>{item.tanggal}</span>
+                  </div>
+                  <h3 className="text-base font-bold text-gray-900 mb-2">
+                    {item.judul}
+                  </h3>
+                  <p className="text-xs text-gray-500 leading-relaxed mb-4">
+                    {item.deskripsi}
+                  </p>
+                </div>
+                <button 
+                  onClick={() => setSelectedItem({
+                    tipe: 'kegiatan',
+                    judul: item.judul,
+                    penyelenggaraOrKategori: item.penyelenggara,
+                    tanggalOrDeskripsi: item.tanggal,
+                    isiFormatBiro: item.pengumumanBiro
+                  })}
+                  className="text-xs font-bold text-blue-600 hover:text-blue-800 transition flex items-center gap-1.5 cursor-pointer text-left"
+                >
+                  <span>Baca selengkapnya</span>
+                  <span>→</span>
+                </button>
               </div>
-              <h3 className="text-base font-bold text-gray-900">
-                {item.judul}
-              </h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                {item.deskripsi}
-              </p>
+            ))
+          ) : (
+            <div className="col-span-3 py-8 text-center text-gray-400 text-xs">
+              Tidak ada data kegiatan untuk lembaga ini.
             </div>
-          ))}
+          )}
         </div>
       </section>
+
+      {/* ================= MODAL POP-UP BACA SELENGKAPNYA ================= */}
+      {selectedItem && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200">
+            <div className="flex justify-between items-center border-b pb-3">
+              <div>
+                <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider block">
+                  {selectedItem.tipe === 'beasiswa' ? `Kategori: ${selectedItem.penyelenggaraOrKategori}` : `Penyelenggara: ${selectedItem.penyelenggaraOrKategori}`}
+                </span>
+                <h3 className="text-base font-bold text-gray-900 mt-0.5">{selectedItem.judul}</h3>
+              </div>
+              <button 
+                onClick={() => setSelectedItem(null)}
+                className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition cursor-pointer font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="p-3.5 bg-blue-50/60 border border-blue-100 rounded-xl text-gray-700 leading-relaxed space-y-2">
+                <p className="font-bold text-blue-900">Format / Pengumuman Resmi Biro:</p>
+                <p>{selectedItem.isiFormatBiro}</p>
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-3 border-t">
+              <button
+                onClick={() => setSelectedItem(null)}
+                className="px-5 py-2 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold transition cursor-pointer"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ================= FOOTER SI-BEO ================= */}
       <footer className="mt-auto bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row justify-between gap-8 pb-8">
             <div className="flex items-start gap-3.5 max-w-md">
-              <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="6" cy="18" r="2.5" />
-                  <circle cx="18" cy="6" r="2.5" />
-                  <path d="M7.5 16.5 L16.5 7.5" />
-                </svg>
-              </div>
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-10 h-10 object-contain rounded-xl bg-white p-0.5 shadow shrink-0 border border-gray-100"
+              />
               <div>
                 <div className="flex items-baseline gap-2">
                   <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>

@@ -82,7 +82,7 @@ export const PengumumanOrmawa: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  // Form input tambah pengumuman sesuai dengan screenshot referensi
+  // Form input tambah pengumuman sesuai dengan referensi
   const [formData, setFormData] = useState({
     judul: '',
     kategori: '',
@@ -147,8 +147,8 @@ export const PengumumanOrmawa: React.FC = () => {
 
           {currentView === 'list' ? (
             <>
-              {/* Box Filter & Aksi */}
-              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6 space-y-6">
+              {/* Box Filter & Aksi (GLASSMORPHISM) */}
+              <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6 space-y-6">
                 <div className="flex justify-between items-center">
                   <div>
                     <h2 className="text-lg font-bold text-gray-900">Pengumuman</h2>
@@ -173,7 +173,7 @@ export const PengumumanOrmawa: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[11px] font-bold text-gray-700 mb-1">Pilih Beasiswa atau Ormawa</label>
-                    <select className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-700 outline-none cursor-pointer">
+                    <select className="w-full px-4 py-2 bg-white/90 border border-gray-200/80 rounded-xl text-xs font-medium text-gray-700 outline-none cursor-pointer">
                       <option>Semua Kategori</option>
                       <option>Beasiswa</option>
                       <option>Ormawa</option>
@@ -181,7 +181,7 @@ export const PengumumanOrmawa: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-[11px] font-bold text-gray-700 mb-1">Filter Tahun Akademik</label>
-                    <select className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-700 outline-none cursor-pointer">
+                    <select className="w-full px-4 py-2 bg-white/90 border border-gray-200/80 rounded-xl text-xs font-medium text-gray-700 outline-none cursor-pointer">
                       <option>2026/2027</option>
                       <option>2025/2026</option>
                     </select>
@@ -189,11 +189,11 @@ export const PengumumanOrmawa: React.FC = () => {
                 </div>
               </div>
 
-              {/* Grid 4 Kartu Pengumuman dengan Gambar Asli */}
-              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-8">
+              {/* Grid 4 Kartu Pengumuman dengan Gambar Asli (GLASSMORPHISM) */}
+              <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {daftarPengumuman.map((item) => (
-                    <div key={item.id} className="border border-gray-200 rounded-2xl overflow-hidden flex flex-col justify-between bg-white shadow-sm hover:shadow-md transition">
+                    <div key={item.id} className="border border-gray-200/80 rounded-2xl overflow-hidden flex flex-col justify-between bg-white/90 shadow-sm hover:shadow-md transition">
                       <div>
                         <div className="w-full h-36 relative overflow-hidden bg-gray-100">
                           <img 
@@ -225,9 +225,9 @@ export const PengumumanOrmawa: React.FC = () => {
               </div>
             </>
           ) : (
-            /* ================= TAMPILAN DETAIL PENGUMUMAN ================= */
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm mb-8 space-y-6">
-              <div className="flex justify-between items-center border-b pb-4">
+            /* ================= TAMPILAN DETAIL PENGUMUMAN (GLASSMORPHISM) ================= */
+            <div className="bg-white/70 backdrop-blur-md p-8 rounded-2xl border border-white/60 shadow-sm mb-8 space-y-6">
+              <div className="flex justify-between items-center border-b border-gray-100 pb-4">
                 <div>
                   <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-wider">
                     {selectedItem?.kategori}
@@ -236,7 +236,7 @@ export const PengumumanOrmawa: React.FC = () => {
                 </div>
                 <button 
                   onClick={() => setCurrentView('list')}
-                  className="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-bold rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 bg-white/90 border border-gray-300 hover:bg-white text-gray-700 text-xs font-bold rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>←</span> Kembali
                 </button>
@@ -277,7 +277,7 @@ export const PengumumanOrmawa: React.FC = () => {
               {selectedItem?.lampiran && (
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs font-bold text-gray-700 mb-2">Lampiran</p>
-                  <div className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-blue-600 cursor-pointer hover:bg-gray-100">
+                  <div className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/90 border border-gray-200 rounded-xl text-xs font-bold text-blue-600 cursor-pointer hover:bg-white shadow-sm">
                     <span>📄 {selectedItem.lampiran}</span>
                   </div>
                 </div>
@@ -285,35 +285,34 @@ export const PengumumanOrmawa: React.FC = () => {
             </div>
           )}
 
-          {/* Footer */}
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1.5 bg-[#1B437C] rounded-lg text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
-                <span className="text-[10px] text-gray-400 font-normal">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</span>
+          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm leading-relaxed">
-                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-              </p>
             </div>
-            <div className="space-y-1.5">
-              <p className="font-bold text-gray-700 uppercase tracking-wider text-[10px]">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline cursor-pointer">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline cursor-pointer">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline cursor-pointer">[tempatkan alamat resmi]</span></p>
+
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
         </main>
       </div>
 
-      {/* ================= POPUP MODAL TAMBAH POSTINGAN (PERSIS SEPERTI GAMBAR REFERENSI) DENGAN BLUR ================= */}
+      {/* ================= POPUP MODAL TAMBAH POSTINGAN DENGAN BLUR ================= */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200 relative">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-6 space-y-5 animate-in fade-in zoom-in duration-200 relative border border-gray-100">
             
             {/* Header Modal */}
-            <div className="flex justify-between items-start border-b pb-4">
+            <div className="flex justify-between items-start border-b border-gray-100 pb-4">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Informasi Pengumuman</h3>
                 <p className="text-xs text-gray-500 mt-0.5">Lengkapi detail berikut sebelum menerbitkan pengumuman.</p>
@@ -338,7 +337,7 @@ export const PengumumanOrmawa: React.FC = () => {
                   value={formData.judul}
                   onChange={(e) => setFormData({...formData, judul: e.target.value})}
                   placeholder="Contoh: Pendaftaran Anggota Tim Kerja BEM 2026"
-                  className="w-full p-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+                  className="w-full p-2.5 bg-white border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
                 />
               </div>
 
@@ -350,7 +349,7 @@ export const PengumumanOrmawa: React.FC = () => {
                 <select 
                   value={formData.kategori}
                   onChange={(e) => setFormData({...formData, kategori: e.target.value})}
-                  className="w-full p-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 cursor-pointer"
+                  className="w-full p-2.5 bg-white border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 cursor-pointer"
                 >
                   <option value="">Pilih kategori pengumuman</option>
                   <option value="Akademik">Akademik</option>
@@ -368,7 +367,7 @@ export const PengumumanOrmawa: React.FC = () => {
                   value={formData.ormawa}
                   onChange={(e) => setFormData({...formData, ormawa: e.target.value})}
                   placeholder="Nama Ormawa atau Biro"
-                  className="w-full p-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+                  className="w-full p-2.5 bg-white border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
                 />
               </div>
 
@@ -382,7 +381,7 @@ export const PengumumanOrmawa: React.FC = () => {
                   value={formData.isi}
                   onChange={(e) => setFormData({...formData, isi: e.target.value})}
                   placeholder="Tuliskan detail, jadwal, persyaratan, dan informasi kontak...&#10;Gunakan bahasa yang jelas agar mudah dipahami oleh pembaca."
-                  className="w-full p-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 resize-none"
+                  className="w-full p-3 bg-white border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 resize-none"
                 />
               </div>
 
@@ -395,21 +394,21 @@ export const PengumumanOrmawa: React.FC = () => {
                       type="date"
                       value={formData.tanggal}
                       onChange={(e) => setFormData({...formData, tanggal: e.target.value})}
-                      className="w-full p-2.5 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+                      className="w-full p-2.5 bg-white border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 cursor-pointer"
                     />
                   </div>
                 </div>
 
                 <div>
                   <label className="block font-bold text-gray-700 mb-1">Lampiran (opsional)</label>
-                  <div className="border border-dashed border-gray-300 rounded-lg p-3 text-center bg-white hover:bg-gray-50 transition cursor-pointer">
+                  <div className="border border-dashed border-gray-300 rounded-xl p-3 text-center bg-white hover:bg-gray-50 transition cursor-pointer">
                     <p className="text-[11px] text-gray-500">+ Tambahkan PDF / gambar / dokumen pendukung</p>
                   </div>
                 </div>
               </div>
 
               {/* Tombol Aksi Bawah */}
-              <div className="flex justify-end gap-3 pt-4 border-t mt-4">
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100 mt-4">
                 <button 
                   type="button" 
                   onClick={() => setShowAddModal(false)}
@@ -431,8 +430,8 @@ export const PengumumanOrmawa: React.FC = () => {
 
       {/* ================= POPUP MODAL KONFIRMASI HAPUS DENGAN BLUR ================= */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 text-center space-y-4 animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 text-center space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
             <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
               !
             </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Shield, Eye, EyeOff, User, Lock, GraduationCap, Users } from 'lucide-react';
+import { Eye, EyeOff, User, Lock, GraduationCap, Users, Shield, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const LoginAdmin: React.FC = () => {
   const [identifier, setIdentifier] = useState('');
@@ -14,10 +15,8 @@ export const LoginAdmin: React.FC = () => {
     setLoading(true);
 
     try {
-      // Simulasi / Panggil API Login
       if (password === 'admin123') {
         localStorage.setItem('adminToken', 'biro-token');
-        // Navigasi browser murni tanpa useNavigate
         window.location.href = '/biro/dashboard';
       } else {
         setError('Email/username atau kata sandi tidak valid. Gunakan sandi: admin123');
@@ -38,9 +37,11 @@ export const LoginAdmin: React.FC = () => {
         <div className="md:col-span-5 bg-[#1B437C] text-white p-8 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-2 bg-blue-500 rounded-lg">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
+              <img
+                src="/logo sibeo.jpeg"
+                alt="Logo SI-BEO"
+                className="w-8 h-8 object-contain rounded-lg bg-white p-0.5 shadow"
+              />
               <span className="font-bold text-xl tracking-wide">SI-BEO</span>
             </div>
 
@@ -85,19 +86,29 @@ export const LoginAdmin: React.FC = () => {
 
         {/* Sisi Kanan: Form Login */}
         <div className="md:col-span-7 p-8 md:p-12 flex flex-col justify-between relative bg-white">
-          <div className="absolute top-6 left-6 md:left-12">
+          
+          {/* Header Kanan: Tombol Panah Kembali di Kiri Atas & Badge Akses Administrator di Kanan */}
+          <div className="absolute top-6 left-6 right-6 md:left-8 md:right-12 flex justify-between items-center">
+            <Link 
+              to="/" 
+              title="Kembali ke Beranda Visitor"
+              className="w-9 h-9 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 flex items-center justify-center shadow-sm transition duration-200 cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 text-[#1B437C]" />
+            </Link>
+
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600 border border-blue-100">
               <Shield className="w-3.5 h-3.5" />
               Akses administrator
             </span>
           </div>
 
-          <div className="flex flex-col items-center mt-8">
-            {/* Logo dari public/logo.jpg */}
+          <div className="flex flex-col items-center mt-12">
+            {/* Logo kampus di atas form */}
             <img
               src="/logo.jpg" 
-              alt="Logo Unika De La Salle Manado"
-              className="w-24 h-24 object-contain mb-6"
+              alt="Logo Kampus"
+              className="w-20 h-20 object-contain mb-6 rounded-xl bg-white p-1 shadow border border-gray-100"
             />
 
             <h3 className="text-2xl font-bold text-gray-800">Login</h3>
@@ -123,7 +134,7 @@ export const LoginAdmin: React.FC = () => {
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     placeholder="Masukkan email atau username"
-                    className="w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none bg-white"
                     required
                   />
                 </div>
@@ -140,13 +151,13 @@ export const LoginAdmin: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Masukkan kata sandi (admin123)"
-                    className="w-full pl-9 pr-10 py-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full pl-9 pr-10 py-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none bg-white"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -156,7 +167,7 @@ export const LoginAdmin: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow transition duration-200 mt-2"
+                className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow transition duration-200 mt-2 cursor-pointer"
               >
                 {loading ? 'Memproses...' : 'Login'}
               </button>

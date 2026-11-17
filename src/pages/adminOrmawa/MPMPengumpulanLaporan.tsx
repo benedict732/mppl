@@ -110,11 +110,11 @@ export const MPMPengumpulanLaporan: React.FC = () => {
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
       <div className="flex flex-1">
         
-        {/* ================= SIDEBAR SESUAI GAMBAR 1 (IKUT ADMIN ORMAWA DENGAN FITUR KHUSUS MPM) ================= */}
+        {/* ================= SIDEBAR KIRI ================= */}
         <SidebarAdmin currentMenu="pengumpulan-laporan" />
 
         {/* ================= KONTEN UTAMA AKUN MPM ================= */}
-        <main className="flex-1 p-8 overflow-y-auto flex flex-col justify-between">
+        <main className="flex-1 p-8 overflow-y-auto flex flex-col justify-between space-y-6">
           <div>
             {/* Breadcrumb Bar Atas dengan User Profile */}
             <div className="flex justify-between items-center mb-6">
@@ -129,7 +129,7 @@ export const MPMPengumpulanLaporan: React.FC = () => {
 
               {/* Profile Avatar Kanan */}
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs">
+                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs shadow-sm">
                   A
                 </div>
                 <div className="text-right hidden sm:block">
@@ -146,27 +146,24 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                   Pengumpulan Proposal &amp; Laporan BEM/BPM
                 </h2>
                 <p className="text-xs text-gray-500 mt-1">
-                  Kelola data organisasi mahasiswa melalui portal SI-BEO.
-                </p>
-                <p className="text-xs text-gray-500">
-                  Pantau dan verifikasi dokumen proposal serta laporan dari BEM/BPM.
+                  Kelola data organisasi mahasiswa melalui portal SI-BEO. Pantau dan verifikasi dokumen proposal serta laporan dari BEM/BPM.
                 </p>
               </div>
 
               <button 
                 onClick={() => setShowAddModal(true)}
-                className="px-5 py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow transition cursor-pointer flex items-center gap-2"
+                className="px-5 py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow transition cursor-pointer flex items-center gap-2 shrink-0"
               >
                 <span>+</span>
                 <span>Catat Pengumpulan</span>
               </button>
             </div>
 
-            {/* 4 Summary Cards (KPI Metrics Sesuai Referensi Gambar) */}
+            {/* 4 Summary Cards (KPI Metrics dengan GLASSMORPHISM) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               {/* Total Dokumen */}
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0">
+              <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0 shadow-sm">
                   📑
                 </div>
                 <div>
@@ -176,8 +173,8 @@ export const MPMPengumpulanLaporan: React.FC = () => {
               </div>
 
               {/* Menunggu Verifikasi */}
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl shrink-0">
+              <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl shrink-0 shadow-sm">
                   ⏳
                 </div>
                 <div>
@@ -187,8 +184,8 @@ export const MPMPengumpulanLaporan: React.FC = () => {
               </div>
 
               {/* Perlu Revisi */}
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl shrink-0">
+              <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl shrink-0 shadow-sm">
                   ⚠️
                 </div>
                 <div>
@@ -198,8 +195,8 @@ export const MPMPengumpulanLaporan: React.FC = () => {
               </div>
 
               {/* Terverifikasi */}
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+              <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0 shadow-sm">
                   ✅
                 </div>
                 <div>
@@ -209,8 +206,8 @@ export const MPMPengumpulanLaporan: React.FC = () => {
               </div>
             </div>
 
-            {/* Kartu Tabel Utama */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-8">
+            {/* Kartu Tabel Utama (GLASSMORPHISM) */}
+            <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
               {/* Header Tabel & Input Pencarian */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5">
                 <div>
@@ -229,9 +226,9 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       placeholder="Cari nama dokumen atau organisasi..."
-                      className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-xs text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 transition"
+                      className="w-full pl-9 pr-4 py-2.5 bg-white/90 border border-gray-200/80 rounded-xl text-xs text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 transition"
                     />
-                    <span className="absolute left-3 top-2.5 text-gray-400 text-xs">🔍</span>
+                    <span className="absolute left-3 top-3 text-gray-400 text-xs">🔍</span>
                   </div>
                 </div>
               </div>
@@ -240,7 +237,7 @@ export const MPMPengumpulanLaporan: React.FC = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-gray-50/70 border-b border-gray-100 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                    <tr className="bg-white/50 border-b border-gray-100 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
                       <th className="py-3 px-4">ORGANISASI</th>
                       <th className="py-3 px-4">JENIS DOKUMEN</th>
                       <th className="py-3 px-4">TANGGAL MASUK</th>
@@ -249,10 +246,10 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                       <th className="py-3 px-4 text-right">AKSI</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50 text-xs">
+                  <tbody className="divide-y divide-gray-100/60 text-xs">
                     {filteredList.length > 0 ? (
                       filteredList.map((item) => (
-                        <tr key={item.id} className="hover:bg-gray-50/60 transition">
+                        <tr key={item.id} className="hover:bg-white/60 transition">
                           <td className="py-3.5 px-4 font-bold text-gray-900">
                             {item.organisasi}
                           </td>
@@ -313,32 +310,32 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                   <button 
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-40 cursor-pointer"
+                    className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-40 cursor-pointer shadow-sm"
                   >
                     ‹
                   </button>
                   <button 
                     onClick={() => setCurrentPage(1)}
-                    className={`w-7 h-7 flex items-center justify-center rounded-lg ${currentPage === 1 ? 'bg-[#1B437C] text-white font-bold' : 'border border-gray-200 hover:bg-gray-50 text-gray-700'} cursor-pointer`}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg ${currentPage === 1 ? 'bg-[#1B437C] text-white font-bold shadow' : 'border border-gray-200 bg-white hover:bg-gray-50 text-gray-700'} cursor-pointer`}
                   >
                     1
                   </button>
                   <button 
                     onClick={() => setCurrentPage(2)}
-                    className={`w-7 h-7 flex items-center justify-center rounded-lg ${currentPage === 2 ? 'bg-[#1B437C] text-white font-bold' : 'border border-gray-200 hover:bg-gray-50 text-gray-700'} cursor-pointer`}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg ${currentPage === 2 ? 'bg-[#1B437C] text-white font-bold shadow' : 'border border-gray-200 bg-white hover:bg-gray-50 text-gray-700'} cursor-pointer`}
                   >
                     2
                   </button>
                   <button 
                     onClick={() => setCurrentPage(3)}
-                    className={`w-7 h-7 flex items-center justify-center rounded-lg ${currentPage === 3 ? 'bg-[#1B437C] text-white font-bold' : 'border border-gray-200 hover:bg-gray-50 text-gray-700'} cursor-pointer`}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg ${currentPage === 3 ? 'bg-[#1B437C] text-white font-bold shadow' : 'border border-gray-200 bg-white hover:bg-gray-50 text-gray-700'} cursor-pointer`}
                   >
                     3
                   </button>
                   <button 
                     disabled={currentPage === 3}
                     onClick={() => setCurrentPage(prev => Math.min(3, prev + 1))}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-40 cursor-pointer"
+                    className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-40 cursor-pointer shadow-sm"
                   >
                     ›
                   </button>
@@ -347,45 +344,22 @@ export const MPMPengumpulanLaporan: React.FC = () => {
             </div>
           </div>
 
-          {/* ================= FOOTER SI-BEO ================= */}
-          <footer className="mt-8 pt-8 border-t border-gray-200">
-            <div className="flex flex-col md:flex-row justify-between gap-6 pb-6">
-              <div className="flex items-start gap-3 max-w-lg">
-                <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="6" cy="18" r="2.5" />
-                    <circle cx="18" cy="6" r="2.5" />
-                    <path d="M7.5 16.5 L16.5 7.5" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
-                    <span className="text-[10px] text-gray-500">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</span>
-                  </div>
-                  <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                    Portal terpadu pengawasan, verifikasi berkas, dan evaluasi laporan pertanggungjawaban organisasi mahasiswa.
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-1 text-xs">
-                <p className="font-bold text-gray-800 text-xs mb-1.5">Kontak Kampus</p>
-                <p className="text-gray-600">Email: <span className="text-blue-600 font-medium">[tempatkan email resmi]</span></p>
-                <p className="text-gray-600">Telepon: <span className="text-blue-600 font-medium">[tempatkan nomor resmi]</span></p>
-                <p className="text-gray-600">Lokasi: <span className="text-blue-600 font-medium">[tempatkan alamat resmi]</span></p>
+          {/* ================= FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) ================= */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-[10px] text-gray-400 gap-2">
-              <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
-              <div className="flex items-center gap-4">
-                <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
-                <span>•</span>
-                <span className="hover:text-gray-600 cursor-pointer">Pusat bantuan</span>
-                <span>•</span>
-                <span className="hover:text-gray-600 cursor-pointer">Kebijakan privasi</span>
-              </div>
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
         </main>
@@ -393,9 +367,9 @@ export const MPMPengumpulanLaporan: React.FC = () => {
 
       {/* ================= MODAL CATAT PENGUMPULAN BARU ================= */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center border-b pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Catat Pengumpulan Dokumen BEM/BPM</h3>
                 <p className="text-xs text-gray-500">Pencatatan berkas proposal atau laporan yang masuk untuk diverifikasi MPM.</p>
@@ -418,7 +392,7 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                   value={formData.organisasi}
                   onChange={(e) => setFormData({ ...formData, organisasi: e.target.value })}
                   placeholder="Contoh: BEM Fakultas Ilmu Komputer..."
-                  className="w-full p-2.5 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                 />
               </div>
 
@@ -429,7 +403,7 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                 <select
                   value={formData.jenisDokumen}
                   onChange={(e) => setFormData({ ...formData, jenisDokumen: e.target.value })}
-                  className="w-full p-2.5 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
                 >
                   <option value="Proposal Program Kerja">Proposal Program Kerja</option>
                   <option value="Proposal Kegiatan">Proposal Kegiatan</option>
@@ -456,11 +430,11 @@ export const MPMPengumpulanLaporan: React.FC = () => {
                   value={formData.catatan}
                   onChange={(e) => setFormData({ ...formData, catatan: e.target.value })}
                   placeholder="Catatan peninjauan awal dokumen..."
-                  className="w-full p-2.5 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full p-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 resize-none bg-white"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t">
+              <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
@@ -482,9 +456,9 @@ export const MPMPengumpulanLaporan: React.FC = () => {
 
       {/* ================= MODAL DETAIL PEMERIKSAAN ================= */}
       {selectedDoc && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center border-b pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Verifikasi Dokumen BEM/BPM</h3>
                 <p className="text-xs text-gray-500">{selectedDoc.organisasi}</p>
@@ -531,7 +505,7 @@ export const MPMPengumpulanLaporan: React.FC = () => {
 
               <div>
                 <label className="block text-gray-600 font-bold mb-1">File Berkas Masuk</label>
-                <div className="flex items-center justify-between p-3 border border-gray-200 rounded-xl bg-white hover:bg-gray-50 transition">
+                <div className="flex items-center justify-between p-3 border border-gray-200 rounded-xl bg-white hover:bg-gray-50 transition shadow-sm">
                   <div className="flex items-center gap-2.5">
                     <span className="text-base">📄</span>
                     <span className="font-medium text-gray-800">{selectedDoc.fileNama}</span>
@@ -546,7 +520,7 @@ export const MPMPengumpulanLaporan: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex justify-end pt-3 border-t">
+            <div className="flex justify-end pt-3 border-t border-gray-100">
               <button
                 onClick={() => setSelectedDoc(null)}
                 className="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition cursor-pointer"
@@ -563,4 +537,3 @@ export const MPMPengumpulanLaporan: React.FC = () => {
 };
 
 export default MPMPengumpulanLaporan;
-

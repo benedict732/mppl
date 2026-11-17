@@ -27,8 +27,8 @@ export const DashboardOrmawa: React.FC = () => {
             </h1>
           </div>
 
-          {/* Selamat Datang & Filter */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+          {/* Selamat Datang & Filter (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm space-y-4">
             <div>
               <h2 className="text-sm font-bold text-gray-900">Selamat datang</h2>
               <p className="text-xs text-gray-500">Kelola data Ormawa</p>
@@ -36,43 +36,43 @@ export const DashboardOrmawa: React.FC = () => {
             <div className="flex items-end gap-4">
               <div className="w-64">
                 <label className="block text-[11px] font-bold text-gray-700 mb-1">PERIODE DATA ORMAWA</label>
-                <select className="w-full p-2.5 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-700 outline-none">
+                <select className="w-full p-2.5 bg-white/90 border border-gray-200/80 rounded-xl text-xs font-medium text-gray-700 outline-none cursor-pointer">
                   <option>Semua periode</option>
                 </select>
               </div>
-              <button className="px-5 py-2.5 bg-[#1B437C] text-white rounded-lg text-xs font-bold hover:bg-blue-900 cursor-pointer">
+              <button className="px-5 py-2.5 bg-[#1B437C] text-white rounded-xl text-xs font-bold hover:bg-blue-900 cursor-pointer shadow-sm transition">
                 Terapkan
               </button>
             </div>
           </div>
 
-          {/* 3 Kotak Statistik Atas */}
+          {/* 3 Kotak Statistik Atas (GLASSMORPHISM) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-blue-600">
               <p className="text-[11px] text-gray-500 font-bold mb-1">Anggota Ormawa Aktif</p>
               <p className="text-2xl font-extrabold text-gray-900 mb-2">12</p>
               <p className="text-[10px] text-gray-400">Data dermy</p>
             </div>
-            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-emerald-600">
               <p className="text-[11px] text-gray-500 font-bold mb-1">Keseluruhan Anggota</p>
               <p className="text-2xl font-extrabold text-gray-900 mb-2">8</p>
               <p className="text-[10px] text-gray-400">Data dermy</p>
             </div>
-            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-amber-500">
               <p className="text-[11px] text-gray-500 font-bold mb-1">Pengumuman</p>
               <p className="text-2xl font-extrabold text-gray-900 mb-2">5</p>
               <p className="text-[10px] text-gray-400">Data dermy</p>
             </div>
           </div>
 
-          {/* Kegiatan Unggulan Organisasi */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+          {/* Kegiatan Unggulan Organisasi (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900">Kegiatan Unggulan Organisasi</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               
               {/* Card 1 */}
-              <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white">
+              <div className="border border-gray-200/80 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white/90">
                 <div>
                   <div className="h-28 bg-gray-200 relative overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&auto=format&fit=crop&q=60" alt="Kegiatan" className="w-full h-full object-cover" />
@@ -87,8 +87,8 @@ export const DashboardOrmawa: React.FC = () => {
                 </div>
               </div>
 
-              {/* Card 2 (Diperbaiki gambarnya agar tidak hilang) */}
-              <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white">
+              {/* Card 2 */}
+              <div className="border border-gray-200/80 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white/90">
                 <div>
                   <div className="h-28 bg-gray-200 relative overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500&auto=format&fit=crop&q=60" alt="Kegiatan" className="w-full h-full object-cover" />
@@ -104,7 +104,7 @@ export const DashboardOrmawa: React.FC = () => {
               </div>
 
               {/* Card 3 */}
-              <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white">
+              <div className="border border-gray-200/80 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white/90">
                 <div>
                   <div className="h-28 bg-gray-200 relative overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&auto=format&fit=crop&q=60" alt="Kegiatan" className="w-full h-full object-cover" />
@@ -120,7 +120,7 @@ export const DashboardOrmawa: React.FC = () => {
               </div>
 
               {/* Card 4 */}
-              <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white">
+              <div className="border border-gray-200/80 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between bg-white/90">
                 <div>
                   <div className="h-28 bg-gray-200 relative overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&auto=format&fit=crop&q=60" alt="Kegiatan" className="w-full h-full object-cover" />
@@ -138,17 +138,17 @@ export const DashboardOrmawa: React.FC = () => {
             </div>
           </div>
 
-          {/* Pengingat Laporan Kegiatan */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+          {/* Pengingat Laporan Kegiatan (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm space-y-4">
             <div>
               <h3 className="text-sm font-bold text-gray-900">Pengingat laporan kegiatan</h3>
               <p className="text-[11px] text-gray-500">Laporan kegiatan yang belum dikumpulkan / perlu ditinjau.</p>
             </div>
 
-            <div className="overflow-x-auto border border-gray-100 rounded-xl">
+            <div className="overflow-x-auto border border-gray-100 rounded-xl bg-white/50">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-gray-50 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                  <tr className="bg-gray-50/80 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
                     <th className="py-3 px-4">KEGIATAN</th>
                     <th className="py-3 px-4">TAHUN AKADEMIK</th>
                     <th className="py-3 px-4">STATUS LAPORAN</th>
@@ -156,7 +156,7 @@ export const DashboardOrmawa: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="text-xs divide-y divide-gray-100">
-                  <tr className="hover:bg-gray-50/50">
+                  <tr className="hover:bg-white/60 transition">
                     <td className="py-3.5 px-4 font-bold text-gray-900">Seminar Karier</td>
                     <td className="py-3.5 px-4 text-gray-600">2026/2027</td>
                     <td className="py-3.5 px-4">
@@ -167,13 +167,13 @@ export const DashboardOrmawa: React.FC = () => {
                     <td className="py-3.5 px-4 text-right">
                       <button 
                         onClick={() => navigate(`${prefix}/detail-kegiatan`)}
-                        className="px-3.5 py-1.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-lg font-bold transition shadow-sm cursor-pointer"
+                        className="px-3.5 py-1.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl font-bold transition shadow-sm cursor-pointer"
                       >
                         Cek Kegiatan
                       </button>
                     </td>
                   </tr>
-                  <tr className="hover:bg-gray-50/50">
+                  <tr className="hover:bg-white/60 transition">
                     <td className="py-3.5 px-4 font-bold text-gray-900">Pekan Seni</td>
                     <td className="py-3.5 px-4 text-gray-600">2026/2027</td>
                     <td className="py-3.5 px-4">
@@ -184,7 +184,7 @@ export const DashboardOrmawa: React.FC = () => {
                     <td className="py-3.5 px-4 text-right">
                       <button 
                         onClick={() => navigate(`${prefix}/detail-kegiatan`)}
-                        className="px-3.5 py-1.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-lg font-bold transition shadow-sm cursor-pointer"
+                        className="px-3.5 py-1.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl font-bold transition shadow-sm cursor-pointer"
                       >
                         Cek Kegiatan
                       </button>
@@ -195,23 +195,22 @@ export const DashboardOrmawa: React.FC = () => {
             </div>
           </div>
 
-          {/* Footer */}
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1.5 bg-[#1B437C] rounded-lg text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
-                <span className="text-[10px] text-gray-400 font-normal">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</span>
+          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm leading-relaxed">
-                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-              </p>
             </div>
-            <div className="space-y-1.5">
-              <p className="font-bold text-gray-700 uppercase tracking-wider text-[10px]">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline cursor-pointer">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline cursor-pointer">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline cursor-pointer">[tempatkan alamat resmi]</span></p>
+
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
         </main>

@@ -68,14 +68,15 @@ export const DetailLaporan: React.FC = () => {
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
       <div className="flex flex-1">
         
-        {/* SIDEBAR KIRI (11 MENU KONSISTEN DENGAN LOGO /logo.jpg) */}
+        {/* SIDEBAR KIRI */}
         <aside className="w-64 bg-[#0B1E36] text-white flex flex-col justify-between p-4 shrink-0">
           <div>
+            {/* LOGO KAMPUS DI ATAS SIDEBAR */}
             <div className="flex items-center gap-3 mb-6 px-2 pt-2">
               <img 
                 src="/logo.jpg" 
                 alt="Logo Kampus" 
-                className="w-9 h-9 object-contain rounded-lg shrink-0"
+                className="w-9 h-9 object-contain rounded-lg shrink-0 bg-white p-0.5 shadow"
               />
               <div>
                 <span className="text-[10px] font-bold text-blue-300 tracking-wider uppercase block">
@@ -95,7 +96,7 @@ export const DetailLaporan: React.FC = () => {
               <div>
                 <button
                   onClick={() => setIsBeasiswaOpen(!isBeasiswaOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>🎓</span>
@@ -115,7 +116,7 @@ export const DetailLaporan: React.FC = () => {
 
               <a href="/biro/ormawa" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>👥</span>
-                <span>Data Anggota Ormawa</span>
+                <span>Data Ormawa</span>
               </a>
               <a href="/biro/pengumuman" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📢</span>
@@ -138,7 +139,7 @@ export const DetailLaporan: React.FC = () => {
               <div>
                 <button
                   onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>📈</span>
@@ -173,7 +174,7 @@ export const DetailLaporan: React.FC = () => {
           <div className="pt-4 border-t border-gray-700/50">
             <button 
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition cursor-pointer"
             >
               <span>🚪</span>
               <span>Logout</span>
@@ -193,8 +194,8 @@ export const DetailLaporan: React.FC = () => {
             <p className="text-xs text-gray-500 mt-1">Daftar laporan kegiatan ormawa yang telah melalui proses pemeriksaan.</p>
           </div>
 
-          {/* PENCARIAN & FILTER BAR */}
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
+          {/* PENCARIAN & FILTER BAR (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div className="md:col-span-8">
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5">Cari nama kegiatan atau ormawa</label>
@@ -203,14 +204,14 @@ export const DetailLaporan: React.FC = () => {
                   value={search} 
                   onChange={(e) => setSearch(e.target.value)} 
                   placeholder="Ketik nama kegiatan..." 
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white" 
+                  className="w-full px-4 py-2 border border-gray-200/80 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white/90" 
                 />
               </div>
               <div className="md:col-span-4">
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5">Filter Lanjutan</label>
                 <button 
                   onClick={() => setIsFilterOpen(true)} 
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs flex justify-between items-center cursor-pointer bg-white text-gray-600 hover:border-blue-400 transition font-medium"
+                  className="w-full px-4 py-2 border border-gray-200/80 rounded-xl text-xs flex justify-between items-center cursor-pointer bg-white/90 text-gray-600 hover:border-blue-400 transition font-medium"
                 >
                   <span>Filter Status & Ormawa</span>
                   <span>⚙️</span>
@@ -219,15 +220,15 @@ export const DetailLaporan: React.FC = () => {
             </div>
           </div>
 
-          {/* TABEL DAFTAR LAPORAN */}
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
+          {/* TABEL DAFTAR LAPORAN (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-bold text-gray-900">Daftar Laporan Terverifikasi ({dataLaporanSelesai.length})</h3>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-[10px]">
+                <thead className="bg-gray-50/80 text-gray-500 font-semibold uppercase text-[10px]">
                   <tr>
                     <th className="p-3">NAMA KEGIATAN</th>
                     <th className="p-3">ORMAWA</th>
@@ -239,7 +240,7 @@ export const DetailLaporan: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {dataLaporanSelesai.map((item) => (
-                    <tr key={item.id} className="hover:bg-gray-50 transition">
+                    <tr key={item.id} className="hover:bg-white/60 transition">
                       <td className="p-3 font-bold text-gray-900">{item.kegiatan}</td>
                       <td className="p-3 text-gray-600">{item.ormawa}</td>
                       <td className="p-3 text-gray-600">{item.jenis}</td>
@@ -255,7 +256,7 @@ export const DetailLaporan: React.FC = () => {
                       <td className="p-3 text-right">
                         <button 
                           onClick={() => handleOpenDetail(item)}
-                          className="text-blue-600 hover:underline font-semibold text-xs"
+                          className="text-blue-600 hover:underline font-semibold text-xs cursor-pointer"
                         >
                           Lihat Detail
                         </button>
@@ -267,62 +268,57 @@ export const DetailLaporan: React.FC = () => {
             </div>
           </div>
 
-          {/* FOOTER */}
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1 bg-blue-900 rounded text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
+          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm">
-                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-              </p>
             </div>
-            <div className="space-y-1">
-              <p className="font-bold text-gray-700">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline">[tempatkan alamat resmi]</span></p>
+
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
-
-          <div className="mt-6 flex justify-between items-center text-[10px] text-gray-400">
-            <p>© 2026 SIMPUL - Satu Akses, Beragam Peluang.</p>
-            <p>Konten program ilustratif - Pusat bantuan - Kebijakan privasi</p>
-          </div>
         </main>
       </div>
 
-      {/* ================= MODAL DETAIL LAPORAN (DENGAN BLUR BACKGROUND) ================= */}
+      {/* ================= MODAL DETAIL LAPORAN ================= */}
       {isDetailOpen && selectedLaporan && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 space-y-4 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
             <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <div>
                 <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Arsip Pemeriksaan</span>
                 <h3 className="text-base font-bold text-gray-900 mt-1">{selectedLaporan.kegiatan}</h3>
               </div>
-              <button onClick={() => setIsDetailOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-sm">✕</button>
+              <button onClick={() => setIsDetailOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer">✕</button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs text-gray-700">
-              <div className="p-3 bg-gray-50 rounded-xl">
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <p className="text-[10px] text-gray-400 uppercase font-bold">Organisasi (Ormawa)</p>
                 <p className="font-semibold text-gray-900 mt-0.5">{selectedLaporan.ormawa}</p>
               </div>
-              <div className="p-3 bg-gray-50 rounded-xl">
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <p className="text-[10px] text-gray-400 uppercase font-bold">Jenis Dokumen</p>
                 <p className="font-semibold text-gray-900 mt-0.5">{selectedLaporan.jenis}</p>
               </div>
-              <div className="p-3 bg-gray-50 rounded-xl">
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <p className="text-[10px] text-gray-400 uppercase font-bold">Tahun Akademik</p>
                 <p className="font-semibold text-gray-900 mt-0.5">{selectedLaporan.tahunAkademik}</p>
               </div>
-              <div className="p-3 bg-gray-50 rounded-xl">
+              <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <p className="text-[10px] text-gray-400 uppercase font-bold">Tanggal Verifikasi</p>
                 <p className="font-semibold text-gray-900 mt-0.5">{selectedLaporan.tanggalVerifikasi}</p>
               </div>
-              <div className="col-span-2 p-3 bg-gray-50 rounded-xl">
+              <div className="col-span-2 p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <p className="text-[10px] text-gray-400 uppercase font-bold">Catatan / Keterangan Pemeriksa</p>
                 <p className="font-medium text-gray-800 mt-0.5 italic">"{selectedLaporan.catatan}"</p>
               </div>
@@ -331,13 +327,13 @@ export const DetailLaporan: React.FC = () => {
             <div className="flex justify-end pt-3 border-t border-gray-100 gap-2">
               <button 
                 onClick={() => alert('Mengunduh dokumen laporan lengkap...')} 
-                className="px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-xs font-semibold"
+                className="px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-xl text-xs font-semibold cursor-pointer"
               >
                 Unduh Lampiran
               </button>
               <button 
                 onClick={() => setIsDetailOpen(false)} 
-                className="px-6 py-2 bg-[#0B2545] hover:bg-[#133763] text-white rounded-lg text-xs font-semibold shadow-sm transition"
+                className="px-6 py-2 bg-[#0B2545] hover:bg-[#133763] text-white rounded-xl text-xs font-semibold shadow-sm transition cursor-pointer"
               >
                 Tutup
               </button>
@@ -346,13 +342,13 @@ export const DetailLaporan: React.FC = () => {
         </div>
       )}
 
-      {/* ================= MODAL FILTER (DENGAN BLUR BACKGROUND) ================= */}
+      {/* ================= MODAL FILTER ================= */}
       {isFilterOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
               <h3 className="text-xs font-bold text-gray-800">Filter Laporan</h3>
-              <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-xs">✕</button>
+              <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-xs cursor-pointer">✕</button>
             </div>
 
             <div>
@@ -361,7 +357,7 @@ export const DetailLaporan: React.FC = () => {
                 {['Selesai', 'Revisi', 'Diterima'].map((s) => (
                   <button
                     key={s}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-100 hover:bg-blue-500 hover:text-white text-gray-600 transition"
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-600 transition cursor-pointer"
                   >
                     {s}
                   </button>
@@ -370,10 +366,10 @@ export const DetailLaporan: React.FC = () => {
             </div>
 
             <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
-              <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-lg">
+              <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl cursor-pointer">
                 RESET
               </button>
-              <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-blue-500 text-white text-xs font-semibold rounded-lg">
+              <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl cursor-pointer shadow-sm">
                 TERAPKAN
               </button>
             </div>

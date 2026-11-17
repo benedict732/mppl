@@ -15,25 +15,26 @@ export const RekapOrmawa: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
+    <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
       <div className="flex flex-1">
         
-        {/* SIDEBAR KIRI KONSISTEN DENGAN LOGO KAMPUS */}
+        {/* SIDEBAR KIRI */}
         <aside className="w-64 bg-[#0B1E36] text-white flex flex-col justify-between p-4 shrink-0">
           <div>
+            {/* LOGO KAMPUS DI ATAS SIDEBAR */}
             <div className="flex items-center gap-3 mb-6 px-2 pt-2">
-             <img 
-             src="/logo.jpg" 
-             alt="Logo.jpg" 
-             className="w-9 h-9 object-contain shrink-0"
-             />
-            <div>
-    <span className="text-[10px] font-bold text-blue-300 tracking-wider uppercase block">
-      KEMAHASISWAAN
-    </span>
-    <span className="text-xs text-gray-400 block mt-0.5">Portal Manajemen</span>
-  </div>
-</div>
+              <img 
+                src="/logo.jpg" 
+                alt="Logo Kampus" 
+                className="w-9 h-9 object-contain rounded-lg shrink-0 bg-white p-0.5 shadow" 
+              />
+              <div>
+                <span className="text-[10px] font-bold text-blue-300 tracking-wider uppercase block">
+                  KEMAHASISWAAN
+                </span>
+                <span className="text-xs text-gray-400 block mt-0.5">Portal Manajemen</span>
+              </div>
+            </div>
 
             <nav className="space-y-1 text-xs">
               <a href="/biro/dashboard" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
@@ -44,7 +45,7 @@ export const RekapOrmawa: React.FC = () => {
               <div>
                 <button
                   onClick={() => setIsBeasiswaOpen(!isBeasiswaOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>🎓</span>
@@ -86,7 +87,7 @@ export const RekapOrmawa: React.FC = () => {
               <div>
                 <button
                   onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg text-left"
+                  className="w-full flex items-center justify-between px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg text-left cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>📈</span>
@@ -119,14 +120,14 @@ export const RekapOrmawa: React.FC = () => {
           </div>
 
           <div className="pt-4 border-t border-gray-700/50">
-            <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition">
+            <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition cursor-pointer">
               <span>🚪</span>
               <span>Logout</span>
             </button>
           </div>
         </aside>
 
-        {/* KONTEN UTAMA LENGKAP UTUH */}
+        {/* KONTEN UTAMA */}
         <main className="flex-1 p-8 overflow-y-auto">
           <div className="mb-6">
             <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">KEPALA BIRO / REKAPITULASI</p>
@@ -146,13 +147,13 @@ export const RekapOrmawa: React.FC = () => {
                   <select
                     value={periode}
                     onChange={(e) => setPeriode(e.target.value)}
-                    className="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-medium text-gray-600 outline-none shadow-sm min-w-[200px]"
+                    className="bg-white/90 border border-gray-200/80 rounded-xl px-4 py-2 text-xs font-medium text-gray-600 outline-none shadow-sm min-w-[200px] cursor-pointer"
                   >
                     <option value="Semua periode">Semua periode</option>
                     <option value="2026/2027">2026/2027</option>
                     <option value="2025/2026">2025/2026</option>
                   </select>
-                  <button className="px-5 py-2 bg-[#1B437C] hover:bg-[#133360] text-white text-xs font-semibold rounded-lg shadow-sm transition">
+                  <button className="px-5 py-2 bg-[#1B437C] hover:bg-[#133360] text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer">
                     Terapkan
                   </button>
                 </div>
@@ -161,42 +162,42 @@ export const RekapOrmawa: React.FC = () => {
 
             <button
               onClick={handleExport}
-              className="px-6 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-2 self-end md:self-auto"
+              className="px-6 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center gap-2 self-end md:self-auto cursor-pointer"
             >
               <span>Export File</span>
             </button>
           </div>
 
-          {/* KARTU METRIK UTAMA */}
+          {/* KARTU METRIK UTAMA (GLASSMORPHISM) */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-blue-600">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-blue-600">
               <p className="text-[11px] text-gray-500 font-medium">Total kegiatan</p>
               <p className="text-3xl font-extrabold text-gray-900 mt-1">36</p>
               <p className="text-[10px] text-gray-400 mt-1">Contoh data</p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-emerald-600">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-emerald-600">
               <p className="text-[11px] text-gray-500 font-medium">Laporan terkumpul</p>
               <p className="text-3xl font-extrabold text-gray-900 mt-1">24</p>
               <p className="text-[10px] text-gray-400 mt-1">Contoh data</p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-amber-500">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-amber-500">
               <p className="text-[11px] text-gray-500 font-medium">Belum dikumpulkan</p>
               <p className="text-3xl font-extrabold text-gray-900 mt-1">6</p>
               <p className="text-[10px] text-amber-600 font-semibold mt-1">Perlu tindak lanjut</p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-blue-400">
+            <div className="bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm border-l-4 border-l-blue-400">
               <p className="text-[11px] text-gray-500 font-medium">Menunggu verifikasi</p>
               <p className="text-3xl font-extrabold text-gray-900 mt-1">6</p>
               <p className="text-[10px] text-gray-400 mt-1">Contoh data</p>
             </div>
           </div>
 
-          {/* GRID PROGRESS & STATUS CARDS */}
+          {/* GRID PROGRESS & STATUS CARDS (GLASSMORPHISM) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-            <div className="lg:col-span-8 bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div className="lg:col-span-8 bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm">
               <h3 className="text-sm font-bold text-gray-900 mb-1">Kelengkapan laporan per ormawa</h3>
               <p className="text-[11px] text-gray-400 mb-6">Jumlah laporan terkumpul dibanding total kegiatan</p>
 
@@ -243,7 +244,7 @@ export const RekapOrmawa: React.FC = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-3">
+            <div className="lg:col-span-4 bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm space-y-3">
               <h3 className="text-sm font-bold text-gray-900 mb-4">Status laporan</h3>
 
               <div className="p-4 bg-[#EAF7ED] text-emerald-900 rounded-xl flex justify-between items-center shadow-sm">
@@ -263,12 +264,12 @@ export const RekapOrmawa: React.FC = () => {
             </div>
           </div>
 
-          {/* TABEL DATA */}
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
+          {/* TABEL DATA (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
             <h3 className="text-sm font-bold text-gray-900 mb-4">Ormawa yang belum mengumpulkan laporan</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-[10px]">
+                <thead className="bg-gray-50/80 text-gray-500 font-semibold uppercase text-[10px]">
                   <tr>
                     <th className="p-3">KEGIATAN</th>
                     <th className="p-3">TANGGAL KEGIATAN</th>
@@ -276,14 +277,14 @@ export const RekapOrmawa: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  <tr>
+                  <tr className="hover:bg-white/60 transition">
                     <td className="p-3 font-semibold text-gray-800">Seminar Karier</td>
                     <td className="p-3 text-gray-600">08 - 10 - 2026</td>
                     <td className="p-3 text-center">
                       <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-[10px] font-semibold">Belum dikumpulkan</span>
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="hover:bg-white/60 transition">
                     <td className="p-3 font-semibold text-gray-800">Turnamen Internal</td>
                     <td className="p-3 text-gray-600">05 - 09 - 2026</td>
                     <td className="p-3 text-center">
@@ -295,19 +296,22 @@ export const RekapOrmawa: React.FC = () => {
             </div>
           </div>
 
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1 bg-blue-900 rounded text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
+          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm">Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.</p>
             </div>
-            <div className="space-y-1">
-              <p className="font-bold text-gray-700">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline">[tempatkan alamat resmi]</span></p>
+
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
         </main>

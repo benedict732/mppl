@@ -92,14 +92,15 @@ export const Pengumuman: React.FC = () => {
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
       <div className="flex flex-1">
         
-        {/* SIDEBAR KIRI KONSISTEN DENGAN LOGO.JPG */}
+        {/* SIDEBAR KIRI */}
         <aside className="w-64 bg-[#0B1E36] text-white flex flex-col justify-between p-4 shrink-0">
           <div>
+            {/* LOGO KAMPUS DI ATAS SIDEBAR */}
             <div className="flex items-center gap-3 mb-6 px-2 pt-2">
               <img 
                 src="/logo.jpg" 
                 alt="Logo Kampus" 
-                className="w-9 h-9 object-contain rounded-lg shrink-0"
+                className="w-9 h-9 object-contain rounded-lg shrink-0 bg-white p-0.5 shadow"
               />
               <div>
                 <span className="text-[10px] font-bold text-blue-300 tracking-wider uppercase block">
@@ -119,7 +120,7 @@ export const Pengumuman: React.FC = () => {
               <div>
                 <button
                   onClick={() => setIsBeasiswaOpen(!isBeasiswaOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>🎓</span>
@@ -168,7 +169,7 @@ export const Pengumuman: React.FC = () => {
               <div>
                 <button
                   onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition"
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <span>📈</span>
@@ -207,7 +208,7 @@ export const Pengumuman: React.FC = () => {
           <div className="pt-4 border-t border-gray-700/50">
             <button 
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition cursor-pointer"
             >
               <span>🚪</span>
               <span>Logout</span>
@@ -215,7 +216,7 @@ export const Pengumuman: React.FC = () => {
           </div>
         </aside>
 
-        {/* AREA KONTEN UTAMA LENGKAP */}
+        {/* AREA KONTEN UTAMA */}
         <main className="flex-1 p-8 overflow-y-auto">
           <div className="mb-6">
             <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">PENGUMUMAN</p>
@@ -229,15 +230,15 @@ export const Pengumuman: React.FC = () => {
             </div>
             <button
               onClick={() => setActiveModal('buat')}
-              className="px-5 py-2.5 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer"
             >
               <span>+</span>
               <span>Buat Pengumuman</span>
             </button>
           </div>
 
-          {/* CARD FILTER LENGKAP */}
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
+          {/* CARD FILTER (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
               <div className="md:col-span-5">
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5">
@@ -246,7 +247,7 @@ export const Pengumuman: React.FC = () => {
                 <select
                   value={filterKategori}
                   onChange={(e) => setFilterKategori(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 bg-white"
+                  className="w-full px-4 py-2 border border-gray-200/80 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 bg-white/90 cursor-pointer"
                 >
                   <option value="Semua">Semua Kategori</option>
                   <option value="Beasiswa">Beasiswa</option>
@@ -261,7 +262,7 @@ export const Pengumuman: React.FC = () => {
                 <select
                   value={filterTahun}
                   onChange={(e) => setFilterTahun(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 bg-white"
+                  className="w-full px-4 py-2 border border-gray-200/80 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 bg-white/90 cursor-pointer"
                 >
                   <option value="Semua">Semua Tahun Akademik</option>
                   <option value="2026/2027">2026/2027</option>
@@ -272,7 +273,7 @@ export const Pengumuman: React.FC = () => {
               <div className="md:col-span-2">
                 <button
                   onClick={() => { setFilterKategori('Semua'); setFilterTahun('Semua'); }}
-                  className="w-full py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg shadow-sm transition"
+                  className="w-full py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer"
                 >
                   Reset
                 </button>
@@ -280,13 +281,13 @@ export const Pengumuman: React.FC = () => {
             </div>
           </div>
 
-          {/* GRID KARTU PENGUMUMAN LENGKAP */}
-          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
+          {/* GRID KARTU PENGUMUMAN (GLASSMORPHISM) */}
+          <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {pengumumanFiltered.map((item) => (
                 <div 
                   key={item.id}
-                  className="border border-gray-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition bg-white relative group"
+                  className="border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition bg-white/90 relative group"
                 >
                   <div>
                     <div className="w-full h-40 bg-gray-200 rounded-xl overflow-hidden mb-3 relative">
@@ -309,13 +310,13 @@ export const Pengumuman: React.FC = () => {
                   <div className="flex justify-between items-center border-t border-gray-100 pt-3 mt-2">
                     <button 
                       onClick={() => { setSelectedPengumuman(item); setActiveModal('detail'); }}
-                      className="text-xs font-semibold text-blue-600 hover:underline"
+                      className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
                     >
                       Selengkapnya
                     </button>
                     <button 
                       onClick={() => { setSelectedPengumuman(item); setActiveModal('hapus'); }}
-                      className="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-bold transition"
+                      className="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-bold transition cursor-pointer"
                       title="Hapus Pengumuman"
                     >
                       🗑️
@@ -326,30 +327,24 @@ export const Pengumuman: React.FC = () => {
             </div>
           </div>
 
-          {/* FOOTER */}
-          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 font-bold text-gray-800">
-                <div className="p-1 bg-blue-900 rounded text-white text-xs">🛡️</div>
-                <span>SI-BEO</span>
+          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
-              <p className="text-[10px] text-gray-400 max-w-sm">
-                Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-              </p>
             </div>
-            <div className="space-y-1">
-              <p className="font-bold text-gray-700">Kontak Kampus</p>
-              <p>Email: <span className="text-blue-600 underline">[tempatkan email resmi]</span></p>
-              <p>Telepon: <span className="text-blue-600 underline">[tempatkan nomor resmi]</span></p>
-              <p>Lokasi: <span className="text-blue-600 underline">[tempatkan alamat resmi]</span></p>
+
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
-
-          <div className="mt-6 flex justify-between items-center text-[10px] text-gray-400">
-            <p>© 2026 SIMPUL - Satu Akses, Beragam Peluang.</p>
-            <p>Konten program ilustratif - Pusat bantuan - Kebijakan privasi</p>
-          </div>
-
         </main>
       </div>
 
@@ -363,7 +358,7 @@ export const Pengumuman: React.FC = () => {
                 <h3 className="text-base font-bold text-gray-900 mt-1">Buat Pengumuman</h3>
                 <p className="text-[11px] text-gray-400">Publikasikan informasi penting untuk mahasiswa dan anggota organisasi.</p>
               </div>
-              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 font-bold text-sm">✕</button>
+              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer">✕</button>
             </div>
 
             <form onSubmit={(e) => { e.preventDefault(); setActiveModal(null); alert('Pengumuman berhasil diterbitkan!'); }} className="p-6 space-y-4">
@@ -376,7 +371,7 @@ export const Pengumuman: React.FC = () => {
                   placeholder="Contoh: Pendaftaran Anggota Tim Kerja BEM 2026"
                   value={formBuat.judul}
                   onChange={(e) => setFormBuat({ ...formBuat, judul: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
@@ -389,7 +384,7 @@ export const Pengumuman: React.FC = () => {
                   <select
                     value={formBuat.kategori}
                     onChange={(e) => setFormBuat({ ...formBuat, kategori: e.target.value as 'Beasiswa' | 'Ormawa' })}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
                   >
                     <option value="Beasiswa">Beasiswa (KIP, GenBI, VDMI)</option>
                     <option value="Ormawa">Ormawa (BEM, BPM, MPM)</option>
@@ -405,7 +400,7 @@ export const Pengumuman: React.FC = () => {
                     placeholder="Nama Ormawa atau Biro"
                     value={formBuat.organisasi}
                     onChange={(e) => setFormBuat({ ...formBuat, organisasi: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -419,7 +414,7 @@ export const Pengumuman: React.FC = () => {
                   placeholder="Tuliskan detail, jadwal, persyaratan, dan informasi kontak..."
                   value={formBuat.isi}
                   onChange={(e) => setFormBuat({ ...formBuat, isi: e.target.value })}
-                  className="w-full p-3 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full p-3 border border-gray-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                   required
                 ></textarea>
               </div>
@@ -430,7 +425,7 @@ export const Pengumuman: React.FC = () => {
                   type="date"
                   value={formBuat.tanggal}
                   onChange={(e) => setFormBuat({ ...formBuat, tanggal: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
                 />
               </div>
 
@@ -438,13 +433,13 @@ export const Pengumuman: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveModal(null)}
-                  className="px-5 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-semibold rounded-lg transition"
+                  className="px-5 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-semibold rounded-xl transition cursor-pointer"
                 >
                   Simpan Draf
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-lg shadow-sm transition"
+                  className="px-6 py-2 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer"
                 >
                   Terbitkan
                 </button>
@@ -464,8 +459,8 @@ export const Pengumuman: React.FC = () => {
               <span className="font-bold text-gray-800">"{selectedPengumuman.judul}"</span>?
             </p>
             <div className="grid grid-cols-2 gap-3">
-              <button onClick={() => setActiveModal(null)} className="py-2.5 border border-gray-300 text-gray-700 text-xs font-semibold rounded-lg">Batal</button>
-              <button onClick={() => { setActiveModal(null); alert('Pengumuman dihapus!'); }} className="py-2.5 bg-red-600 text-white text-xs font-semibold rounded-lg">Ya, Hapus</button>
+              <button onClick={() => setActiveModal(null)} className="py-2.5 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl cursor-pointer">Batal</button>
+              <button onClick={() => { setActiveModal(null); alert('Pengumuman dihapus!'); }} className="py-2.5 bg-red-600 text-white text-xs font-semibold rounded-xl cursor-pointer">Ya, Hapus</button>
             </div>
           </div>
         </div>
@@ -485,7 +480,7 @@ export const Pengumuman: React.FC = () => {
             </div>
             <p className="text-xs text-gray-600 leading-relaxed border-t border-b border-gray-100 py-3">{selectedPengumuman.isi}</p>
             <div className="flex justify-end">
-              <button onClick={() => setActiveModal(null)} className="px-5 py-2 bg-[#0B2545] text-white text-xs font-semibold rounded-lg">Tutup</button>
+              <button onClick={() => setActiveModal(null)} className="px-5 py-2 bg-[#0B2545] text-white text-xs font-semibold rounded-xl cursor-pointer">Tutup</button>
             </div>
           </div>
         </div>

@@ -5,54 +5,40 @@ interface OrmawaItem {
   id: number;
   nama: string;
   singkatan: string;
-  kategori: string;
   deskripsi: string;
   anggota: string;
   ketua: string;
-  status: string;
+  tabKey: string;
 }
 
 export const Ormawa: React.FC = () => {
   const daftarOrmawa: OrmawaItem[] = [
     {
       id: 1,
-      nama: "Badan Eksekutif Mahasiswa Universitas",
-      singkatan: "BEM Universitas",
-      kategori: "Lembaga Eksekutif",
-      deskripsi: "Lembaga eksekutif tingkat universitas yang mengoordinasikan aspirasi, program kerja kemahasiswaan, dan advokasi mahasiswa kampus.",
-      anggota: "85 Pengurus",
-      ketua: "Andi Pratama",
-      status: "Aktif"
+      nama: "Majelis Permusyawaratan Mahasiswa",
+      singkatan: "MPM",
+      deskripsi: "Lembaga legislatif tertinggi dalam organisasi kemahasiswaan yang bertugas menyerap dan menyampaikan aspirasi mahasiswa, membuat aturan organisasi, serta mengawasi kinerja BEM dan BPM[cite: 2].",
+      anggota: "30 Anggota",
+      ketua: "Ketua MPM",
+      tabKey: "MPM"
     },
     {
       id: 2,
-      nama: "Badan Perwakilan Mahasiswa Universitas",
-      singkatan: "BPM Universitas",
-      kategori: "Lembaga Legislatif",
-      deskripsi: "Lembaga perwakilan dan legislatif kemahasiswaan yang bertugas menampung aspirasi, merumuskan regulasi, dan mengawasi kinerja eksekutif.",
-      anggota: "45 Anggota",
-      ketua: "Maria Lestari",
-      status: "Aktif"
+      nama: "Badan Perwakilan Mahasiswa",
+      singkatan: "BPM",
+      deskripsi: "Lembaga legislatif yang membantu MPM dalam menerima dan menyampaikan aspirasi mahasiswa, melakukan pengawasan terhadap kinerja BEM, serta menyusun peraturan organisasi[cite: 2].",
+      anggota: "35 Anggota",
+      ketua: "Ketua BPM",
+      tabKey: "BPM"
     },
     {
       id: 3,
-      nama: "Badan Eksekutif Mahasiswa Fakultas",
-      singkatan: "BEM Fakultas",
-      kategori: "Lembaga Eksekutif",
-      deskripsi: "Pelaksana program kerja kemahasiswaan di tingkat fakultas yang menaungi kegiatan akademik, sosial, dan minat mahasiswa fakultas.",
+      nama: "Badan Eksekutif Mahasiswa",
+      singkatan: "BEM",
+      deskripsi: "Lembaga eksekutif yang berkegiatan membuat program kerja mahasiswa baik internal maupun eksternal kampus, seperti PKKMB, pengabdian masyarakat, dan kegiatan representatif[cite: 2].",
       anggota: "55 Pengurus",
-      ketua: "Rizky Saputra",
-      status: "Aktif"
-    },
-    {
-      id: 4,
-      nama: "Badan Perwakilan Mahasiswa Fakultas",
-      singkatan: "BPM Fakultas",
-      kategori: "Lembaga Legislatif",
-      deskripsi: "Badan legislatif di tingkat fakultas yang mengawal kebijakan dekanat serta menjaring aspirasi mahasiswa di program studi.",
-      anggota: "35 Anggota",
-      ketua: "Clara Manoppo",
-      status: "Aktif"
+      ketua: "Ketua BEM",
+      tabKey: "BEM"
     }
   ];
 
@@ -96,13 +82,13 @@ export const Ormawa: React.FC = () => {
           <div className="flex items-center gap-2">
             <Link 
               to="/ormawa/login" 
-              className="px-3.5 py-2 text-xs font-bold text-gray-700 hover:text-blue-900 rounded-xl transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Ormawa
             </Link>
             <Link 
               to="/biro/login" 
-              className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Biro
             </Link>
@@ -114,13 +100,13 @@ export const Ormawa: React.FC = () => {
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider">
-            ✦ Organisasi Mahasiswa
+            ✦ Pusat Kelembagaan Mahasiswa
           </span>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
-            Organisasi Mahasiswa (BEM &amp; BPM)
+            Wadah Kepemimpinan, Aspirasi &amp; Kreasi Mahasiswa
           </h1>
           <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-2xl">
-            Informasi kelembagaan Badan Eksekutif Mahasiswa (BEM) dan Badan Perwakilan Mahasiswa (BPM) di lingkungan kampus.
+            Kenali lebih dekat struktur organisasi kemahasiswaan kampus yang aktif mengawal transparansi, menyalurkan aspirasi, serta menyelenggarakan berbagai kegiatan pengembangan diri yang inspiratif.
           </p>
         </div>
       </section>
@@ -133,23 +119,14 @@ export const Ormawa: React.FC = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {daftarOrmawa.map((item) => (
             <div 
               key={item.id} 
               className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
             >
               <div>
-                <div className="flex justify-between items-start gap-2 mb-3">
-                  <span className="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md text-[10px] font-bold uppercase tracking-wider">
-                    {item.kategori}
-                  </span>
-                  <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold">
-                    {item.status}
-                  </span>
-                </div>
-
-                <h3 className="text-lg font-bold text-gray-900 mb-0.5">
+                <h3 className="text-lg font-bold text-gray-900 pt-1 mb-1">
                   {item.singkatan}
                 </h3>
                 <p className="text-xs text-gray-400 font-medium mb-3">
@@ -163,12 +140,11 @@ export const Ormawa: React.FC = () => {
 
               <div className="pt-4 border-t border-gray-100 space-y-3">
                 <div className="flex justify-between text-xs text-gray-500">
-                  <span>Ketua: <strong className="text-gray-800">{item.ketua}</strong></span>
                   <span>Kepengurusan: <strong className="text-gray-800">{item.anggota}</strong></span>
                 </div>
 
                 <Link 
-                  to="/ormawa/profil" 
+                  to={`/ormawa/profil?tab=${encodeURIComponent(item.tabKey)}`} 
                   className="w-full block text-center py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow-sm transition"
                 >
                   Lihat Profil Lengkap →
@@ -184,13 +160,11 @@ export const Ormawa: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row justify-between gap-8 pb-8">
             <div className="flex items-start gap-3.5 max-w-md">
-              <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="6" cy="18" r="2.5" />
-                  <circle cx="18" cy="6" r="2.5" />
-                  <path d="M7.5 16.5 L16.5 7.5" />
-                </svg>
-              </div>
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-10 h-10 object-contain rounded-xl bg-white p-0.5 shadow shrink-0 border border-gray-100"
+              />
               <div>
                 <div className="flex items-baseline gap-2">
                   <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
@@ -211,7 +185,7 @@ export const Ormawa: React.FC = () => {
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-2">
-            <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
+            <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             <div className="flex items-center gap-4 text-xs">
               <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
               <span>•</span>

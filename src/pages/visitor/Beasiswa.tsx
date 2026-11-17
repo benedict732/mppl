@@ -10,6 +10,7 @@ interface BeasiswaItem {
   kuota: string;
   status: "Dibuka" | "Segera Dibuka" | "Ditutup";
   tenggat: string;
+  tabKey: string;
 }
 
 export const Beasiswa: React.FC = () => {
@@ -22,57 +23,30 @@ export const Beasiswa: React.FC = () => {
       deskripsi: "Bantuan biaya pendidikan penuh dan tunjangan biaya hidup bulanan bagi mahasiswa berprestasi dari keluarga prasejahtera.",
       kuota: "250 Mahasiswa",
       status: "Dibuka",
-      tenggat: "30 November 2026"
+      tenggat: "30 November 2026",
+      tabKey: "KIP Kuliah"
     },
     {
       id: 2,
-      judul: "Beasiswa Bank Indonesia",
-      penyelenggara: "Bank Indonesia",
-      kategori: "Instansi",
-      deskripsi: "Program beasiswa prestisius untuk mahasiswa aktif semester 3 hingga 6 dengan capaian IPK minimal 3.00.",
-      kuota: "50 Mahasiswa",
-      status: "Dibuka",
-      tenggat: "15 Desember 2026"
-    },
-    {
-      id: 3,
-      judul: "Beasiswa Prestasi Akademik Kampus",
-      penyelenggara: "Universitas",
-      kategori: "Internal",
-      deskripsi: "Apresiasi potongan biaya kuliah bagi mahasiswa peraih IPK tertinggi di tingkat fakultas dan program studi.",
-      kuota: "100 Mahasiswa",
-      status: "Segera Dibuka",
-      tenggat: "20 Januari 2027"
-    },
-    {
-      id: 4,
       judul: "Beasiswa Van Deventer-Maas Indonesia (VDMI)",
       penyelenggara: "Yayasan VDMI",
       kategori: "Yayasan",
       deskripsi: "Dukungan dana pendidikan serta pelatihan kepemimpinan dan bahasa Inggris bagi mahasiswa jenjang S1 dan D4.",
       kuota: "30 Mahasiswa",
       status: "Ditutup",
-      tenggat: "10 Oktober 2026"
+      tenggat: "10 Oktober 2026",
+      tabKey: "VDMI"
     },
     {
-      id: 5,
-      judul: "Beasiswa Unggulan Prestasi Mahasiswa",
-      penyelenggara: "Biro Kemahasiswaan",
-      kategori: "Internal",
-      deskripsi: "Beasiswa khusus mahasiswa yang memiliki prestasi kejuaraan akademik maupun kepemimpinan minimal tingkat provinsi.",
-      kuota: "20 Mahasiswa",
+      id: 3,
+      judul: "Beasiswa Bank Indonesia",
+      penyelenggara: "Bank Indonesia",
+      kategori: "Instansi",
+      deskripsi: "Program beasiswa prestisius untuk mahasiswa aktif semester 3 hingga 6 dengan capaian IPK minimal 3.00.",
+      kuota: "50 Mahasiswa",
       status: "Dibuka",
-      tenggat: "05 Desember 2026"
-    },
-    {
-      id: 6,
-      judul: "Bantuan Dana Riset Skripsi Mahasiswa",
-      penyelenggara: "LPPM Universitas",
-      kategori: "Internal",
-      deskripsi: "Bantuan dana pelaksanaan penelitian dan publikasi jurnal ilmiah bagi mahasiswa tingkat akhir.",
-      kuota: "75 Mahasiswa",
-      status: "Dibuka",
-      tenggat: "31 Desember 2026"
+      tenggat: "15 Desember 2026",
+      tabKey: "Bank Indonesia"
     }
   ];
 
@@ -116,13 +90,13 @@ export const Beasiswa: React.FC = () => {
           <div className="flex items-center gap-2">
             <Link 
               to="/ormawa/login" 
-              className="px-3.5 py-2 text-xs font-bold text-gray-700 hover:text-blue-900 rounded-xl transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Ormawa
             </Link>
             <Link 
               to="/biro/login" 
-              className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition"
+              className="px-4 py-2 text-gray-500 hover:text-white hover:bg-[#0B1E36] text-xs font-bold rounded-xl transition"
             >
               Login Biro
             </Link>
@@ -134,13 +108,13 @@ export const Beasiswa: React.FC = () => {
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider">
-            ✦ Informasi Beasiswa Aktif
+            ✦ Penawaran &amp; Program Beasiswa Unggulan
           </span>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
-            Peluang Beasiswa Mahasiswa
+            Raih Kesempatan Studi Tanpa Batas Finansial
           </h1>
           <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-2xl">
-            Jelajahi beragam program beasiswa dari pemerintah, universitas, maupun lembaga mitra eksternal untuk mendukung pembiayaan studimu.
+            Manfaatkan berbagai program beasiswa resmi yang dirancang khusus untuk meringankan biaya pendidikan, mengapresiasi prestasi akademik, serta memperluas jaringan pengembangan diri Anda di tingkat nasional dan internasional.
           </p>
         </div>
       </section>
@@ -191,10 +165,10 @@ export const Beasiswa: React.FC = () => {
                 </div>
 
                 <Link 
-                  to="/beasiswa/detail" 
+                  to={`/beasiswa/detail?tab=${encodeURIComponent(item.tabKey)}`} 
                   className="w-full block text-center py-2 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow-sm transition"
                 >
-                  Lihat Detail &amp; Panduan →
+                  Lihat Detail →
                 </Link>
               </div>
             </div>
@@ -207,13 +181,11 @@ export const Beasiswa: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row justify-between gap-8 pb-8">
             <div className="flex items-start gap-3.5 max-w-md">
-              <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="6" cy="18" r="2.5" />
-                  <circle cx="18" cy="6" r="2.5" />
-                  <path d="M7.5 16.5 L16.5 7.5" />
-                </svg>
-              </div>
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-10 h-10 object-contain rounded-xl bg-white p-0.5 shadow shrink-0 border border-gray-100"
+              />
               <div>
                 <div className="flex items-baseline gap-2">
                   <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
@@ -234,7 +206,7 @@ export const Beasiswa: React.FC = () => {
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-2">
-            <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
+            <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             <div className="flex items-center gap-4 text-xs">
               <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
               <span>•</span>

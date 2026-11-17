@@ -100,8 +100,8 @@ export const ProposalLaporanKegiatan: React.FC = () => {
               </p>
             </div>
 
-            {/* Card Filter Tahun Akademik */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
+            {/* Card Filter Tahun Akademik (GLASSMORPHISM) */}
+            <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
               <label className="block text-[11px] font-bold text-gray-700 mb-2">
                 Tahun akademik
               </label>
@@ -109,7 +109,7 @@ export const ProposalLaporanKegiatan: React.FC = () => {
                 <select
                   value={tahunAkademik}
                   onChange={(e) => setTahunAkademik(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-medium text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-sm transition"
+                  className="w-full px-4 py-2.5 bg-white/90 border border-gray-200/80 rounded-xl text-xs font-medium text-gray-700 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-sm transition"
                 >
                   <option value="2026/2027">2026/2027</option>
                   <option value="2025/2026">2025/2026</option>
@@ -118,16 +118,16 @@ export const ProposalLaporanKegiatan: React.FC = () => {
               </div>
             </div>
 
-            {/* Card Tabel Daftar Dokumen */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-8">
+            {/* Card Tabel Daftar Dokumen (GLASSMORPHISM) */}
+            <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
               <h3 className="text-sm font-bold text-gray-900 mb-4">
                 Daftar dokumen
               </h3>
 
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto border border-gray-100 rounded-xl bg-white/50">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-gray-100 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                    <tr className="border-b border-gray-100 bg-gray-50/80 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
                       <th className="py-3 px-4">KEGIATAN</th>
                       <th className="py-3 px-4">DOKUMEN</th>
                       <th className="py-3 px-4">TAHUN AKADEMIK</th>
@@ -135,10 +135,10 @@ export const ProposalLaporanKegiatan: React.FC = () => {
                       <th className="py-3 px-4 text-right">AKSI</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50 text-xs">
+                  <tbody className="divide-y divide-gray-100 text-xs">
                     {filteredDokumen.length > 0 ? (
                       filteredDokumen.map((doc) => (
-                        <tr key={doc.id} className="hover:bg-gray-50/60 transition">
+                        <tr key={doc.id} className="hover:bg-white/60 transition">
                           <td className="py-3.5 px-4 font-bold text-gray-900">
                             {doc.kegiatan}
                           </td>
@@ -150,7 +150,7 @@ export const ProposalLaporanKegiatan: React.FC = () => {
                           </td>
                           <td className="py-3.5 px-4 text-center">
                             {doc.status === 'Menunggu' && (
-                              <span className="inline-block px-3 py-1 bg-amber-100/80 text-amber-800 text-[11px] font-semibold rounded-full">
+                              <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-[11px] font-semibold rounded-full">
                                 Menunggu
                               </span>
                             )}
@@ -188,48 +188,22 @@ export const ProposalLaporanKegiatan: React.FC = () => {
             </div>
           </div>
 
-          {/* ================= FOOTER SI-BEO ================= */}
-          <footer className="mt-8 pt-8 border-t border-gray-200">
-            <div className="flex flex-col md:flex-row justify-between gap-6 pb-6">
-              {/* Sisi Kiri: Logo & Deskripsi SI-BEO */}
-              <div className="flex items-start gap-3 max-w-lg">
-                <div className="w-10 h-10 rounded-xl bg-[#1B437C] flex items-center justify-center text-white shrink-0 shadow-sm">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="6" cy="18" r="2.5" />
-                    <circle cx="18" cy="6" r="2.5" />
-                    <path d="M7.5 16.5 L16.5 7.5" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-extrabold text-sm text-gray-900 tracking-tight">SI-BEO</span>
-                    <span className="text-[10px] text-gray-500">Sistem Informasi Beasiswa dan Organisasi Mahasiswa</span>
-                  </div>
-                  <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                    Platform informasi beasiswa dan organisasi kemahasiswaan untuk memudahkan pencarian peluang dan pengembangan diri di kampus.
-                  </p>
-                </div>
-              </div>
-
-              {/* Sisi Kanan: Kontak Kampus */}
-              <div className="space-y-1 text-xs">
-                <p className="font-bold text-gray-800 text-xs mb-1.5">Kontak Kampus</p>
-                <p className="text-gray-600">Email: <span className="text-blue-600 font-medium">[tempatkan email resmi]</span></p>
-                <p className="text-gray-600">Telepon: <span className="text-blue-600 font-medium">[tempatkan nomor resmi]</span></p>
-                <p className="text-gray-600">Lokasi: <span className="text-blue-600 font-medium">[tempatkan alamat resmi]</span></p>
+          {/* ================= FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) ================= */}
+          <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo sibeo.jpeg" 
+                alt="Logo SI-BEO" 
+                className="w-8 h-8 object-contain rounded-xl bg-white p-0.5 shadow border border-gray-100"
+              />
+              <div>
+                <span className="font-extrabold text-xs text-gray-900 tracking-tight block">SI-BEO</span>
+                <span className="text-[10px] text-gray-400">Sistem Informasi Beasiswa &amp; Ormawa</span>
               </div>
             </div>
 
-            {/* Baris Bawah: Hak Cipta & Link Bantuan */}
-            <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-[10px] text-gray-400 gap-2">
-              <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
-              <div className="flex items-center gap-4">
-                <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
-                <span>•</span>
-                <span className="hover:text-gray-600 cursor-pointer">Pusat bantuan</span>
-                <span>•</span>
-                <span className="hover:text-gray-600 cursor-pointer">Kebijakan privasi</span>
-              </div>
+            <div className="text-center md:text-right text-xs text-gray-400">
+              <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             </div>
           </footer>
         </main>
@@ -237,9 +211,9 @@ export const ProposalLaporanKegiatan: React.FC = () => {
 
       {/* ================= MODAL DETAIL PEMERIKSAAN DOKUMEN ================= */}
       {showModal && selectedDokumen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center border-b pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4 animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-3">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Detail Pemeriksaan Dokumen</h3>
                 <p className="text-xs text-gray-500">{selectedDokumen.kegiatan}</p>
@@ -301,7 +275,7 @@ export const ProposalLaporanKegiatan: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex justify-end pt-3 border-t">
+            <div className="flex justify-end pt-3 border-t border-gray-100">
               <button
                 onClick={() => setShowModal(false)}
                 className="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition cursor-pointer"

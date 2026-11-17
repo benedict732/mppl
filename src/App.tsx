@@ -10,7 +10,8 @@ import Beasiswa from './pages/visitor/Beasiswa';
 import ProfilBeasiswa from './pages/visitor/ProfilBeasiswa';
 import Ormawa from './pages/visitor/Ormawa';
 import ProfilOrmawa from './pages/visitor/ProfilOrmawa';
-import BeritaKegiatan from './pages/visitor/BeritaKegiatan';
+import KegiatanAgenda from './pages/visitor/KegiatanAgenda';
+import DetailKegiatanVisitor from './pages/visitor/DetailKegiatan';
 
 // ================= HALAMAN BIRO KEMAHASISWAAN =================
 import DashboardAdmin from './pages/biro/DashboardAdmin';
@@ -35,7 +36,7 @@ import PengumumanOrmawa from './pages/adminOrmawa/PengumumanOrmawa';
 import ProposalLaporanKegiatan from './pages/adminOrmawa/ProposalLaporanKegiatan';
 import PengumpulanLaporanOrmawa from './pages/adminOrmawa/PengumpulanKegiatan';
 import LaporanKegiatanOrmawa from './pages/adminOrmawa/LaporanKegiatan';
-import DetailKegiatan from './pages/adminOrmawa/DetailKegiatan';
+import DetailKegiatanAdmin from './pages/adminOrmawa/DetailKegiatan';
 import RevisiDokumenOrmawa from './pages/adminOrmawa/RevisiDokumen';
 import StrukturKepengurusanOrmawa from './pages/adminOrmawa/StrukturKepengurusanOrmawa';
 import EditProfilOrmawa from './pages/adminOrmawa/EditProfil';
@@ -53,8 +54,14 @@ function App() {
         <Route path="/beasiswa/detail" element={<ProfilBeasiswa />} />
         <Route path="/ormawa" element={<Ormawa />} />
         <Route path="/ormawa/profil" element={<ProfilOrmawa />} />
-        <Route path="/berita-kegiatan" element={<BeritaKegiatan />} />
-        <Route path="/berita" element={<Navigate to="/berita-kegiatan" replace />} />
+        
+        {/* Rute Kegiatan & Agenda Visitor */}
+        <Route path="/kegiatan-agenda" element={<KegiatanAgenda />} />
+        <Route path="/kegiatan-agenda/detail" element={<DetailKegiatanVisitor />} />
+        
+        {/* Redirect kompatibilitas path lama */}
+        <Route path="/berita-kegiatan" element={<Navigate to="/kegiatan-agenda" replace />} />
+        <Route path="/berita" element={<Navigate to="/kegiatan-agenda" replace />} />
 
         {/* ================= AUTH ROUTES ================= */}
         <Route path="/biro/login" element={<LoginAdmin />} />
@@ -87,7 +94,7 @@ function App() {
         <Route path="/ormawa/pengumpulan-laporan" element={<PengumpulanLaporanOrmawa />} />
         <Route path="/ormawa/pengumpulan-kegiatan" element={<PengumpulanLaporanOrmawa />} />
         <Route path="/ormawa/laporan-kegiatan" element={<LaporanKegiatanOrmawa />} />
-        <Route path="/ormawa/detail-kegiatan" element={<DetailKegiatan />} />
+        <Route path="/ormawa/detail-kegiatan" element={<DetailKegiatanAdmin />} />
         <Route path="/ormawa/revisi" element={<RevisiDokumenOrmawa />} />
         <Route path="/ormawa/struktur" element={<StrukturKepengurusanOrmawa />} />
         <Route path="/ormawa/edit-profil" element={<EditProfilOrmawa />} />
@@ -100,7 +107,7 @@ function App() {
         <Route path="/mpm/proposal" element={<ProposalLaporanKegiatan />} />
         <Route path="/mpm/pengumpulan" element={<PengumpulanLaporanOrmawa />} />
         <Route path="/mpm/pengumpulan-laporan" element={<MPMPengumpulanLaporan />} />
-        <Route path="/mpm/detail-kegiatan" element={<DetailKegiatan />} />
+        <Route path="/mpm/detail-kegiatan" element={<DetailKegiatanAdmin />} />
         <Route path="/mpm/struktur" element={<StrukturKepengurusanOrmawa />} />
         <Route path="/mpm/revisi" element={<RevisiDokumenOrmawa />} />
         <Route path="/mpm/edit-profil" element={<EditProfilOrmawa />} />
