@@ -25,7 +25,6 @@ const prodiMapping: Record<string, string[]> = {
 
 export const KelolaDataMahasiswa: React.FC = () => {
   const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(true);
-  const [isRekapOpen, setIsRekapOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [periode, setPeriode] = useState('2026');
   const [currentPage, setCurrentPage] = useState(1);
@@ -180,38 +179,6 @@ export const KelolaDataMahasiswa: React.FC = () => {
                 <span>📄</span>
                 <span>Proposal & Laporan</span>
               </a>
-              <a href="/biro/pengumpulan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📥</span>
-                <span>Pengumpulan Laporan</span>
-              </a>
-              <a href="/biro/detail-laporan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📋</span>
-                <span>Detail Laporan</span>
-              </a>
-
-              <div>
-                <button
-                  onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <span>📈</span>
-                    <span>Rekapitulasi</span>
-                  </div>
-                  <span className="text-[10px]">{isRekapOpen ? '▲' : '▼'}</span>
-                </button>
-
-                {isRekapOpen && (
-                  <div className="ml-6 mt-1 space-y-1 border-l border-blue-400/30 pl-3">
-                    <a href="/biro/rekapitulasi/beasiswa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Beasiswa
-                    </a>
-                    <a href="/biro/rekapitulasi/ormawa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Ormawa
-                    </a>
-                  </div>
-                )}
-              </div>
 
               <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>👤</span>
@@ -219,7 +186,7 @@ export const KelolaDataMahasiswa: React.FC = () => {
               </a>
               <a href="/biro/edit-profil" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>✏️</span>
-                <span>Edit Profil</span>
+                <span>Ubah Informasi Beasiswa</span>
               </a>
               <a href="/biro/struktur" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>🌿</span>
@@ -263,12 +230,12 @@ export const KelolaDataMahasiswa: React.FC = () => {
                 </select>
               </div>
 
+              {/* TOMBOL TAMBAH DATA TANPA LOGO PLUS */}
               <button
                 onClick={() => setActiveModal('tambah')}
-                className="flex items-center gap-2 px-4 py-2 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer"
+                className="px-4 py-2 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer"
               >
-                <span className="text-sm font-bold">+</span>
-                <span>Tambah Data</span>
+                Tambah Data
               </button>
             </div>
           </div>

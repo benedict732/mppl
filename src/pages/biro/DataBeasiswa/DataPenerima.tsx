@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 interface MahasiswaPenerima {
   nim: string;
   nama: string;
-  semester: number;
+  semester: number | string;
   fakultas: string;
   prodi: string;
   beasiswa: string;
@@ -12,18 +12,17 @@ interface MahasiswaPenerima {
 
 const prodiMapping: Record<string, string[]> = {
   'TEKNIK': ['Informatika', 'Elektro', 'Sipil', 'Industri'],
-  'FEB': ['Manajemen', 'Akuntansi'],
+  'PERTANIAN': ['Agribisnis'],
+  'EKONOMI DAN BISNIS': ['Manajemen', 'Akuntansi'],
   'HUKUM': ['Ilmu Hukum'],
-  'PGSD': ['Ilmu Pendidikan'],
-  'KEPERAWATAN': ['Keperawatan'],
-  'KEDOKTERAN': ['Kedokteran'],
-  'PARIWISATA': ['Pariwisata'],
-  'AGRIBISNIS': ['Agribisnis']
+  'KEPERAWATAN': ['Fisioterapi', 'Ilmu Keperawatan', 'Profesi Ners'],
+  'PARIWISATA': ['Hospitality dan Pariwisata'],
+  'ILMU PENDIDIKAN': ['Pendidikan Guru SD'],
+  'KEDOKTERAN': ['Kedokteran']
 };
 
 export const DataPenerima: React.FC = () => {
   const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(true);
-  const [isRekapOpen, setIsRekapOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [periode, setPeriode] = useState('2026');
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +31,22 @@ export const DataPenerima: React.FC = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterStep, setFilterStep] = useState<number>(1);
   const [selectedMhs, setSelectedMhs] = useState<MahasiswaPenerima | null>(null);
+
+  // State Modal CRUD (Tambah, Edit, Hapus)
+  const [activeModal, setActiveModal] = useState<'tambah' | 'edit' | 'hapus' | null>(null);
+
+  // State untuk Pop-up Konfirmasi Logout
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    nim: '',
+    nama: '',
+    semester: '6',
+    fakultas: 'TEKNIK',
+    prodi: 'Informatika',
+    beasiswa: 'KIP Kuliah',
+    status: 'Penerima'
+  });
 
   const [filterState, setFilterState] = useState({
     beasiswa: 'KIP Kuliah',
@@ -45,7 +60,7 @@ export const DataPenerima: React.FC = () => {
     window.location.href = '/biro/login';
   };
 
-  const dataMahasiswa: MahasiswaPenerima[] = [
+  const [dataMahasiswa, setDataMahasiswa] = useState<MahasiswaPenerima[]>([
     {
       nim: '22041001',
       nama: 'Benedictus Siby',
@@ -59,7 +74,7 @@ export const DataPenerima: React.FC = () => {
       nim: '23021005',
       nama: 'Maria Lestari',
       semester: 4,
-      fakultas: 'FEB',
+      fakultas: 'EKONOMI DAN BISNIS',
       prodi: 'Manajemen',
       beasiswa: 'Kebanksentralan',
       status: 'Penerima'
@@ -68,8 +83,8 @@ export const DataPenerima: React.FC = () => {
       nim: '23051007',
       nama: 'Daniel Rondonuwu',
       semester: 4,
-      fakultas: 'AGRIBISNIS',
-      prodi: 'Agroteknologi',
+      fakultas: 'PERTANIAN',
+      prodi: 'Agribisnis',
       beasiswa: 'VDMI',
       status: 'Mantan Penerima'
     },
@@ -82,14 +97,34 @@ export const DataPenerima: React.FC = () => {
       beasiswa: 'KIP Kuliah',
       status: 'Dikeluarkan'
     }
-  ];
+  ]);
 
   const handleOpenDetail = (mhs: MahasiswaPenerima) => {
     setSelectedMhs(mhs);
     setIsDetailOpen(true);
   };
 
+  const handleOpenEdit = (mhs: MahasiswaPenerima) => {
+    setSelectedMhs(mhs);
+    setFormData({
+      nim: mhs.nim,
+      nama: mhs.nama,
+      semester: String(mhs.semester),
+      fakultas: mhs.fakultas,
+      prodi: mhs.prodi,
+      beasiswa: mhs.beasiswa,
+      status: mhs.status
+    });
+    setActiveModal('edit');
+  };
+
+  const handleOpenHapus = (mhs: MahasiswaPenerima) => {
+    setSelectedMhs(mhs);
+    setActiveModal('hapus');
+  };
+
   const availableProdi = prodiMapping[filterState.fakultas] || ['Umum'];
+  const availableProdiForm = prodiMapping[formData.fakultas] || ['Informatika'];
 
   return (
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800 relative">
@@ -138,9 +173,6 @@ export const DataPenerima: React.FC = () => {
                     <a href="/biro/beasiswa/calon" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
                       › Data Calon Penerima
                     </a>
-                    <a href="/biro/beasiswa/kelola" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Kelola Data Mahasiswa
-                    </a>
                   </div>
                 )}
               </div>
@@ -153,42 +185,16 @@ export const DataPenerima: React.FC = () => {
                 <span>📢</span>
                 <span>Pengumuman</span>
               </a>
+
+              <a href="/biro/agenda-kegiatan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>📅</span>
+                <span>Agenda & Kegiatan</span>
+              </a>
+
               <a href="/biro/proposal" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📄</span>
                 <span>Proposal & Laporan</span>
               </a>
-              <a href="/biro/pengumpulan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📥</span>
-                <span>Pengumpulan Laporan</span>
-              </a>
-              <a href="/biro/detail-laporan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📋</span>
-                <span>Detail Laporan</span>
-              </a>
-
-              <div>
-                <button
-                  onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <span>📈</span>
-                    <span>Rekapitulasi</span>
-                  </div>
-                  <span className="text-[10px]">{isRekapOpen ? '▲' : '▼'}</span>
-                </button>
-
-                {isRekapOpen && (
-                  <div className="ml-6 mt-1 space-y-1 border-l border-blue-400/30 pl-3">
-                    <a href="/biro/rekapitulasi/beasiswa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Beasiswa
-                    </a>
-                    <a href="/biro/rekapitulasi/ormawa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Ormawa
-                    </a>
-                  </div>
-                )}
-              </div>
 
               <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>👤</span>
@@ -196,7 +202,7 @@ export const DataPenerima: React.FC = () => {
               </a>
               <a href="/biro/edit-profil" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>✏️</span>
-                <span>Edit Profil</span>
+                <span>Ubah Informasi Beasiswa</span>
               </a>
               <a href="/biro/struktur" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>🌿</span>
@@ -207,7 +213,7 @@ export const DataPenerima: React.FC = () => {
 
           <div className="pt-4 border-t border-gray-700/50">
             <button 
-              onClick={handleLogout}
+              onClick={() => setIsLogoutModalOpen(true)}
               className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition cursor-pointer"
             >
               <span>🚪</span>
@@ -218,29 +224,39 @@ export const DataPenerima: React.FC = () => {
 
         {/* AREA KONTEN UTAMA */}
         <main className="flex-1 p-8 overflow-y-auto">
-          {/* HEADER TUNGGAL YANG RAPI */}
-          <div className="mb-6 flex justify-between items-center">
+          <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">BEASISWA / BASIS DATA</p>
               <h1 className="text-2xl font-bold text-gray-900 mt-0.5">Data Penerima</h1>
-              <p className="text-xs text-gray-500 mt-0.5">Data mahasiswa penerima beasiswa dan riwayat penerimaannya.</p>
+              <p className="text-xs text-gray-500 mt-0.5">Data mahasiswa penerima beasiswa, riwayat penerimaan, serta pengelolaan data.</p>
             </div>
             
-            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/40 shadow-sm">
-              <span className="text-xs font-bold text-gray-500">Periode:</span>
-              <select
-                value={periode}
-                onChange={(e) => setPeriode(e.target.value)}
-                className="bg-transparent text-xs font-semibold text-gray-800 outline-none cursor-pointer"
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/40 shadow-sm">
+                <span className="text-xs font-bold text-gray-500">Periode:</span>
+                <select
+                  value={periode}
+                  onChange={(e) => setPeriode(e.target.value)}
+                  className="bg-transparent text-xs font-semibold text-gray-800 outline-none cursor-pointer"
+                >
+                  <option value="2026">2026</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                </select>
+              </div>
+
+              <button
+                onClick={() => {
+                  setFormData({ nim: '', nama: '', semester: '1', fakultas: 'TEKNIK', prodi: 'Informatika', beasiswa: 'KIP Kuliah', status: 'Penerima' });
+                  setActiveModal('tambah');
+                }}
+                className="px-4 py-2 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer"
               >
-                <option value="2026">2026</option>
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-              </select>
+                Tambah Data
+              </button>
             </div>
           </div>
 
-          {/* KONTainer PENCARIAN & FILTER */}
           <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div className="md:col-span-8">
@@ -267,12 +283,11 @@ export const DataPenerima: React.FC = () => {
             </div>
           </div>
 
-          {/* KONTainer DAFTAR MAHASISWA */}
           <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-8">
             <div className="flex justify-between items-center mb-4">
               <div>
                 <h3 className="text-sm font-bold text-gray-900">Daftar mahasiswa</h3>
-                <p className="text-[11px] text-gray-400 mt-0.5">Menampilkan data contoh untuk rancangan UI</p>
+                <p className="text-[11px] text-gray-400 mt-0.5">Menampilkan data mahasiswa penerima beasiswa</p>
               </div>
               <span className="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1 rounded-xl border border-blue-100">
                 Total Penerima: {dataMahasiswa.length} Mahasiswa
@@ -280,7 +295,7 @@ export const DataPenerima: React.FC = () => {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs whitespace-nowrap">
                 <thead className="bg-gray-50/80 text-gray-500 font-semibold uppercase text-[10px]">
                   <tr>
                     <th className="p-3">NIM</th>
@@ -290,11 +305,11 @@ export const DataPenerima: React.FC = () => {
                     <th className="p-3">PROGRAM STUDI</th>
                     <th className="p-3">BEASISWA AKTIF</th>
                     <th className="p-3 text-center">KETERANGAN</th>
-                    <th className="p-3 text-right">AKSI</th>
+                    <th className="p-3 text-center">AKSI</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {dataMahasiswa.map((item, idx) => (
+                  {dataMahasiswa.map((item: MahasiswaPenerima, idx: number) => (
                     <tr key={idx} className="hover:bg-white/60 transition">
                       <td className="p-3 text-gray-600 font-medium">{item.nim}</td>
                       <td className="p-3 font-bold text-gray-900">{item.nama}</td>
@@ -311,13 +326,29 @@ export const DataPenerima: React.FC = () => {
                           {item.status}
                         </span>
                       </td>
-                      <td className="p-3 text-right">
-                        <button 
-                          onClick={() => handleOpenDetail(item)}
-                          className="text-blue-600 hover:underline font-semibold text-xs cursor-pointer"
-                        >
-                          Detail
-                        </button>
+                      <td className="p-3 text-center">
+                        <div className="flex justify-center items-center gap-1.5">
+                          <button 
+                            onClick={() => handleOpenDetail(item)}
+                            className="px-2.5 py-1 text-blue-600 hover:underline font-semibold text-xs cursor-pointer"
+                          >
+                            Detail
+                          </button>
+                          <button 
+                            onClick={() => handleOpenEdit(item)}
+                            className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs transition cursor-pointer shadow-sm"
+                            title="Edit"
+                          >
+                            ✏️
+                          </button>
+                          <button 
+                            onClick={() => handleOpenHapus(item)}
+                            className="p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs transition cursor-pointer shadow-sm"
+                            title="Hapus"
+                          >
+                            🗑️
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -325,7 +356,6 @@ export const DataPenerima: React.FC = () => {
               </table>
             </div>
 
-            {/* PAGINATION HANYA PANAH KIRI KANAN */}
             <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100 text-xs text-gray-500">
               <span>Halaman {currentPage} dari total data</span>
               <div className="flex items-center gap-1">
@@ -364,7 +394,7 @@ export const DataPenerima: React.FC = () => {
         </main>
       </div>
 
-      {/* MODAL DETAIL RIWAYAT */}
+      {/* MODAL DETAIL */}
       {isDetailOpen && selectedMhs && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
           <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6 space-y-4">
@@ -404,77 +434,244 @@ export const DataPenerima: React.FC = () => {
         </div>
       )}
 
-      {/* MODAL FILTER BERTAHAP */}
-      {isFilterOpen && (
+      {/* MODAL TAMBAH DATA */}
+      {activeModal === 'tambah' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6 space-y-4">
-            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <div>
-                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Filter Berurutan</span>
-                <h3 className="text-xs font-bold text-gray-800">
-                  {filterStep === 1 ? '1. Pilih Beasiswa' : filterStep === 2 ? '2. Pilih Fakultas' : filterStep === 3 ? `3. Pilih Prodi (${filterState.fakultas})` : '4. Status Mahasiswa'}
-                </h3>
-              </div>
-              <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-xs cursor-pointer">✕</button>
+          <div className="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6">
+            <div className="flex justify-between items-center pb-4 border-b border-gray-100">
+              <h3 className="text-sm font-bold text-gray-900">Tambah Data Penerima</h3>
+              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer">✕</button>
             </div>
 
-            {filterStep === 1 && (
-              <div className="space-y-2">
-                <div className="flex flex-col gap-2">
-                  {['KIP Kuliah', 'VDMI', 'Kebanksentralan'].map((b) => (
-                    <button key={b} onClick={() => setFilterState({ ...filterState, beasiswa: b })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.beasiswa === b ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{b}</button>
-                  ))}
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              setDataMahasiswa([...dataMahasiswa, formData]);
+              setActiveModal(null);
+            }} className="space-y-4 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Nama Lengkap</label>
+                  <input type="text" value={formData.nama} onChange={(e) => setFormData({ ...formData, nama: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white" required />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">NIM</label>
+                  <input type="text" value={formData.nim} onChange={(e) => setFormData({ ...formData, nim: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white" required />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Semester</label>
+                  <select value={formData.semester} onChange={(e) => setFormData({ ...formData, semester: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((s: number) => <option key={s} value={s}>Semester {s}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Fakultas</label>
+                  <select value={formData.fakultas} onChange={(e) => {
+                    const fak = e.target.value;
+                    setFormData({ ...formData, fakultas: fak, prodi: prodiMapping[fak]?.[0] || '' });
+                  }} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    {Object.keys(prodiMapping).map((f: string) => <option key={f} value={f}>{f}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Program Studi</label>
+                  <select value={formData.prodi} onChange={(e) => setFormData({ ...formData, prodi: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    {availableProdiForm.map((p: string) => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Beasiswa</label>
+                  <select value={formData.beasiswa} onChange={(e) => setFormData({ ...formData, beasiswa: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    <option value="KIP Kuliah">KIP Kuliah</option>
+                    <option value="VDMI">VDMI</option>
+                    <option value="Kebanksentralan">Kebanksentralan</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Status Keterangan</label>
+                  <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    <option value="Penerima">Penerima</option>
+                    <option value="Mantan Penerima">Mantan Penerima</option>
+                    <option value="Dikeluarkan">Dikeluarkan</option>
+                  </select>
                 </div>
               </div>
-            )}
 
-            {filterStep === 2 && (
-              <div className="space-y-2">
-                <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
-                  {['TEKNIK', 'HUKUM', 'FEB', 'PGSD', 'KEPERAWATAN', 'KEDOKTERAN', 'PARIWISATA', 'AGRIBISNIS'].map((f) => (
-                    <button key={f} onClick={() => { const firstProdi = prodiMapping[f]?.[0] || ''; setFilterState({ ...filterState, fakultas: f, prodi: firstProdi }); }} className={`px-3 py-2 rounded-xl text-[10px] font-semibold text-center cursor-pointer transition ${filterState.fakultas === f ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{f}</button>
-                  ))}
+              <div className="flex justify-between items-center pt-4 border-t border-gray-100 mt-6">
+                <button type="button" onClick={() => setActiveModal(null)} className="px-6 py-2 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl cursor-pointer">Batal</button>
+                <button type="submit" className="px-6 py-2 bg-[#1B5299] text-white text-xs font-semibold rounded-xl cursor-pointer">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL EDIT DATA */}
+      {activeModal === 'edit' && selectedMhs && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6">
+            <div className="flex justify-between items-center pb-4 border-b border-gray-100">
+              <h3 className="text-sm font-bold text-gray-900">Edit Data Penerima</h3>
+              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer">✕</button>
+            </div>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              setDataMahasiswa(dataMahasiswa.map((m: MahasiswaPenerima) => m.nim === selectedMhs.nim ? formData : m));
+              setActiveModal(null);
+            }} className="space-y-4 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Nama Lengkap</label>
+                  <input type="text" value={formData.nama} onChange={(e) => setFormData({ ...formData, nama: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white" required />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">NIM</label>
+                  <input type="text" value={formData.nim} onChange={(e) => setFormData({ ...formData, nim: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white" required />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Semester</label>
+                  <select value={formData.semester} onChange={(e) => setFormData({ ...formData, semester: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((s: number) => <option key={s} value={s}>Semester {s}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Fakultas</label>
+                  <select value={formData.fakultas} onChange={(e) => {
+                    const fak = e.target.value;
+                    setFormData({ ...formData, fakultas: fak, prodi: prodiMapping[fak]?.[0] || '' });
+                  }} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    {Object.keys(prodiMapping).map((f: string) => <option key={f} value={f}>{f}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Program Studi</label>
+                  <select value={formData.prodi} onChange={(e) => setFormData({ ...formData, prodi: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    {availableProdiForm.map((p: string) => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Beasiswa</label>
+                  <select value={formData.beasiswa} onChange={(e) => setFormData({ ...formData, beasiswa: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    <option value="KIP Kuliah">KIP Kuliah</option>
+                    <option value="VDMI">VDMI</option>
+                    <option value="Kebanksentralan">Kebanksentralan</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Status Keterangan</label>
+                  <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
+                    <option value="Penerima">Penerima</option>
+                    <option value="Mantan Penerima">Mantan Penerima</option>
+                    <option value="Dikeluarkan">Dikeluarkan</option>
+                  </select>
                 </div>
               </div>
-            )}
 
-            {filterStep === 3 && (
-              <div className="space-y-2">
-                <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
-                  {availableProdi.map((p) => (
-                    <button key={p} onClick={() => setFilterState({ ...filterState, prodi: p })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.prodi === p ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{p}</button>
-                  ))}
-                </div>
+              <div className="flex justify-between items-center pt-4 border-t border-gray-100 mt-6">
+                <button type="button" onClick={() => setActiveModal(null)} className="px-6 py-2 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl cursor-pointer">Batal</button>
+                <button type="submit" className="px-6 py-2 bg-[#1B5299] text-white text-xs font-semibold rounded-xl cursor-pointer">Simpan Perubahan</button>
               </div>
-            )}
+            </form>
+          </div>
+        </div>
+      )}
 
-            {filterStep === 4 && (
-              <div className="space-y-2">
-                <div className="flex flex-col gap-2">
-                  {['Penerima', 'Mantan Penerima', 'Dikeluarkan'].map((s) => (
-                    <button key={s} onClick={() => setFilterState({ ...filterState, statusMahasiswa: s })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.statusMahasiswa === s ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>{s}</button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-              <div>
-                {filterStep > 1 && (
-                  <button onClick={() => setFilterStep(filterStep - 1)} className="px-4 py-1.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg cursor-pointer">Kembali</button>
-                )}
-              </div>
-              <div>
-                {filterStep < 4 ? (
-                  <button onClick={() => setFilterStep(filterStep + 1)} className="px-4 py-1.5 bg-blue-600 text-white text-xs font-semibold rounded-lg cursor-pointer">Lanjut ➔</button>
-                ) : (
-                  <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg cursor-pointer">Terapkan Filter</button>
-                )}
-              </div>
+      {/* MODAL HAPUS */}
+      {activeModal === 'hapus' && selectedMhs && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 text-center">
+            <div className="my-4 flex justify-center">
+              <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-red-500 text-3xl font-extrabold border-4 border-red-200">!</div>
+            </div>
+            <h4 className="text-sm font-bold text-gray-900 mb-1">Hapus data penerima ini?</h4>
+            <p className="text-[11px] text-gray-400 mb-4">{selectedMhs.nama} ({selectedMhs.nim})</p>
+            <div className="grid grid-cols-2 gap-3">
+              <button onClick={() => setActiveModal(null)} className="py-2.5 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl cursor-pointer">Batal</button>
+              <button onClick={() => {
+                setDataMahasiswa(dataMahasiswa.filter((m: MahasiswaPenerima) => m.nim !== selectedMhs.nim));
+                setActiveModal(null);
+              }} className="py-2.5 bg-red-600 text-white text-xs font-semibold rounded-xl cursor-pointer">Hapus</button>
             </div>
           </div>
         </div>
       )}
+
+      {/* MODAL FILTER */}
+      {isFilterOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+              <h3 className="text-xs font-bold text-gray-800">Filter Berurutan</h3>
+              <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-xs cursor-pointer">✕</button>
+            </div>
+            {filterStep === 1 && (
+              <div className="flex flex-col gap-2">
+                {['KIP Kuliah', 'VDMI', 'Kebanksentralan'].map((b: string) => (
+                  <button key={b} onClick={() => setFilterState({ ...filterState, beasiswa: b })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.beasiswa === b ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}>{b}</button>
+                ))}
+              </div>
+            )}
+            {filterStep === 2 && (
+              <div className="grid grid-cols-2 gap-2">
+                {Object.keys(prodiMapping).map((f: string) => (
+                  <button key={f} onClick={() => setFilterState({ ...filterState, fakultas: f })} className={`px-3 py-2 rounded-xl text-[10px] font-semibold text-center cursor-pointer transition ${filterState.fakultas === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}>{f}</button>
+                ))}
+              </div>
+            )}
+            {filterStep === 3 && (
+              <div className="flex flex-col gap-2">
+                {availableProdi.map((p: string) => (
+                  <button key={p} onClick={() => setFilterState({ ...filterState, prodi: p })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.prodi === p ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}>{p}</button>
+                ))}
+              </div>
+            )}
+            {filterStep === 4 && (
+              <div className="flex flex-col gap-2">
+                {['Penerima', 'Mantan Penerima', 'Dikeluarkan'].map((s: string) => (
+                  <button key={s} onClick={() => setFilterState({ ...filterState, statusMahasiswa: s })} className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold text-left cursor-pointer transition ${filterState.statusMahasiswa === s ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}>{s}</button>
+                ))}
+              </div>
+            )}
+            <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+              {filterStep > 1 ? <button onClick={() => setFilterStep(filterStep - 1)} className="px-4 py-1.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg cursor-pointer">Kembali</button> : <div />}
+              {filterStep < 4 ? <button onClick={() => setFilterStep(filterStep + 1)} className="px-4 py-1.5 bg-blue-600 text-white text-xs font-semibold rounded-lg cursor-pointer">Lanjut ➔</button> : <button onClick={() => setIsFilterOpen(false)} className="px-4 py-1.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg cursor-pointer">Terapkan</button>}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL KONFIRMASI LOGOUT ================= */}
+      {isLogoutModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 text-center animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="my-3 flex justify-center">
+              <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-2xl font-black border-4 border-red-50">
+                🚪
+              </div>
+            </div>
+            <h4 className="text-base font-bold text-gray-900 mb-1">Konfirmasi Keluar</h4>
+            <p className="text-xs text-gray-500 mb-5 px-2">
+              Apakah Anda yakin ingin keluar dari sesi admin <br />
+              <span className="font-bold text-gray-800">Biro Kemahasiswaan SI-BEO</span>?
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button 
+                onClick={() => setIsLogoutModalOpen(false)} 
+                className="py-2.5 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl hover:bg-gray-50 cursor-pointer transition"
+              >
+                Batal
+              </button>
+              <button 
+                onClick={handleLogout} 
+                className="py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl shadow cursor-pointer transition"
+              >
+                Ya, Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

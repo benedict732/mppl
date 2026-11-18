@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 
 export const DashboardAdmin: React.FC = () => {
   const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(false);
-  const [isRekapOpen, setIsRekapOpen] = useState(false);
   const [tahunAkademik, setTahunAkademik] = useState('2026/2027');
   
   // State untuk Pop-up Total Penerima Beasiswa (VDMI, KIP, Bank Indonesia)
   const [isPopupPenerimaOpen, setIsPopupPenerimaOpen] = useState(false);
+
+  // State untuk Pop-up Konfirmasi Logout
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
@@ -62,9 +64,6 @@ export const DashboardAdmin: React.FC = () => {
                     <a href="/biro/beasiswa/calon" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
                       › Data Calon Penerima
                     </a>
-                    <a href="/biro/beasiswa/kelola" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Kelola Data Mahasiswa
-                    </a>
                   </div>
                 )}
               </div>
@@ -77,43 +76,17 @@ export const DashboardAdmin: React.FC = () => {
                 <span>📢</span>
                 <span>Pengumuman</span>
               </a>
+
+              {/* MENU AGENDA & KEGIATAN */}
+              <a href="/biro/agenda-kegiatan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
+                <span>📅</span>
+                <span>Agenda & Kegiatan</span>
+              </a>
+
               <a href="/biro/proposal" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📄</span>
                 <span>Proposal & Laporan</span>
               </a>
-              <a href="/biro/pengumpulan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📥</span>
-                <span>Pengumpulan Laporan</span>
-              </a>
-              <a href="/biro/detail-laporan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📋</span>
-                <span>Detail Laporan</span>
-              </a>
-
-              {/* ACCORDION REKAPITULASI */}
-              <div>
-                <button
-                  onClick={() => setIsRekapOpen(!isRekapOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg text-left transition cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <span>📈</span>
-                    <span>Rekapitulasi</span>
-                  </div>
-                  <span className="text-[10px]">{isRekapOpen ? '▲' : '▼'}</span>
-                </button>
-
-                {isRekapOpen && (
-                  <div className="ml-6 mt-1 space-y-1 border-l border-blue-400/30 pl-3">
-                    <a href="/biro/rekapitulasi/beasiswa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Beasiswa
-                    </a>
-                    <a href="/biro/rekapitulasi/ormawa" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">
-                      › Ormawa
-                    </a>
-                  </div>
-                )}
-              </div>
 
               <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>👤</span>
@@ -121,7 +94,7 @@ export const DashboardAdmin: React.FC = () => {
               </a>
               <a href="/biro/edit-profil" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>✏️</span>
-                <span>Edit Profil</span>
+                <span>Ubah Informasi Beasiswa</span>
               </a>
               <a href="/biro/struktur" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>🌿</span>
@@ -132,7 +105,7 @@ export const DashboardAdmin: React.FC = () => {
 
           <div className="pt-4 border-t border-gray-700/50">
             <button 
-              onClick={handleLogout}
+              onClick={() => setIsLogoutModalOpen(true)}
               className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold transition shadow-sm cursor-pointer"
             >
               <span>🚪</span>
@@ -175,7 +148,7 @@ export const DashboardAdmin: React.FC = () => {
           {/* 4 KARTU METRIK UTAMA */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             
-            {/* KARTU 1: TOTAL PENERIMA BEASISWA (DENGAN TOMBOL DETAIL RAPI) */}
+            {/* KARTU 1: TOTAL PENERIMA BEASISWA */}
             <div 
               onClick={() => setIsPopupPenerimaOpen(true)}
               className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm border-l-4 border-l-blue-600 hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
@@ -273,16 +246,19 @@ export const DashboardAdmin: React.FC = () => {
             </div>
           </div>
 
-          {/* TABEL PROPOSAL & LAPORAN TERBARU */}
+          {/* TABEL PROPOSAL & LAPORAN TERBARU (DENGAN LINK KE HALAMAN PROPOSAL) */}
           <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8">
             <div className="flex justify-between items-center mb-4">
               <div>
                 <h3 className="text-sm font-bold text-gray-900">Proposal & laporan terbaru</h3>
                 <p className="text-[11px] text-gray-400 mt-0.5">Dokumen kegiatan yang membutuhkan tindak lanjut</p>
               </div>
-              <button className="px-4 py-1.5 border border-gray-200 hover:bg-gray-50 rounded-lg text-xs font-semibold text-gray-700 transition cursor-pointer">
+              <a 
+                href="/biro/proposal"
+                className="px-4 py-1.5 border border-gray-200 hover:bg-gray-50 rounded-lg text-xs font-semibold text-gray-700 transition cursor-pointer inline-block"
+              >
                 Lihat semua
-              </button>
+              </a>
             </div>
 
             <div className="overflow-x-auto">
@@ -298,7 +274,11 @@ export const DashboardAdmin: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   <tr className="hover:bg-gray-50 transition">
-                    <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Bakti Sosial</td>
+                    <td className="p-3 font-semibold text-gray-900">
+                      <a href="/biro/proposal" className="underline hover:text-blue-600 transition cursor-pointer">
+                        Bakti Sosial
+                      </a>
+                    </td>
                     <td className="p-3 text-gray-600">12/12/2026</td>
                     <td className="p-3 text-gray-600">BEM</td>
                     <td className="p-3 text-gray-600">Proposal</td>
@@ -309,7 +289,11 @@ export const DashboardAdmin: React.FC = () => {
                     </td>
                   </tr>
                   <tr className="hover:bg-gray-50 transition">
-                    <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Pekan Seni</td>
+                    <td className="p-3 font-semibold text-gray-900">
+                      <a href="/biro/proposal" className="underline hover:text-blue-600 transition cursor-pointer">
+                        Pekan Seni
+                      </a>
+                    </td>
                     <td className="p-3 text-gray-600">2/12/2026</td>
                     <td className="p-3 text-gray-600">BEM Fakultas</td>
                     <td className="p-3 text-gray-600">Laporan</td>
@@ -320,7 +304,11 @@ export const DashboardAdmin: React.FC = () => {
                     </td>
                   </tr>
                   <tr className="hover:bg-gray-50 transition">
-                    <td className="p-3 font-semibold text-gray-900 underline cursor-pointer">Seminar Karier</td>
+                    <td className="p-3 font-semibold text-gray-900">
+                      <a href="/biro/proposal" className="underline hover:text-blue-600 transition cursor-pointer">
+                        Seminar Karier
+                      </a>
+                    </td>
                     <td className="p-3 text-gray-600">2/11/2026</td>
                     <td className="p-3 text-gray-600">HIMA</td>
                     <td className="p-3 text-gray-600">Proposal</td>
@@ -335,7 +323,7 @@ export const DashboardAdmin: React.FC = () => {
             </div>
           </div>
 
-          {/* FOOTER BAWAH LENGKAP (DENGAN LOGO SI-BEO, TANPA KONTAK KAMPUS SESUAI RULE 3) */}
+          {/* FOOTER BAWAH LENGKAP */}
           <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
               <img 
@@ -406,6 +394,38 @@ export const DashboardAdmin: React.FC = () => {
                 className="w-full py-2.5 bg-[#0B1E36] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow transition cursor-pointer"
               >
                 Tutup Rincian
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL KONFIRMASI LOGOUT ================= */}
+      {isLogoutModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 text-center animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="my-3 flex justify-center">
+              <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-2xl font-black border-4 border-red-50">
+                🚪
+              </div>
+            </div>
+            <h4 className="text-base font-bold text-gray-900 mb-1">Konfirmasi Keluar</h4>
+            <p className="text-xs text-gray-500 mb-5 px-2">
+              Apakah Anda yakin ingin keluar dari sesi admin <br />
+              <span className="font-bold text-gray-800">Biro Kemahasiswaan SI-BEO</span>?
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button 
+                onClick={() => setIsLogoutModalOpen(false)} 
+                className="py-2.5 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl hover:bg-gray-50 cursor-pointer transition"
+              >
+                Batal
+              </button>
+              <button 
+                onClick={handleLogout} 
+                className="py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl shadow cursor-pointer transition"
+              >
+                Ya, Keluar
               </button>
             </div>
           </div>

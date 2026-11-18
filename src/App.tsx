@@ -21,13 +21,13 @@ import KelolaDataMahasiswa from './pages/biro/DataBeasiswa/KelolaDataMahasiswa';
 import DataAnggotaOrmawaBiro from './pages/biro/DataOrmawa';
 import StrukturKepengurusanAdmin from './pages/biro/StrukturKepengurusanAdmin';
 import ProposalLaporan from './pages/biro/ProposalLaporan';
-import DetailLaporan from './pages/biro/DetailLaporan';
 import PengumpulanBiro from './pages/biro/Pengumpulan';
 import ManajemenAkun from './pages/biro/ManajemenAkun';
 import RekapBeasiswa from './pages/biro/Rekapitulasi/Beasiswa';
 import RekapOrmawa from './pages/biro/Rekapitulasi/Ormawa';
 import EditProfil from './pages/biro/EditProfil';
 import PengumumanBiro from './pages/biro/Pengumuman';
+import AgendaKegiatanBiro from './pages/biro/AgendaKegiatan'; // <-- Import Halaman Agenda & Kegiatan Biro
 
 // ================= HALAMAN ADMIN ORMAWA =================
 import DashboardOrmawa from './pages/adminOrmawa/DashboardOrmawa';
@@ -77,12 +77,12 @@ function App() {
         <Route path="/biro/struktur" element={<StrukturKepengurusanAdmin />} />
         <Route path="/biro/proposal" element={<ProposalLaporan />} />
         <Route path="/biro/pengumpulan" element={<PengumpulanBiro />} />
-        <Route path="/biro/detail-laporan" element={<DetailLaporan />} />
         <Route path="/biro/rekapitulasi" element={<Navigate to="/biro/rekapitulasi/beasiswa" replace />} />
         <Route path="/biro/rekapitulasi/beasiswa" element={<RekapBeasiswa />} />
         <Route path="/biro/rekapitulasi/ormawa" element={<RekapOrmawa />} />
         <Route path="/biro/manajemen-akun" element={<ManajemenAkun />} />
         <Route path="/biro/pengumuman" element={<PengumumanBiro />} />
+        <Route path="/biro/agenda-kegiatan" element={<AgendaKegiatanBiro />} /> {/* <-- Rute Agenda & Kegiatan Biro */}
         <Route path="/biro/edit-profil" element={<EditProfil />} />
 
         {/* ================= HAK AKSES: ADMIN ORMAWA ================= */}

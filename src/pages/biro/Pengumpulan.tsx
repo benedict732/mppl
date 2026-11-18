@@ -112,7 +112,6 @@ export const Pengumpulan: React.FC = () => {
                   <div className="ml-6 mt-1 space-y-1 border-l border-blue-400/30 pl-3">
                     <a href="/biro/beasiswa/penerima" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">› Data Penerima</a>
                     <a href="/biro/beasiswa/calon" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">› Data Calon Penerima</a>
-                    <a href="/biro/beasiswa/kelola" className="block py-1.5 px-2 text-xs text-gray-300 hover:text-white transition">› Kelola Data Mahasiswa</a>
                   </div>
                 )}
               </div>
@@ -132,10 +131,6 @@ export const Pengumpulan: React.FC = () => {
               <a href="/biro/pengumpulan" className="flex items-center gap-3 px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg transition">
                 <span>📥</span>
                 <span>Pengumpulan Laporan</span>
-              </a>
-              <a href="/biro/detail-laporan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
-                <span>📋</span>
-                <span>Detail Laporan</span>
               </a>
 
               {/* ACCORDION REKAPITULASI */}
@@ -165,7 +160,7 @@ export const Pengumpulan: React.FC = () => {
               </a>
               <a href="/biro/edit-profil" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>✏️</span>
-                <span>Edit Profil</span>
+                <span>Ubah Informasi Beasiswa</span>
               </a>
               <a href="/biro/struktur" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>🌿</span>
@@ -187,14 +182,11 @@ export const Pengumpulan: React.FC = () => {
 
         {/* AREA KONTEN UTAMA */}
         <main className="flex-1 p-8 overflow-y-auto">
+          {/* HEADER UTAMA YANG BERSIH DAN TIDAK DOUBLE */}
           <div className="mb-6">
             <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">ORMAWA / PENGUMPULAN</p>
-            <h1 className="text-xl font-bold text-gray-900">Pengumpulan Laporan</h1>
-          </div>
-
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Pengumpulan Laporan Kegiatan</h2>
-            <p className="text-xs text-gray-500 mt-1">Pantau dan kelola berkas laporan pertanggungjawaban yang diunggah oleh setiap ormawa.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mt-0.5">Pengumpulan Laporan Kegiatan</h1>
+            <p className="text-xs text-gray-500 mt-0.5">Pantau dan kelola berkas laporan pertanggungjawaban yang diunggah oleh setiap ormawa.</p>
           </div>
 
           {/* SEARCH & FILTER BAR (GLASSMORPHISM) */}
@@ -271,7 +263,7 @@ export const Pengumpulan: React.FC = () => {
             </div>
           </div>
 
-          {/* FOOTER BAWAH (TANPA BLOK KONTAK KAMPUS) */}
+          {/* FOOTER BAWAH */}
           <footer className="pt-6 border-t border-gray-200 text-[11px] text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
               <img 
