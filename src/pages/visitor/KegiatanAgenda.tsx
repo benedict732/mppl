@@ -131,7 +131,7 @@ export const KegiatanAgenda: React.FC = () => {
               Ormawa
             </Link>
             <Link to="/kegiatan-agenda" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
-              Kegiatan &amp; Agenda
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 
@@ -159,7 +159,7 @@ export const KegiatanAgenda: React.FC = () => {
             ✦ Publikasi &amp; Agenda Kampus
           </span>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
-            Kegiatan &amp; Agenda Mahasiswa
+            Agenda &amp; Kegiatan Mahasiswa
           </h1>
           <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-2xl">
             Temukan berbagai informasi jadwal penting, sosialisasi program beasiswa resmi, hingga kegiatan organisasi kemahasiswaan (BEM &amp; BPM) untuk mendukung pengembangan potensi diri Anda di kampus.

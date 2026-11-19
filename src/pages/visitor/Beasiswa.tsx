@@ -5,7 +5,6 @@ interface BeasiswaItem {
   id: number;
   judul: string;
   penyelenggara: string;
-  kategori: string;
   deskripsi: string;
   kuota: string;
   status: "Dibuka" | "Segera Dibuka" | "Ditutup";
@@ -19,7 +18,6 @@ export const Beasiswa: React.FC = () => {
       id: 1,
       judul: "KIP Kuliah 2026",
       penyelenggara: "Kemendikbudristek",
-      kategori: "Pemerintah",
       deskripsi: "Bantuan biaya pendidikan penuh dan tunjangan biaya hidup bulanan bagi mahasiswa berprestasi dari keluarga prasejahtera.",
       kuota: "250 Mahasiswa",
       status: "Dibuka",
@@ -30,7 +28,6 @@ export const Beasiswa: React.FC = () => {
       id: 2,
       judul: "Beasiswa Van Deventer-Maas Indonesia (VDMI)",
       penyelenggara: "Yayasan VDMI",
-      kategori: "Yayasan",
       deskripsi: "Dukungan dana pendidikan serta pelatihan kepemimpinan dan bahasa Inggris bagi mahasiswa jenjang S1 dan D4.",
       kuota: "30 Mahasiswa",
       status: "Ditutup",
@@ -41,7 +38,6 @@ export const Beasiswa: React.FC = () => {
       id: 3,
       judul: "Beasiswa Bank Indonesia",
       penyelenggara: "Bank Indonesia",
-      kategori: "Instansi",
       deskripsi: "Program beasiswa prestisius untuk mahasiswa aktif semester 3 hingga 6 dengan capaian IPK minimal 3.00.",
       kuota: "50 Mahasiswa",
       status: "Dibuka",
@@ -82,8 +78,8 @@ export const Beasiswa: React.FC = () => {
             <Link to="/ormawa" className="text-gray-600 hover:text-blue-600 py-5 transition">
               Ormawa
             </Link>
-            <Link to="/berita-kegiatan" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Berita &amp; Kegiatan
+            <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 
@@ -134,10 +130,7 @@ export const Beasiswa: React.FC = () => {
               className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
             >
               <div>
-                <div className="flex justify-between items-start gap-2 mb-3">
-                  <span className="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[10px] font-bold uppercase tracking-wider">
-                    {item.kategori}
-                  </span>
+                <div className="flex justify-end items-center mb-3">
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                     item.status === "Dibuka" ? "bg-emerald-100 text-emerald-700" :
                     item.status === "Segera Dibuka" ? "bg-amber-100 text-amber-800" : "bg-gray-100 text-gray-600"

@@ -138,12 +138,12 @@ export const Beranda: React.FC = () => {
             <Link to="/ormawa" className="text-gray-600 hover:text-blue-600 py-5 transition">
               Ormawa
             </Link>
-            <Link to="/berita-kegiatan" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Berita &amp; Kegiatan
+            <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 
-          {/* Tombol Akses Portal Login (Keduanya Polos, Muncul Bar Saat Hover) */}
+          {/* Tombol Akses Portal Login */}
           <div className="flex items-center gap-2">
             <Link 
               to="/ormawa/login" 
@@ -173,7 +173,7 @@ export const Beranda: React.FC = () => {
               Kembangkan Potensimu Lewat Beasiswa &amp; Organisasi Mahasiswa
             </h1>
             <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-xl">
-              Satu portal terpadu untuk menemukan kesempatan beasiswa, mengenal organisasi kemahasiswaan kampus, serta memantau berita dan kegiatan terbaru.
+              Satu portal terpadu untuk menemukan kesempatan beasiswa, mengenal organisasi kemahasiswaan kampus, serta memantau agenda dan kegiatan terbaru.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link 
@@ -238,7 +238,7 @@ export const Beranda: React.FC = () => {
             </p>
           </div>
 
-          {/* Filter Dropdown Beasiswa (semua, KIP, VDMI, BI) */}
+          {/* Filter Dropdown Beasiswa */}
           <div className="flex items-center gap-2 text-xs">
             <span className="font-bold text-gray-600">Filter:</span>
             <select
@@ -295,19 +295,19 @@ export const Beranda: React.FC = () => {
         </div>
       </section>
 
-      {/* ================= SECTION KEGIATAN & BERITA ORMAWA ================= */}
+      {/* ================= SECTION AGENDA & KEGIATAN ORMAWA ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-16 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
-              Kegiatan &amp; Berita Ormawa
+              Agenda &amp; Kegiatan Ormawa
             </h2>
             <p className="text-xs text-gray-500 mt-1">
               Kabar kegiatan mahasiswa terkini berdasarkan pengumuman resmi lembaga kampus.
             </p>
           </div>
 
-          {/* Filter Dropdown Kegiatan & Berita Ormawa (semua, MPM, BPM, BEM) */}
+          {/* Filter Dropdown Agenda & Kegiatan */}
           <div className="flex items-center gap-2 text-xs">
             <span className="font-bold text-gray-600">Filter:</span>
             <select
@@ -433,7 +433,7 @@ export const Beranda: React.FC = () => {
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-2">
-            <p>© 2026 SIMPUL · Satu Akses, Beragam Peluang.</p>
+            <p>© 2026 SI-BEO · Satu Akses, Beragam Peluang.</p>
             <div className="flex items-center gap-4 text-xs">
               <span className="hover:text-gray-600 cursor-pointer">Konten program ilustratif</span>
               <span>•</span>

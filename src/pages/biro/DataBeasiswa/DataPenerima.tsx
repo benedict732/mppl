@@ -32,8 +32,8 @@ export const DataPenerima: React.FC = () => {
   const [filterStep, setFilterStep] = useState<number>(1);
   const [selectedMhs, setSelectedMhs] = useState<MahasiswaPenerima | null>(null);
 
-  // State Modal CRUD (Tambah, Edit, Hapus)
-  const [activeModal, setActiveModal] = useState<'tambah' | 'edit' | 'hapus' | null>(null);
+  // State Modal CRUD (Edit, Hapus)
+  const [activeModal, setActiveModal] = useState<'edit' | 'hapus' | null>(null);
 
   // State untuk Pop-up Konfirmasi Logout
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -188,12 +188,12 @@ export const DataPenerima: React.FC = () => {
 
               <a href="/biro/agenda-kegiatan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📅</span>
-                <span>Agenda & Kegiatan</span>
+                <span>Agenda &amp; Kegiatan</span>
               </a>
 
               <a href="/biro/proposal" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📄</span>
-                <span>Proposal & Laporan</span>
+                <span>Proposal &amp; Laporan</span>
               </a>
 
               <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
@@ -244,23 +244,13 @@ export const DataPenerima: React.FC = () => {
                   <option value="2024">2024</option>
                 </select>
               </div>
-
-              <button
-                onClick={() => {
-                  setFormData({ nim: '', nama: '', semester: '1', fakultas: 'TEKNIK', prodi: 'Informatika', beasiswa: 'KIP Kuliah', status: 'Penerima' });
-                  setActiveModal('tambah');
-                }}
-                className="px-4 py-2 bg-[#0B2545] hover:bg-[#133763] text-white text-xs font-semibold rounded-xl shadow-sm transition cursor-pointer"
-              >
-                Tambah Data
-              </button>
             </div>
           </div>
 
           <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div className="md:col-span-8">
-                <label className="block text-xs font-semibold text-gray-700 mb-1.5">Cari nama mahasiswa</label>
+                <label className="block text-xs font-semibold text-gray-700 mb-1.5">Cari Nama atau NIM Mahasiswa</label>
                 <input
                   type="text"
                   value={search}
@@ -430,77 +420,6 @@ export const DataPenerima: React.FC = () => {
                 Tutup
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL TAMBAH DATA */}
-      {activeModal === 'tambah' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6">
-            <div className="flex justify-between items-center pb-4 border-b border-gray-100">
-              <h3 className="text-sm font-bold text-gray-900">Tambah Data Penerima</h3>
-              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer">✕</button>
-            </div>
-
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              setDataMahasiswa([...dataMahasiswa, formData]);
-              setActiveModal(null);
-            }} className="space-y-4 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Nama Lengkap</label>
-                  <input type="text" value={formData.nama} onChange={(e) => setFormData({ ...formData, nama: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white" required />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">NIM</label>
-                  <input type="text" value={formData.nim} onChange={(e) => setFormData({ ...formData, nim: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white" required />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Semester</label>
-                  <select value={formData.semester} onChange={(e) => setFormData({ ...formData, semester: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((s: number) => <option key={s} value={s}>Semester {s}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Fakultas</label>
-                  <select value={formData.fakultas} onChange={(e) => {
-                    const fak = e.target.value;
-                    setFormData({ ...formData, fakultas: fak, prodi: prodiMapping[fak]?.[0] || '' });
-                  }} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
-                    {Object.keys(prodiMapping).map((f: string) => <option key={f} value={f}>{f}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Program Studi</label>
-                  <select value={formData.prodi} onChange={(e) => setFormData({ ...formData, prodi: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
-                    {availableProdiForm.map((p: string) => <option key={p} value={p}>{p}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Beasiswa</label>
-                  <select value={formData.beasiswa} onChange={(e) => setFormData({ ...formData, beasiswa: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
-                    <option value="KIP Kuliah">KIP Kuliah</option>
-                    <option value="VDMI">VDMI</option>
-                    <option value="Kebanksentralan">Kebanksentralan</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-700 mb-1">Status Keterangan</label>
-                  <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs outline-none bg-white cursor-pointer">
-                    <option value="Penerima">Penerima</option>
-                    <option value="Mantan Penerima">Mantan Penerima</option>
-                    <option value="Dikeluarkan">Dikeluarkan</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center pt-4 border-t border-gray-100 mt-6">
-                <button type="button" onClick={() => setActiveModal(null)} className="px-6 py-2 border border-gray-300 text-gray-700 text-xs font-semibold rounded-xl cursor-pointer">Batal</button>
-                <button type="submit" className="px-6 py-2 bg-[#1B5299] text-white text-xs font-semibold rounded-xl cursor-pointer">Simpan</button>
-              </div>
-            </form>
           </div>
         </div>
       )}

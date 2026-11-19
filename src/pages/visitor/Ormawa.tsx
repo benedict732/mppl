@@ -74,8 +74,8 @@ export const Ormawa: React.FC = () => {
             <Link to="/ormawa" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
               Ormawa
             </Link>
-            <Link to="/berita-kegiatan" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Berita &amp; Kegiatan
+            <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 

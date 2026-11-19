@@ -472,7 +472,7 @@ export const Pengumuman: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">
-                  Upload Foto / Poster (Banner) <span className="text-gray-400 font-normal">· Opsional</span>
+                  Unggah Foto / Poster <span className="text-gray-400 font-normal">· Opsional</span>
                 </label>
                 <input
                   type="file"

@@ -243,7 +243,7 @@ export const DataCalonPenerima: React.FC = () => {
           <div className="bg-white/70 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-sm mb-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div className="md:col-span-8">
-                <label className="block text-xs font-semibold text-gray-700 mb-1.5">Cari nama mahasiswa</label>
+                <label className="block text-xs font-semibold text-gray-700 mb-1.5">Cari Nama atau NIM Mahasiswa</label>
                 <input
                   type="text"
                   value={search}

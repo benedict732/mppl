@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const DetailKegiatan: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("Sosialisasi KIP");
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const kegiatanParam = params.get("kegiatan");
-    if (kegiatanParam && [
-      "Sosialisasi KIP", 
-      "Bakti Sosial", 
-      "Workshop BI", 
-      "Pekan Kreasi", 
-      "Sosialisasi VDMI", 
-      "Musyawarah Kerja"
-    ].includes(kegiatanParam)) {
-      setActiveTab(kegiatanParam);
-    }
-  }, [location.search]);
+  // Mengambil parameter URL (misal: ?kegiatan=Bakti Sosial) untuk menentukan kegiatan mana yang ditampilkan
+  const params = new URLSearchParams(location.search);
+  const kegiatanParam = params.get("kegiatan");
+  
+  const validKegiatan = [
+    "Sosialisasi KIP", 
+    "Bakti Sosial", 
+    "Workshop BI", 
+    "Pekan Kreasi", 
+    "Sosialisasi VDMI", 
+    "Musyawarah Kerja"
+  ];
+
+  // Default ke "Sosialisasi KIP" jika parameter tidak valid atau kosong
+  const activeTab = kegiatanParam && validKegiatan.includes(kegiatanParam) 
+    ? kegiatanParam 
+    : "Sosialisasi KIP";
 
   const detailData: Record<string, {
     judul: string;
@@ -177,8 +179,9 @@ export const DetailKegiatan: React.FC = () => {
             <Link to="/ormawa" className="text-gray-600 hover:text-blue-600 py-5 transition">
               Ormawa
             </Link>
+            {/* Diperbaiki menjadi Agenda & Kegiatan */}
             <Link to="/kegiatan-agenda" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
-              Kegiatan &amp; Agenda
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 
@@ -203,7 +206,7 @@ export const DetailKegiatan: React.FC = () => {
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex items-center gap-2 text-xs text-amber-300 font-bold">
-            <Link to="/kegiatan-agenda" className="hover:underline">Kegiatan &amp; Agenda</Link>
+            <Link to="/kegiatan-agenda" className="hover:underline">Agenda &amp; Kegiatan</Link>
             <span>/</span>
             <span>Detail Kegiatan</span>
           </div>
@@ -218,36 +221,12 @@ export const DetailKegiatan: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
             {current.judul}
           </h1>
-
-          <div className="flex flex-wrap gap-2 pt-4">
-            {[
-              { key: "Sosialisasi KIP", label: "Sosialisasi KIP" },
-              { key: "Bakti Sosial", label: "Bakti Sosial" },
-              { key: "Workshop BI", label: "Workshop BI" },
-              { key: "Pekan Kreasi", label: "Pekan Kreasi" },
-              { key: "Sosialisasi VDMI", label: "Sosialisasi VDMI" },
-              { key: "Musyawarah Kerja", label: "Musyawarah Kerja" }
-            ].map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                  activeTab === tab.key
-                    ? "bg-amber-400 text-gray-950 shadow-md"
-                    : "bg-white/10 hover:bg-white/20 text-white"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* ================= KONTEN DETAIL KEGIATAN ================= */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
         
-        {/* Tombol Kembali (Berwujud teks dengan efek hover, terletak di antara tab hero dan konten utama) */}
         <div className="mb-6 flex justify-start">
           <button 
             onClick={() => navigate("/kegiatan-agenda")}

@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const ProfilBeasiswa: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("KIP Kuliah");
 
-  // Membaca parameter URL (misal: ?tab=VDMI) agar pas diklik dari daftar langsung mengarah ke tab yang sesuai
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const tabParam = params.get("tab");
-    if (tabParam && ["KIP Kuliah", "VDMI", "Bank Indonesia"].includes(tabParam)) {
-      setActiveTab(tabParam);
-    }
-  }, [location.search]);
+  // Mengambil parameter URL (misal: ?tab=VDMI) untuk menentukan beasiswa mana yang ditampilkan
+  const params = new URLSearchParams(location.search);
+  const tabParam = params.get("tab");
+  
+  // Default ke "KIP Kuliah" jika parameter tidak valid atau kosong
+  const activeTab = tabParam && ["KIP Kuliah", "VDMI", "Bank Indonesia"].includes(tabParam) 
+    ? tabParam 
+    : "KIP Kuliah";
 
   const beasiswaData: Record<string, {
     nama: string;
@@ -128,7 +127,7 @@ export const ProfilBeasiswa: React.FC = () => {
               Ormawa
             </Link>
             <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Kegiatan &amp; Agenda
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 
@@ -149,7 +148,7 @@ export const ProfilBeasiswa: React.FC = () => {
         </div>
       </header>
 
-      {/* ================= HERO HEADER (Hanya Judul & Tab Beasiswa) ================= */}
+      {/* ================= HERO HEADER ================= */}
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           
@@ -168,29 +167,13 @@ export const ProfilBeasiswa: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-4">
-            {["KIP Kuliah", "VDMI", "Bank Indonesia"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                  activeTab === tab
-                    ? "bg-amber-400 text-gray-950 shadow-md"
-                    : "bg-white/10 hover:bg-white/20 text-white"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
         </div>
       </section>
 
       {/* ================= KONTEN DETAIL ================= */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
         
-        {/* Tombol Kembali (Di antara tab dan kotak Tentang Beasiswa, berwujud teks dengan efek hover) */}
+        {/* Tombol Kembali */}
         <div className="mb-6 flex justify-start">
           <button 
             onClick={() => navigate("/beasiswa")}

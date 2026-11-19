@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const ProfilOrmawa: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("MPM");
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const tabParam = params.get("tab");
-    if (tabParam && ["MPM", "BPM", "BEM"].includes(tabParam)) {
-      setActiveTab(tabParam);
-    }
-  }, [location.search]);
+  // Mengambil parameter URL (misal: ?tab=BPM) untuk menentukan ormawa mana yang ditampilkan
+  const params = new URLSearchParams(location.search);
+  const tabParam = params.get("tab");
+  
+  // Default ke "MPM" jika parameter tidak valid atau kosong
+  const activeTab = tabParam && ["MPM", "BPM", "BEM"].includes(tabParam) 
+    ? tabParam 
+    : "MPM";
 
   const ormawaData: Record<string, {
     nama: string;
@@ -124,8 +124,9 @@ export const ProfilOrmawa: React.FC = () => {
             <Link to="/ormawa" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
               Ormawa
             </Link>
+            {/* Memperbaiki path tujuan rute ke /kegiatan-agenda */}
             <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Kegiatan &amp; Agenda
+              Agenda &amp; Kegiatan
             </Link>
           </nav>
 
@@ -146,7 +147,7 @@ export const ProfilOrmawa: React.FC = () => {
         </div>
       </header>
 
-      {/* ================= HERO HEADER ================= */}
+      {/* ================= HERO HEADER (Tanpa Tombol Tab Pilihan) ================= */}
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex items-center gap-2 text-xs text-amber-300 font-bold">
@@ -162,22 +163,6 @@ export const ProfilOrmawa: React.FC = () => {
             <p className="text-xs sm:text-sm text-gray-200 mt-1">
               Pengelola: <strong>{current.pengelola}</strong>
             </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2 pt-4">
-            {["MPM", "BPM", "BEM"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                  activeTab === tab
-                    ? "bg-amber-400 text-gray-950 shadow-md"
-                    : "bg-white/10 hover:bg-white/20 text-white"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
           </div>
         </div>
       </section>
