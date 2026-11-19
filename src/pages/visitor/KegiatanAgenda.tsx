@@ -106,10 +106,10 @@ export const KegiatanAgenda: React.FC = () => {
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider">
-            ✦ Publikasi &amp; Agenda Kampus
+            ✦ Publikasi &amp; Pengumuman Kampus
           </span>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
-            Agenda &amp; Kegiatan Mahasiswa
+            Pengumuman Mahasiswa
           </h1>
           <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-2xl">
             Temukan berbagai informasi jadwal penting, sosialisasi program beasiswa resmi, hingga kegiatan organisasi kemahasiswaan (BEM &amp; BPM) untuk mendukung pengembangan potensi diri Anda di kampus.
@@ -131,7 +131,7 @@ export const KegiatanAgenda: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <h2 className="text-xl font-bold text-gray-900">
-            Daftar Agenda &amp; Kegiatan ({filteredKegiatan.length})
+            Daftar Pengumuman ({filteredKegiatan.length})
           </h2>
 
           <div className="flex items-center gap-2">
