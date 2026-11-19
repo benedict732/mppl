@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface ItemPengumuman {
+export interface ItemPengumuman {
   id: number;
   judul: string;
   kategori: 'Beasiswa' | 'Ormawa';
@@ -13,6 +13,113 @@ interface ItemPengumuman {
   waktuPelaksanaan?: string;
   tanggalAcara?: string;
 }
+
+export const listPengumuman: ItemPengumuman[] = [
+  {
+    id: 1,
+    judul: 'Pembukaan Pendaftaran Beasiswa KIP Kuliah 2026',
+    kategori: 'Beasiswa',
+    organisasi: 'KIP Kuliah',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&q=80'],
+    isi: 'Pendaftaran beasiswa KIP Kuliah resmi dibuka untuk mahasiswa aktif angkatan 2026. Segera lengkapi persyaratan berkas administratif dan transkrip nilai sebelum tenggat waktu yang ditentukan.',
+    tanggal: '10 November 2026',
+    lokasi: 'Auditorium Utama Kampus',
+    tanggalAcara: '15 November 2026',
+    waktuPelaksanaan: '09:00 - Selesai WITA'
+  },
+  {
+    id: 2,
+    judul: 'Open Recruitment Anggota BEM 2026',
+    kategori: 'Ormawa',
+    organisasi: 'BEM',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&q=80'],
+    isi: 'Mari bergabung dan berkontribusi aktif dalam kepengurusan Badan Eksekutif Mahasiswa (BEM) periode 2026/2027. Terbuka bagi seluruh mahasiswa aktif semester 2 sampai semester 4.',
+    tanggal: '05 November 2026',
+    lokasi: 'Gedung Sekretariat Ormawa Lt. 2',
+    tanggalAcara: '12 November 2026',
+    waktuPelaksanaan: '14:00 - 17:00 WITA'
+  },
+  {
+    id: 3,
+    judul: 'Seleksi Wawancara Beasiswa Kebanksentralan',
+    kategori: 'Beasiswa',
+    organisasi: 'Kebanksentralan',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&q=80'],
+    isi: 'Pengumuman penting bagi seluruh kandidat lolos administrasi beasiswa Kebanksentralan. Jadwal sesi wawancara tatap muka dapat langsung dicek pada lampiran dokumen.',
+    tanggal: '01 November 2026',
+    lokasi: 'Ruang Rapat Biro Kemahasiswaan Lt. 1',
+    tanggalAcara: '19 November 2026',
+    waktuPelaksanaan: '08:30 - 15:00 WITA'
+  },
+  {
+    id: 4,
+    judul: 'Pekan Seni & Budaya Kampus - BEM',
+    kategori: 'Ormawa',
+    organisasi: 'BEM',
+    tahunAkademik: '2025/2026',
+    gambar: ['https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80'],
+    isi: 'Saksikan pertunjukan pameran seni dan pentas budaya tahunan yang diselenggarakan secara meriah oleh BEM bersama seluruh unit kegiatan mahasiswa.',
+    tanggal: '25 Oktober 2026',
+    lokasi: 'Lapangan Basket Kampus Utama',
+    tanggalAcara: '30 Oktober 2026',
+    waktuPelaksanaan: '16:00 - 21:00 WITA'
+  },
+  {
+    id: 5,
+    judul: 'Sosialisasi & Verifikasi Berkas Beasiswa VDMI 2026',
+    kategori: 'Beasiswa',
+    organisasi: 'VDMI',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&q=80'],
+    isi: 'Sosialisasi teknis pengisian formulir, surat keterangan tidak mampu, dan verifikasi berkas awal bagi calon penerima Beasiswa VDMI.',
+    tanggal: '12 November 2026',
+    lokasi: 'Ruang Seminar Gedung Utama Lt. 2',
+    tanggalAcara: '24 November 2026',
+    waktuPelaksanaan: '10:00 - 13:00 WITA'
+  },
+  {
+    id: 6,
+    judul: 'Rapat Evaluasi Program Kerja & Anggaran Ormawa',
+    kategori: 'Ormawa',
+    organisasi: 'BPM',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=500&q=80'],
+    isi: 'Rapat koordinasi dan pengawasan pelaksanaan program kerja serta realisasi anggaran seluruh organisasi kemahasiswaan.',
+    tanggal: '14 November 2026',
+    lokasi: 'Lab Komputer Terpadu Lt. 3',
+    tanggalAcara: '22 November 2026',
+    waktuPelaksanaan: '10:00 - 14:00 WITA'
+  },
+  {
+    id: 7,
+    judul: 'Sidang Pleno Terbuka Majelis Permusyawaratan Mahasiswa',
+    kategori: 'Ormawa',
+    organisasi: 'MPM',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&q=80'],
+    isi: 'Penyampaian laporan pertanggungjawaban dan evaluasi kegiatan seluruh ormawa dalam sidang pleno terbuka.',
+    tanggal: '29 Oktober 2026',
+    lokasi: 'Ruang Sidang Utama Kampus',
+    tanggalAcara: '04 November 2026',
+    waktuPelaksanaan: '13:00 - 17:00 WITA'
+  },
+  {
+    id: 8,
+    judul: 'Bakti Sosial & Edukasi Lingkungan Desa Binaan',
+    kategori: 'Ormawa',
+    organisasi: 'BEM',
+    tahunAkademik: '2026/2027',
+    gambar: ['https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&q=80'],
+    isi: 'Kegiatan pengabdian masyarakat, edukasi pengelolaan lingkungan, dan pemeriksaan kesehatan gratis di desa binaan.',
+    tanggal: '20 Oktober 2026',
+    lokasi: 'Desa Binaan Kampus',
+    tanggalAcara: '28 Oktober 2026',
+    waktuPelaksanaan: '08:00 - 15:00 WITA'
+  }
+];
 
 export const Pengumuman: React.FC = () => {
   const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(false);
@@ -52,62 +159,6 @@ export const Pengumuman: React.FC = () => {
     localStorage.removeItem('adminToken');
     window.location.href = '/biro/login';
   };
-
-  // Dummy Data Pengumuman Lengkap dengan Informasi Rinci Acara
-  const listPengumuman: ItemPengumuman[] = [
-    {
-      id: 1,
-      judul: 'Pembukaan Pendaftaran Beasiswa KIP Kuliah 2026',
-      kategori: 'Beasiswa',
-      organisasi: 'KIP Kuliah',
-      tahunAkademik: '2026/2027',
-      gambar: ['https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&q=80'],
-      isi: 'Pendaftaran beasiswa KIP Kuliah resmi dibuka untuk mahasiswa aktif angkatan 2026. Segera lengkapi persyaratan berkas administratif dan transkrip nilai sebelum tenggat waktu yang ditentukan.',
-      tanggal: '10 November 2026',
-      lokasi: 'Auditorium Utama Kampus & secara Online via Portal SI-BEO',
-      tanggalAcara: '15 November 2026',
-      waktuPelaksanaan: '09:00 - Selesai WITA'
-    },
-    {
-      id: 2,
-      judul: 'Open Recruitment Anggota BEM Universitas 2026',
-      kategori: 'Ormawa',
-      organisasi: 'BEM',
-      tahunAkademik: '2026/2027',
-      gambar: ['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&q=80'],
-      isi: 'Mari bergabung dan berkontribusi aktif dalam kepengurusan Badan Eksekutif Mahasiswa (BEM) periode 2026/2027. Terbuka bagi seluruh mahasiswa aktif semester 2 sampai semester 4.',
-      tanggal: '05 November 2026',
-      lokasi: 'Gedung Sekretariat Ormawa Lt. 2',
-      tanggalAcara: '12 November 2026',
-      waktuPelaksanaan: '14:00 - 17:00 WITA'
-    },
-    {
-      id: 3,
-      judul: 'Seleksi Wawancara Beasiswa Kebanksentralan',
-      kategori: 'Beasiswa',
-      organisasi: 'Kebanksentralan',
-      tahunAkademik: '2026/2027',
-      gambar: ['https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&q=80'],
-      isi: 'Pengumuman penting bagi seluruh kandidat lolos administrasi beasiswa Kebanksentralan. Jadwal sesi wawancara tatap muka dapat langsung dicek pada lampiran dokumen.',
-      tanggal: '01 November 2026',
-      lokasi: 'Ruang Rapat Biro Kemahasiswaan',
-      tanggalAcara: '08 November 2026',
-      waktuPelaksanaan: '08:30 - 15:00 WITA'
-    },
-    {
-      id: 4,
-      judul: 'Pekan Seni & Budaya Kampus - BEM Universitas',
-      kategori: 'Ormawa',
-      organisasi: 'BEM',
-      tahunAkademik: '2025/2026',
-      gambar: ['https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80'],
-      isi: 'Saksikan pertunjukan pameran seni dan pentas budaya tahunan yang diselenggarakan secara meriah oleh BEM Universitas bersama seluruh unit kegiatan mahasiswa.',
-      tanggal: '25 Oktober 2026',
-      lokasi: 'Lapangan Basket Kampus Utama',
-      tanggalAcara: '30 Oktober 2026',
-      waktuPelaksanaan: '16:00 - 21:00 WITA'
-    }
-  ];
 
   const pengumumanFiltered = listPengumuman.filter((item) => {
     return filterKategori === 'Semua' || item.kategori === filterKategori;
@@ -171,12 +222,12 @@ export const Pengumuman: React.FC = () => {
 
               <a href="/biro/agenda-kegiatan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📅</span>
-                <span>Agenda & Kegiatan</span>
+                <span>Agenda &amp; Kegiatan</span>
               </a>
 
               <a href="/biro/proposal" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📄</span>
-                <span>Proposal & Laporan</span>
+                <span>Proposal &amp; Laporan</span>
               </a>
 
               <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">

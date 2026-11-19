@@ -139,7 +139,7 @@ export const Beranda: React.FC = () => {
               Ormawa
             </Link>
             <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Agenda &amp; Kegiatan
+              Pengumuman
             </Link>
           </nav>
 
@@ -295,7 +295,7 @@ export const Beranda: React.FC = () => {
         </div>
       </section>
 
-      {/* ================= SECTION AGENDA & KEGIATAN ORMAWA ================= */}
+      {/* ================= SECTION PENGUMUMAN ORMAWA ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-16 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
           <div>
@@ -307,7 +307,7 @@ export const Beranda: React.FC = () => {
             </p>
           </div>
 
-          {/* Filter Dropdown Agenda & Kegiatan */}
+          {/* Filter Dropdown Pengumuman Ormawa */}
           <div className="flex items-center gap-2 text-xs">
             <span className="font-bold text-gray-600">Filter:</span>
             <select

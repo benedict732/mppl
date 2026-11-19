@@ -79,7 +79,7 @@ export const Beasiswa: React.FC = () => {
               Ormawa
             </Link>
             <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Agenda &amp; Kegiatan
+              Pengumuman
             </Link>
           </nav>
 

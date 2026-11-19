@@ -30,7 +30,7 @@ export const ProfilOrmawa: React.FC = () => {
     "MPM": {
       nama: "Majelis Permusyawaratan Mahasiswa (MPM)",
       pengelola: "Dewan Pimpinan Tertinggi Legislatif Mahasiswa",
-      tentang: "MPM merupakan lembaga legislatif tertinggi dalam organisasi kemahasiswaan di tingkat Perguruan Tinggi, bertugas untuk menyerap dan menyampaikan aspirasi mahasiswa, membuat dan menetapkan aturan organisasi, serta melakukan pengawasan terhadap kinerja BEM dan BPM[cite: 2].",
+      tentang: "MPM merupakan lembaga legislatif tertinggi dalam organisasi kemahasiswaan di tingkat Perguruan Tinggi, bertugas untuk menyerap dan menyampaikan aspirasi mahasiswa, membuat dan menetapkan aturan organisasi, serta melakukan pengawasan terhadap kinerja BEM dan BPM.",
       visi: "Menjadi lembaga legislatif mahasiswa yang independen, berintegritas, dan menjunjung tinggi demokrasi kampus.",
       misi: [
         "Merumuskan dan memperbarui produk hukum kemahasiswaan yang berkeadilan.",
@@ -50,7 +50,7 @@ export const ProfilOrmawa: React.FC = () => {
     "BPM": {
       nama: "Badan Perwakilan Mahasiswa (BPM)",
       pengelola: "Dewan Perwakilan Legislatif Fakultas & Universitas",
-      tentang: "BPM merupakan lembaga legislatif organisasi mahasiswa, yang bertugas untuk membantu MPM dalam menerima dan menyampaikan aspirasi mahasiswa, melakukan pengawasan terhadap kinerja BEM, dan membantu MPM menyusun peraturan organisasi[cite: 2].",
+      tentang: "BPM merupakan lembaga legislatif organisasi mahasiswa, yang bertugas untuk membantu MPM dalam menerima dan menyampaikan aspirasi mahasiswa, melakukan pengawasan terhadap kinerja BEM, dan membantu MPM menyusun peraturan organisasi.",
       visi: "Perwakilan mahasiswa yang responsif, solutif, dan dekat dengan kehidupan akademik mahasiswa.",
       misi: [
         "Mengawal transparansi evaluasi akademik dan fasilitas perkuliahan.",
@@ -70,7 +70,7 @@ export const ProfilOrmawa: React.FC = () => {
     "BEM": {
       nama: "Badan Eksekutif Mahasiswa (BEM)",
       pengelola: "Pengurus Harian Eksekutif Mahasiswa Universitas",
-      tentang: "BEM merupakan lembaga eksekutif organisasi mahasiswa, yang berkegiatan untuk membuat kegiatan mahasiswa dan program kerja mahasiswa baik internal dan eksternal kampus, sebagai contoh kegiatan wajib yang diselenggarakan BEM yaitu PKKMB, kegiatan Pengabdian Kepada Masyarakat, dan menghadiri undangan perwakilan mahasiswa[cite: 2].",
+      tentang: "BEM merupakan lembaga eksekutif organisasi mahasiswa, yang berkegiatan untuk membuat kegiatan mahasiswa dan program kerja mahasiswa baik internal dan eksternal kampus, sebagai contoh kegiatan wajib yang diselenggarakan BEM yaitu PKKMB, kegiatan Pengabdian Kepada Masyarakat, dan menghadiri undangan perwakilan mahasiswa.",
       visi: "Mewujudkan organisasi mahasiswa yang adaptif, transparan, dan berdampak nyata bagi seluruh civitas akademika.",
       misi: [
         "Menampung, mengadvokasi, dan merealisasikan aspirasi serta hak-hak mahasiswa.",
@@ -124,9 +124,8 @@ export const ProfilOrmawa: React.FC = () => {
             <Link to="/ormawa" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
               Ormawa
             </Link>
-            {/* Memperbaiki path tujuan rute ke /kegiatan-agenda */}
             <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Agenda &amp; Kegiatan
+              Pengumuman
             </Link>
           </nav>
 

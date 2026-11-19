@@ -1,29 +1,131 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { listPengumuman, type ItemPengumuman } from "../biro/Pengumuman";
+
+const urlKeyByPengumumanId: Record<number, string> = {
+  1: "kip-kuliah-2026",
+  2: "oprec-bem-2026",
+  3: "wawancara-kebanksentralan",
+  4: "pekan-seni-budaya",
+  5: "sosialisasi-vdmi-2026",
+  6: "rapat-evaluasi-bpm",
+  7: "sidang-pleno-mpm",
+  8: "bakti-sosial-desa-binaan"
+};
+
+const agendaAcaraByPengumumanId: Record<number, string[]> = {
+  1: [
+    "Pembukaan dan sambutan oleh pimpinan Biro Kemahasiswaan.",
+    "Pemaparan alur pendaftaran dan syarat berkas KIP Kuliah 2026.",
+    "Verifikasi dokumen administratif dan transkrip nilai.",
+    "Sesi tanya jawab terbuka (Q&A) bersama tim pengelola.",
+    "Penutupan dan informasi lanjutan di portal SI-BEO."
+  ],
+  2: [
+    "Pembukaan dan pengenalan profil kepengurusan BEM.",
+    "Pemaparan program kerja divisi dan syarat pendaftaran anggota.",
+    "Sesi diskusi interaktif bersama pengurus aktif.",
+    "Penjelasan jadwal seleksi wawancara dan administrasi.",
+    "Penutupan dan sesi tanya jawab."
+  ],
+  3: [
+    "Registrasi peserta yang lolos seleksi administrasi.",
+    "Arahan teknis pelaksanaan sesi wawancara tatap muka.",
+    "Pelaksanaan sesi wawancara per kandidat.",
+    "Rekapitulasi penilaian tim pewawancara.",
+    "Penutupan."
+  ],
+  4: [
+    "Pembukaan Pekan Seni & Budaya Kampus.",
+    "Pameran karya seni dan pertunjukan budaya mahasiswa.",
+    "Pentas seni kolaborasi unit kegiatan mahasiswa.",
+    "Apresiasi peserta dan dokumentasi kegiatan.",
+    "Penutupan acara."
+  ],
+  5: [
+    "Pembukaan sosialisasi Beasiswa VDMI 2026.",
+    "Pemaparan kriteria berkas dan tahapan verifikasi awal.",
+    "Panduan pengisian formulir dan kelengkapan administrasi.",
+    "Sesi tanya jawab peserta.",
+    "Penutupan."
+  ],
+  6: [
+    "Pembukaan rapat evaluasi program kerja dan anggaran.",
+    "Pemaparan capaian program kerja per organisasi.",
+    "Evaluasi penggunaan anggaran dan kendala pelaksanaan.",
+    "Perumusan rekomendasi tindak lanjut.",
+    "Penutupan rapat."
+  ],
+  7: [
+    "Pembukaan sidang pleno terbuka.",
+    "Penyampaian laporan pertanggungjawaban kegiatan.",
+    "Tanggapan dan evaluasi peserta sidang.",
+    "Pengesahan hasil sidang pleno.",
+    "Penutupan sidang."
+  ],
+  8: [
+    "Persiapan dan keberangkatan tim menuju desa binaan.",
+    "Koordinasi bersama perangkat desa setempat.",
+    "Pelaksanaan edukasi lingkungan dan layanan kesehatan gratis.",
+    "Interaksi bersama warga desa binaan.",
+    "Penutupan dan kepulangan tim."
+  ]
+};
 
 export const DetailKegiatan: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Mengambil parameter URL (misal: ?kegiatan=Bakti Sosial) untuk menentukan kegiatan mana yang ditampilkan
   const params = new URLSearchParams(location.search);
   const kegiatanParam = params.get("kegiatan");
-  
-  const validKegiatan = [
-    "Sosialisasi KIP", 
-    "Bakti Sosial", 
-    "Workshop BI", 
-    "Pekan Kreasi", 
-    "Sosialisasi VDMI", 
-    "Musyawarah Kerja"
-  ];
 
-  // Default ke "Sosialisasi KIP" jika parameter tidak valid atau kosong
-  const activeTab = kegiatanParam && validKegiatan.includes(kegiatanParam) 
-    ? kegiatanParam 
-    : "Sosialisasi KIP";
+  const detailData: Record<
+    string,
+    {
+      judul: string;
+      jenis: string;
+      kategori: string;
+      kategoriBadge: string;
+      penyelenggara: string;
+      tanggal: string;
+      lokasi: string;
+      foto: string;
+      tentang: string;
+      agendaAcara: string[];
+    }
+  > = listPengumuman.reduce((acc, item: ItemPengumuman) => {
+    const key = urlKeyByPengumumanId[item.id] || String(item.id);
+    const tanggalGabung = [
+      item.tanggalAcara || item.tanggal,
+      item.waktuPelaksanaan ? `Pukul ${item.waktuPelaksanaan}` : ""
+    ]
+      .filter(Boolean)
+      .join(", ");
 
-  const detailData: Record<string, {
+    acc[key] = {
+      judul: item.judul,
+      jenis: item.kategori,
+      kategori: item.kategori,
+      kategoriBadge:
+        item.kategori === "Beasiswa"
+          ? "bg-amber-400 text-gray-950"
+          : "bg-blue-600 text-white",
+      penyelenggara: item.organisasi,
+      tanggal: tanggalGabung,
+      lokasi: item.lokasi || "Kampus Utama",
+      foto:
+        item.gambar[0] ||
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80",
+      tentang: item.isi,
+      agendaAcara: agendaAcaraByPengumumanId[item.id] || [
+        "Pembukaan kegiatan.",
+        "Pelaksanaan agenda utama sesuai jadwal.",
+        "Sesi diskusi dan tanya jawab.",
+        "Penutupan kegiatan."
+      ]
+    };
+    return acc;
+  }, {} as Record<string, {
     judul: string;
     jenis: string;
     kategori: string;
@@ -34,118 +136,10 @@ export const DetailKegiatan: React.FC = () => {
     foto: string;
     tentang: string;
     agendaAcara: string[];
-  }> = {
-    "Sosialisasi KIP": {
-      judul: "Sosialisasi & Bedah Persyaratan KIP Kuliah 2026",
-      jenis: "Beasiswa",
-      kategori: "Beasiswa",
-      kategoriBadge: "bg-amber-400 text-gray-950",
-      penyelenggara: "Biro Kemahasiswaan",
-      tanggal: "20 November 2026, Pukul 09.00 WITA - Selesai",
-      lokasi: "Aula Utama Kampus & Daring via Zoom Meeting",
-      foto: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
-      tentang: "Kegiatan sosialisasi resmi yang diselenggarakan khusus bagi mahasiswa baru maupun aktif guna memberikan pemahaman menyeluruh mengenai mekanisme pendaftaran, kriteria kelayakan, pemberkasan Gform, hingga alur wawancara program bantuan sosial pendidikan KIP Kuliah tahun 2026/2027.",
-      agendaAcara: [
-        "Pembukaan dan sambutan oleh Wakil Rektor Bidang Kemahasiswaan dan Alumni.",
-        "Pemaparan materi tata cara pengisian berkas KIP Kuliah oleh Kepala Biro Kemahasiswaan.",
-        "Sesi simulasi pengunggahan berkas melalui portal kampus dan Google Form.",
-        "Sesi tanya jawab terbuka (Q&A) bersama tim verifikator beasiswa.",
-        "Penutupan dan dokumentasi bersama."
-      ]
-    },
-    "Bakti Sosial": {
-      judul: "Bakti Sosial Mahasiswa Peduli Lingkungan & Kesehatan Desa Binaan",
-      jenis: "Ormawa",
-      kategori: "Ormawa",
-      kategoriBadge: "bg-blue-600 text-white",
-      penyelenggara: "BEM Universitas",
-      tanggal: "25 November 2026, Pukul 08.00 WITA - Selesai",
-      lokasi: "Desa Sukamaju, Kec. Cisarua",
-      foto: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1200&q=80",
-      tentang: "Program pengabdian masyarakat unggulan yang diinisiasi oleh Badan Eksekutif Mahasiswa (BEM) sebagai implementasi nyata Tri Dharma Perguruan Tinggi. Kegiatan ini berfokus pada penyuluhan kesehatan, pembagian sembako gratis, serta kerja bakti pembersihan fasilitas umum desa.",
-      agendaAcara: [
-        "Apel pelepasan kontingen relawan mahasiswa di halaman rektorat.",
-        "Perjalanan menuju lokasi desa binaan dan koordinasi bersama perangkat desa.",
-        "Pelaksanaan penyuluhan sanitasi air bersih dan pemeriksaan kesehatan gratis.",
-        "Penyerahan bantuan sosial paket sembako secara simbolis kepada warga kurang mampu.",
-        "Evaluasi kegiatan dan ramah tamah bersama warga setempat."
-      ]
-    },
-    "Workshop BI": {
-      judul: "Workshop Kepemimpinan & Management Beasiswa Prestasi Bank Indonesia",
-      jenis: "Beasiswa",
-      kategori: "Beasiswa",
-      kategoriBadge: "bg-amber-400 text-gray-950",
-      penyelenggara: "Kantor Perwakilan Bank Indonesia & Biro Kemahasiswaan",
-      tanggal: "02 Desember 2026, Pukul 13.00 WITA - Selesai",
-      lokasi: "Ruang Teater Hall B Kampus Terpadu",
-      foto: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80",
-      tentang: "Pelatihan eksklusif dan bedah esai motivasi untuk mempersiapkan mahasiswa menghadapi seleksi ketat Beasiswa Bank Indonesia (GenBI). Peserta akan mendapatkan wawasan langsung mengenai kepemimpinan, literasi keuangan, serta peluang pengembangan karier masa depan.",
-      agendaAcara: [
-        "Registrasi peserta dan pengecekan persyaratan administratif awal.",
-        "Keynote speech dari pimpinan Kantor Perwakilan Bank Indonesia.",
-        "Sesi bedah tips & trik penulisan esai serta simulasi wawancara beasiswa.",
-        "Diskusi interaktif dan sharing session bersama alumni penerima beasiswa GenBI.",
-        "Pengumuman doorprize dan sesi foto bersama."
-      ]
-    },
-    "Pekan Kreasi": {
-      judul: "Pekan Kreasi & Seni Mahasiswa: Harmoni Kampus Inklusif",
-      jenis: "Ormawa",
-      kategori: "Ormawa",
-      kategoriBadge: "bg-blue-600 text-white",
-      penyelenggara: "BEM & BPM Universitas",
-      tanggal: "10 - 12 Desember 2026, Pukul 15.00 WITA - Selesai",
-      lokasi: "Gedung Auditorium Utama Kampus",
-      foto: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
-      tentang: "Pagelaran festival seni, pentas tari daerah, konser akustik, dan pameran karya kreasi mahasiswa dari berbagai fakultas untuk mempererat kebersamaan serta menyalurkan bakat kreatif civitas akademika.",
-      agendaAcara: [
-        "Seremonial pembukaan oleh Rektor dan Presiden Mahasiswa.",
-        "Penampilan pameran seni rupa dan karya inovasi mahasiswa.",
-        "Lomba akustik antar program studi.",
-        "Pentas puncak festival tari kreasi nusantara.",
-        "Pengumuman pemenang lomba dan penutupan."
-      ]
-    },
-    "Sosialisasi VDMI": {
-      judul: "Sosialisasi Program Bantuan Pendidikan VDMI 2027",
-      jenis: "Beasiswa",
-      kategori: "Beasiswa",
-      kategoriBadge: "bg-amber-400 text-gray-950",
-      penyelenggara: "Yayasan VDMI & Biro Kemahasiswaan",
-      tanggal: "15 Desember 2026, Pukul 10.00 WITA - Selesai",
-      lokasi: "Auditorium Fakultas Teknik",
-      foto: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
-      tentang: "Pemaparan lengkap mengenai persyaratan administratif, benefit tunjangan dana pendidikan bulanan, pelatihan kepemimpinan, serta tips lolos seleksi beasiswa internasional Van Deventer-Maas Indonesia.",
-      agendaAcara: [
-        "Pembukaan dan pengantar oleh perwakilan Yayasan VDMI.",
-        "Penjelasan mendalam kriteria dan syarat kelayakan pendaftar.",
-        "Tata cara pengunggahan berkas ke link resmi pengelola beasiswa.",
-        "Sesi tanya jawab interaktif seputar kendala pemberkasan.",
-        "Selesai dan penyerahan cinderamata."
-      ]
-    },
-    "Musyawarah Kerja": {
-      judul: "Musyawarah Kerja & Sidang Pleno Mahasiswa Semester Genap",
-      jenis: "Ormawa",
-      kategori: "Ormawa",
-      kategoriBadge: "bg-blue-600 text-white",
-      penyelenggara: "MPM & BPM Kampus",
-      tanggal: "20 Desember 2026, Pukul 09.00 WITA - Selesai",
-      lokasi: "Gedung Student Center Lt. 3",
-      foto: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
-      tentang: "Sidang pleno resmi organisasi kemahasiswaan untuk mengevaluasi laporan pertanggungjawaban tengah semester BEM, membahas revisi garis-garis besar haluan organisasi, serta pengesahan rancangan peraturan legislatif terbaru.",
-      agendaAcara: [
-        "Pembukaan sidang pleno dan pengesahan tata tertib sidang.",
-        "Penyampaian laporan pertanggungjawaban (LPJ) program kerja BEM.",
-        "Sesi tanggapan kritis, sanggahan, dan evaluasi dari Komisi MPM/BPM.",
-        "Penetapan hasil sidang pleno dan penandatanganan berita acara.",
-        "Doa penutup dan pembubaran sidang."
-      ]
-    }
-  };
+  }>);
 
-  const current = detailData[activeTab] || detailData["Sosialisasi KIP"];
+  const defaultKey = urlKeyByPengumumanId[1] || "kip-kuliah-2026";
+  const current = (kegiatanParam && detailData[kegiatanParam]) || detailData[defaultKey];
 
   return (
     <div className="min-h-screen bg-[#F4F7FC] flex flex-col font-sans text-gray-800">
@@ -179,9 +173,8 @@ export const DetailKegiatan: React.FC = () => {
             <Link to="/ormawa" className="text-gray-600 hover:text-blue-600 py-5 transition">
               Ormawa
             </Link>
-            {/* Diperbaiki menjadi Agenda & Kegiatan */}
             <Link to="/kegiatan-agenda" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
-              Agenda &amp; Kegiatan
+              Pengumuman
             </Link>
           </nav>
 
@@ -206,7 +199,7 @@ export const DetailKegiatan: React.FC = () => {
       <section className="bg-gradient-to-r from-[#0B1E36] via-[#12365F] to-[#1B437C] text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex items-center gap-2 text-xs text-amber-300 font-bold">
-            <Link to="/kegiatan-agenda" className="hover:underline">Agenda &amp; Kegiatan</Link>
+            <Link to="/kegiatan-agenda" className="hover:underline">Pengumuman</Link>
             <span>/</span>
             <span>Detail Kegiatan</span>
           </div>

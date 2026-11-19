@@ -17,7 +17,7 @@ export const Ormawa: React.FC = () => {
       id: 1,
       nama: "Majelis Permusyawaratan Mahasiswa",
       singkatan: "MPM",
-      deskripsi: "Lembaga legislatif tertinggi dalam organisasi kemahasiswaan yang bertugas menyerap dan menyampaikan aspirasi mahasiswa, membuat aturan organisasi, serta mengawasi kinerja BEM dan BPM[cite: 2].",
+      deskripsi: "Lembaga legislatif tertinggi dalam organisasi kemahasiswaan yang bertugas menyerap dan menyampaikan aspirasi mahasiswa, membuat aturan organisasi, serta mengawasi kinerja BEM dan BPM.",
       anggota: "30 Anggota",
       ketua: "Ketua MPM",
       tabKey: "MPM"
@@ -26,7 +26,7 @@ export const Ormawa: React.FC = () => {
       id: 2,
       nama: "Badan Perwakilan Mahasiswa",
       singkatan: "BPM",
-      deskripsi: "Lembaga legislatif yang membantu MPM dalam menerima dan menyampaikan aspirasi mahasiswa, melakukan pengawasan terhadap kinerja BEM, serta menyusun peraturan organisasi[cite: 2].",
+      deskripsi: "Lembaga legislatif yang membantu MPM dalam menerima dan menyampaikan aspirasi mahasiswa, melakukan pengawasan terhadap kinerja BEM, serta menyusun peraturan organisasi.",
       anggota: "35 Anggota",
       ketua: "Ketua BPM",
       tabKey: "BPM"
@@ -35,7 +35,7 @@ export const Ormawa: React.FC = () => {
       id: 3,
       nama: "Badan Eksekutif Mahasiswa",
       singkatan: "BEM",
-      deskripsi: "Lembaga eksekutif yang berkegiatan membuat program kerja mahasiswa baik internal maupun eksternal kampus, seperti PKKMB, pengabdian masyarakat, dan kegiatan representatif[cite: 2].",
+      deskripsi: "Lembaga eksekutif yang berkegiatan membuat program kerja mahasiswa baik internal maupun eksternal kampus, seperti PKKMB, pengabdian masyarakat, dan kegiatan representatif.",
       anggota: "55 Pengurus",
       ketua: "Ketua BEM",
       tabKey: "BEM"
@@ -75,7 +75,7 @@ export const Ormawa: React.FC = () => {
               Ormawa
             </Link>
             <Link to="/kegiatan-agenda" className="text-gray-600 hover:text-blue-600 py-5 transition">
-              Agenda &amp; Kegiatan
+              Pengumuman
             </Link>
           </nav>
 

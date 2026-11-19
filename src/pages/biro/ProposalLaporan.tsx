@@ -1,15 +1,85 @@
 import React, { useState } from 'react';
+import { listPengumuman, type ItemPengumuman } from './Pengumuman';
 
 interface DokumenItem {
   id: string;
   kegiatan: string;
   ormawa: string;
-  jenisDokumen: string;
+  jenisDokumen: 'Proposal' | 'Laporan';
   tahunAkademik: string;
-  status: 'Menunggu' | 'Revisi' | 'Diterima' | 'Ditolak';
+  tanggalPengajuan: string;
+  status: 'Menunggu' | 'Revisi' | 'Diterima' | 'Ditolak' | 'Disetujui';
   fileNama: string;
   deskripsiFile: string;
 }
+
+const metaDokumenByPengumumanId: Record<
+  number,
+  {
+    ormawa: string;
+    jenisDokumen: 'Proposal' | 'Laporan';
+    status: DokumenItem['status'];
+    fileNama: string;
+    deskripsiFile: string;
+  }
+> = {
+  1: {
+    ormawa: 'KIP Kuliah',
+    jenisDokumen: 'Proposal',
+    status: 'Diterima',
+    fileNama: 'Proposal_Beasiswa_KIP_Kuliah_2026.pdf',
+    deskripsiFile: 'Lampiran proposal kegiatan - contoh'
+  },
+  2: {
+    ormawa: 'BEM',
+    jenisDokumen: 'Proposal',
+    status: 'Menunggu',
+    fileNama: 'Proposal_Oprec_Anggota_BEM_2026.pdf',
+    deskripsiFile: 'Lampiran proposal kegiatan - contoh'
+  },
+  3: {
+    ormawa: 'Kebanksentralan',
+    jenisDokumen: 'Proposal',
+    status: 'Menunggu',
+    fileNama: 'Proposal_Seleksi_Wawancara_BI.pdf',
+    deskripsiFile: 'Lampiran proposal kegiatan - contoh'
+  },
+  4: {
+    ormawa: 'BEM',
+    jenisDokumen: 'Laporan',
+    status: 'Disetujui',
+    fileNama: 'Laporan_Pekan_Seni_Budaya_BEM.pdf',
+    deskripsiFile: 'Lampiran laporan akhir - contoh'
+  },
+  5: {
+    ormawa: 'VDMI',
+    jenisDokumen: 'Proposal',
+    status: 'Menunggu',
+    fileNama: 'Proposal_Sosialisasi_VDMI_2026.pdf',
+    deskripsiFile: 'Lampiran proposal kegiatan - contoh'
+  },
+  6: {
+    ormawa: 'BPM',
+    jenisDokumen: 'Laporan',
+    status: 'Menunggu',
+    fileNama: 'Laporan_Rapat_Evaluasi_BPM.pdf',
+    deskripsiFile: 'Lampiran laporan kegiatan - contoh'
+  },
+  7: {
+    ormawa: 'MPM',
+    jenisDokumen: 'Laporan',
+    status: 'Revisi',
+    fileNama: 'Laporan_Sidang_Pleno_MPM.pdf',
+    deskripsiFile: 'Lampiran laporan akhir - contoh'
+  },
+  8: {
+    ormawa: 'BEM',
+    jenisDokumen: 'Laporan',
+    status: 'Ditolak',
+    fileNama: 'Laporan_Bakti_Sosial_BEM.pdf',
+    deskripsiFile: 'Lampiran laporan akhir - contoh'
+  }
+};
 
 export const ProposalLaporan: React.FC = () => {
   const [isBeasiswaOpen, setIsBeasiswaOpen] = useState(false);
@@ -33,17 +103,30 @@ export const ProposalLaporan: React.FC = () => {
   // State untuk Pop-up Konfirmasi Logout
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  // State Dokumen Proposal yang sedang dipilih
-  const [selectedDokumen, setSelectedDokumen] = useState<DokumenItem>({
-    id: '1',
-    kegiatan: 'Bakti Sosial',
-    ormawa: 'BEM',
-    jenisDokumen: 'Proposal',
-    tahunAkademik: '2026/2027',
-    status: 'Menunggu',
-    fileNama: 'Proposal_Bakti_Sosial.pdf',
-    deskripsiFile: 'Lampiran proposal - contoh'
+  const daftarDokumen: DokumenItem[] = listPengumuman.map((p: ItemPengumuman) => {
+    const meta = metaDokumenByPengumumanId[p.id] ?? {
+      ormawa: p.organisasi,
+      jenisDokumen: 'Proposal' as const,
+      status: 'Menunggu' as const,
+      fileNama: `Dokumen_${p.id}.pdf`,
+      deskripsiFile: 'Lampiran dokumen - contoh'
+    };
+
+    return {
+      id: String(p.id),
+      kegiatan: p.judul,
+      ormawa: meta.ormawa,
+      jenisDokumen: meta.jenisDokumen,
+      tahunAkademik: p.tahunAkademik,
+      tanggalPengajuan: p.tanggal,
+      status: meta.status,
+      fileNama: meta.fileNama,
+      deskripsiFile: meta.deskripsiFile
+    };
   });
+
+  // State Dokumen Proposal yang sedang dipilih
+  const [selectedDokumen, setSelectedDokumen] = useState<DokumenItem>(daftarDokumen[0]);
 
   const [catatanPemeriksa, setCatatanPemeriksa] = useState('');
 
@@ -51,29 +134,6 @@ export const ProposalLaporan: React.FC = () => {
     localStorage.removeItem('adminToken');
     window.location.href = '/biro/login';
   };
-
-  const daftarDokumen: DokumenItem[] = [
-    {
-      id: '1',
-      kegiatan: 'Bakti Sosial',
-      ormawa: 'BEM',
-      jenisDokumen: 'Proposal',
-      tahunAkademik: '2026/2027',
-      status: 'Menunggu',
-      fileNama: 'Proposal_Bakti_Sosial.pdf',
-      deskripsiFile: 'Lampiran proposal - contoh'
-    },
-    {
-      id: '2',
-      kegiatan: 'Pekan Seni',
-      ormawa: 'BEM',
-      jenisDokumen: 'Laporan',
-      tahunAkademik: '2026/2027',
-      status: 'Revisi',
-      fileNama: 'Laporan_Pekan_Seni.pdf',
-      deskripsiFile: 'Lampiran laporan akhir - contoh'
-    }
-  ];
 
   const handleAksiStatus = (statusBaru: 'Diterima' | 'Ditolak' | 'Revisi') => {
     alert(`Dokumen "${selectedDokumen.kegiatan}" berhasil diberi status: ${statusBaru}. Catatan: ${catatanPemeriksa || '-'}`);
@@ -88,6 +148,21 @@ export const ProposalLaporan: React.FC = () => {
 
   const handleExport = (jenis: string) => {
     alert(`Memproses Export Laporan Rekapitulasi ${jenis}...`);
+  };
+
+  const getBadgeStatusDokumen = (status: DokumenItem['status']) => {
+    switch (status) {
+      case 'Menunggu':
+        return 'bg-amber-100 text-amber-700';
+      case 'Revisi':
+        return 'bg-orange-100 text-orange-700';
+      case 'Diterima':
+      case 'Disetujui':
+        return 'bg-emerald-100 text-emerald-700';
+      case 'Ditolak':
+      default:
+        return 'bg-red-100 text-red-700';
+    }
   };
 
   // Fungsi helper untuk menentukan Header dinamis sesuai menu yang dipilih
@@ -175,14 +250,14 @@ export const ProposalLaporan: React.FC = () => {
 
               <a href="/biro/agenda-kegiatan" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
                 <span>📅</span>
-                <span>Agenda & Kegiatan</span>
+                <span>Agenda &amp; Kegiatan</span>
               </a>
 
 
               {/* Proposal & Laporan (Tanpa Dropdown / Menu Biasa) */}
               <a href="/biro/proposal" className="flex items-center gap-3 px-3 py-2.5 bg-blue-600/30 text-blue-300 font-semibold rounded-lg transition">
                 <span>📄</span>
-                <span>Proposal & Laporan</span>
+                <span>Proposal &amp; Laporan</span>
               </a>
 
               <a href="/biro/manajemen-akun" className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-white/5 rounded-lg transition">
@@ -230,7 +305,7 @@ export const ProposalLaporan: React.FC = () => {
                 onChange={(e) => setActiveSubTab(e.target.value as any)}
                 className="text-xs font-bold text-blue-600 outline-none bg-transparent cursor-pointer"
               >
-                <option value="proposal">📄 Verifikasi Proposal & Laporan</option>
+                <option value="proposal">📄 Verifikasi Proposal &amp; Laporan</option>
                 <option value="rekap-beasiswa">📈 Rekapitulasi Beasiswa</option>
                 <option value="rekap-ormawa">📊 Rekapitulasi Ormawa</option>
               </select>
@@ -278,6 +353,7 @@ export const ProposalLaporan: React.FC = () => {
                         <th className="p-3">ORMAWA</th>
                         <th className="p-3">DOKUMEN</th>
                         <th className="p-3">TAHUN AKADEMIK</th>
+                        <th className="p-3">TANGGAL PENGAJUAN</th>
                         <th className="p-3">STATUS</th>
                         <th className="p-3 text-right">AKSI</th>
                       </tr>
@@ -289,10 +365,9 @@ export const ProposalLaporan: React.FC = () => {
                           <td className="p-3 text-gray-600">{item.ormawa}</td>
                           <td className="p-3 text-gray-600">{item.jenisDokumen}</td>
                           <td className="p-3 text-gray-600">{item.tahunAkademik}</td>
+                          <td className="p-3 text-gray-600 whitespace-nowrap">{item.tanggalPengajuan}</td>
                           <td className="p-3">
-                            <span className={`px-3 py-1 rounded-full text-[10px] font-semibold ${
-                              item.status === 'Menunggu' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'
-                            }`}>
+                            <span className={`px-3 py-1 rounded-full text-[10px] font-semibold ${getBadgeStatusDokumen(item.status)}`}>
                               {item.status}
                             </span>
                           </td>
@@ -528,7 +603,9 @@ export const ProposalLaporan: React.FC = () => {
             <div className="flex justify-between items-center border-b border-gray-100 pb-4">
               <div>
                 <h3 className="text-base font-bold text-gray-900">Detail: {selectedDokumen.kegiatan}</h3>
-                <p className="text-xs text-gray-500 mt-0.5">{selectedDokumen.ormawa} · Tahun akademik {selectedDokumen.tahunAkademik}</p>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {selectedDokumen.ormawa} · Tahun akademik {selectedDokumen.tahunAkademik} · Diajukan: {selectedDokumen.tanggalPengajuan}
+                </p>
               </div>
               <button onClick={() => setIsDetailModalOpen(false)} className="text-gray-400 hover:text-gray-600 font-bold text-sm cursor-pointer w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition">✕</button>
             </div>

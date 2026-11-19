@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { listPengumuman, type ItemPengumuman } from "../biro/Pengumuman";
 
 interface KegiatanItem {
   id: number;
@@ -11,87 +12,36 @@ interface KegiatanItem {
   deskripsi: string;
   lokasi: string;
   foto: string;
-  urlKey: string; // Kunci unik untuk parameter URL
+  urlKey: string;
 }
+
+const urlKeyByPengumumanId: Record<number, string> = {
+  1: "kip-kuliah-2026",
+  2: "oprec-bem-2026",
+  3: "wawancara-kebanksentralan",
+  4: "pekan-seni-budaya",
+  5: "sosialisasi-vdmi-2026",
+  6: "rapat-evaluasi-bpm",
+  7: "sidang-pleno-mpm",
+  8: "bakti-sosial-desa-binaan"
+};
 
 export const KegiatanAgenda: React.FC = () => {
   const [filter, setFilter] = useState<string>("semua");
   const navigate = useNavigate();
 
-  const daftarKegiatan: KegiatanItem[] = [
-    {
-      id: 1,
-      judul: "Sosialisasi & Bedah Persyaratan KIP Kuliah 2026",
-      jenis: "beasiswa",
-      kategori: "Beasiswa",
-      tanggal: "20 November 2026",
-      penyelenggara: "Biro Kemahasiswaan",
-      deskripsi: "Panduan lengkap tata cara pendaftaran, verifikasi berkas, dan sesi tanya jawab langsung seputar beasiswa KIP Kuliah tahun akademik 2026/2027.",
-      lokasi: "Aula Utama & Daring Zoom",
-      foto: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
-      urlKey: "Sosialisasi KIP"
-    },
-    {
-      id: 2,
-      judul: "Bakti Sosial Mahasiswa Peduli Lingkungan & Kesehatan Desa Binaan",
-      jenis: "ormawa",
-      kategori: "Ormawa",
-      tanggal: "25 November 2026",
-      penyelenggara: "BEM Universitas",
-      deskripsi: "Penyuluhan sanitasi air bersih, pembagian sembako, dan pengobatan gratis bagi 200 warga desa binaan universitas sebagai wujud Tri Dharma Perguruan Tinggi.",
-      lokasi: "Desa Sukamaju, Kec. Cisarua",
-      foto: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=800&q=80",
-      urlKey: "Bakti Sosial"
-    },
-    {
-      id: 3,
-      judul: "Workshop Kepemimpinan & Management Beasiswa Prestasi Bank Indonesia",
-      jenis: "beasiswa",
-      kategori: "Beasiswa",
-      tanggal: "02 Desember 2026",
-      penyelenggara: "Kantor Perwakilan Bank Indonesia & Biro Kemahasiswaan",
-      deskripsi: "Pelatihan pengembangan soft skills, personal branding, serta persiapan seleksi wawancara khusus calon penerima beasiswa Bank Indonesia (GenBI).",
-      lokasi: "Ruang Teater Hall B",
-      foto: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
-      urlKey: "Workshop BI"
-    },
-    {
-      id: 4,
-      judul: "Pekan Kreasi & Seni Mahasiswa: Harmoni Kampus Inklusif",
-      jenis: "ormawa",
-      kategori: "Ormawa",
-      tanggal: "10 - 12 Desember 2026",
-      penyelenggara: "BEM & BPM Universitas",
-      deskripsi: "Pagelaran festival tari daerah, konser akustik, dan pameran karya kreasi mahasiswa untuk mempererat kebersamaan antar program studi.",
-      lokasi: "Gedung Auditorium Utama Kampus",
-      foto: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80",
-      urlKey: "Pekan Kreasi"
-    },
-    {
-      id: 5,
-      judul: "Sosialisasi Program Bantuan Pendidikan VDMI 2027",
-      jenis: "beasiswa",
-      kategori: "Beasiswa",
-      tanggal: "15 Desember 2026",
-      penyelenggara: "Yayasan VDMI & Biro Kemahasiswaan",
-      deskripsi: "Pemaparan persyaratan, benefit tunjangan dana pendidikan, serta tips lolos seleksi beasiswa internasional Van Deventer-Maas Indonesia.",
-      lokasi: "Auditorium Fakultas Teknik",
-      foto: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
-      urlKey: "Sosialisasi VDMI"
-    },
-    {
-      id: 6,
-      judul: "Musyawarah Kerja & Sidang Pleno Mahasiswa Semester Genap",
-      jenis: "ormawa",
-      kategori: "Ormawa",
-      tanggal: "20 Desember 2026",
-      penyelenggara: "MPM & BPM Kampus",
-      deskripsi: "Penyampaian evaluasi laporan pertanggungjawaban tengah semester BEM serta pembahasan rancangan peraturan organisasi kemahasiswaan terbaru.",
-      lokasi: "Gedung Student Center Lt. 3",
-      foto: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
-      urlKey: "Musyawarah Kerja"
-    }
-  ];
+  const daftarKegiatan: KegiatanItem[] = listPengumuman.map((p: ItemPengumuman) => ({
+    id: p.id,
+    judul: p.judul,
+    jenis: p.kategori === "Beasiswa" ? "beasiswa" : "ormawa",
+    kategori: p.kategori,
+    tanggal: p.tanggalAcara || p.tanggal,
+    penyelenggara: p.organisasi,
+    deskripsi: p.isi,
+    lokasi: p.lokasi || "Kampus Utama",
+    foto: p.gambar[0] || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&q=80",
+    urlKey: urlKeyByPengumumanId[p.id] || String(p.id)
+  }));
 
   const filteredKegiatan = daftarKegiatan.filter((item) => {
     if (filter === "semua") return true;
@@ -131,7 +81,7 @@ export const KegiatanAgenda: React.FC = () => {
               Ormawa
             </Link>
             <Link to="/kegiatan-agenda" className="text-blue-600 font-bold border-b-2 border-blue-600 py-5 transition">
-              Agenda &amp; Kegiatan
+              Pengumuman
             </Link>
           </nav>
 
@@ -239,7 +189,6 @@ export const KegiatanAgenda: React.FC = () => {
                   <p className="truncate">📍 <span className="text-gray-400">{item.lokasi}</span></p>
                 </div>
 
-                {/* Mengarahkan ke halaman detail dengan membawa parameter query key */}
                 <Link 
                   to={`/kegiatan-agenda/detail?kegiatan=${encodeURIComponent(item.urlKey)}`} 
                   className="w-full block text-center py-2.5 bg-[#1B437C] hover:bg-blue-900 text-white rounded-xl text-xs font-bold shadow-sm transition"
